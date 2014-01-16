@@ -16,6 +16,7 @@ public abstract class Obj
 	// should only be used to remove the object from the game
 	protected List<Obj> objInst;
 	protected SimpleTest gameInst;
+	protected int mass;
 	
 	// draws the object onto the main graphics g
 	abstract public void draw(Graphics g);
