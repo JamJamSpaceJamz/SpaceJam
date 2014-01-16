@@ -10,16 +10,16 @@ public abstract class Obj
 {
 	protected Shape shape;
 	//  the objects speed and velocity
-	protected float[] velocity;
+	protected float[] velocity;// = new float[2];
+	protected float mass;
 	protected boolean collided;
 	// the specific instance of the object in the game
 	// should only be used to remove the object from the game
 	protected List<Obj> objInst;
 	protected SimpleTest gameInst;
-	protected int mass;
 	
 	// draws the object onto the main graphics g
-	abstract public void draw(Graphics g);
+	abstract public void draw(Graphics gfloat);
 	
 	// updates the object using delta (the time in milliseconds between frames)
 	abstract public void update(int delta);

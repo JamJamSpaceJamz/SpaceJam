@@ -6,10 +6,8 @@ import game.SimpleTest;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.ShapeFill;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Polygon;
-import org.newdawn.slick.geom.Shape;
 
 public class Ship extends Obj
 {
@@ -24,12 +22,15 @@ public class Ship extends Obj
 		location = new float[2];
 		location[0] = 200;
 		location[1] = 200;
-		velocity = new float[2];
+		this.velocity = new float[2];
+		//this.velocity[0] = speed;
+		//this.velocity[1] = 0;
 		acceleration = new float[2];
 		this.speed = speed;
 		this.size = size;
 		this.rotateSpd = rotateSpd;
 		this.range = range;
+		this.mass = 75;
 		rotation = 0;
 		gameInst = inst;  
 	}
@@ -164,19 +165,9 @@ public class Ship extends Obj
 
 	public void collide(Obj hitter, int delta)
 	{
-		collided = true;
-		if (hitter instanceof Asteroid)
+		if (!(hitter instanceof Bullet))
 		{
-			// forces this object to move back a step
-			CollisionChecker.backStep(this, 2*delta);
-			
-			// speed of the object you are colliding into
-			float[] hSpeed = hitter.setSpeed(null);
-			hSpeed[0] += velocity[0] / 2;
-			hSpeed[1] += velocity [0] / 2;
-			
-			velocity[0] *= -1.0/2;
-			velocity[1] *= -1.0/2;
+			CollisionChecker.collision(this, hitter);
 		}
 	}
 }

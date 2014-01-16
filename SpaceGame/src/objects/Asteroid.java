@@ -7,30 +7,31 @@ import game.SimpleTest;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Polygon;
-import org.newdawn.slick.geom.Shape;
 
 public class Asteroid extends Obj
 {
 	private final float TURNSPEED = 1f;
 	private float[] points, sizeVars, angles;
-	public float[] location, velocity;
+	public float[] location;
 	private float size;
 	private int direction;
 	
 	public Asteroid(float[] location, float size, List<Obj> objInst, SimpleTest gameInst)
 	{
 		this.gameInst = gameInst;
-		velocity = new float[2];
+		this.velocity = new float[2];
+		this.velocity[0] = (float) (0.1*Math.random());
+		this.velocity[1] = (float) (0.1*Math.random());
 		points = initPts(location, size);
 		this.location = location;
 		this.size = size;
 		this.objInst = objInst;
+		this.mass = this.size * 50;
 		
 		if (Math.random() > .5)
 			direction = 1;
 		else
-			direction = -1;
-		
+			direction = -1;	
 	}
 	
 	private float[] initPts(float[] location, float size)
@@ -94,35 +95,16 @@ public class Asteroid extends Obj
 		if (location[1] < -outOfBounds)
 			location[1] = height;
 	}
-
-	public Shape shape()
-	{
-		return shape;
-	}
 	
-	public float[] setSpeed(float[] speed)
-	{
-		if (speed != null)
-			velocity = speed;
-		return velocity;
-	}
-
 	@Override
 	public void collide(Obj hitter, int delta) 
 	{
 		collided = true;
 		if (hitter instanceof Bullet)
 			objInst.remove();
-		else if (hitter instanceof Asteroid)
+		else
 		{
-			CollisionChecker.backStep(this, 2*delta);
-
-			velocity[0] *= -1;
-			velocity[1] *= -1;
-		}
-		else if (hitter instanceof Ship)
-		{
-			CollisionChecker.backStep(this, delta);
+			CollisionChecker.collision(this, hitter);
 		}
 	}
 }

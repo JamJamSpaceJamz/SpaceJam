@@ -1,7 +1,5 @@
 package objects;
 
-
-
 import game.Helper;
 import game.List;
 
@@ -10,9 +8,11 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Shape;
 
+import java.lang.Math;
+
 public class Bullet extends Obj
 {
-	private float rotation, range, speed, width, hieght;
+	private float range, width, hieght;
 	private float points[];
 
 	public Bullet(float[] location, float rotation, float range, List<Obj> inst)
@@ -22,9 +22,11 @@ public class Bullet extends Obj
 
 		points = makePoints(location, rotation);
 		shape = new Polygon(points);
-		this.rotation = rotation;
 		this.range = range;
-		speed = 30f;
+		this.velocity = new float[2];
+		this.velocity[0] = 30 * Helper.cos(rotation);
+		this.velocity[1] = 30 * Helper.sin(rotation);
+		System.out.println(velocity[0] + "  " + velocity[1]);
 
 		objInst = inst;
 	}
@@ -62,15 +64,15 @@ public class Bullet extends Obj
 			objInst.remove();
 		}
 
-		float speed = this.speed * delta * .01f;
+		float speed = (float)Math.sqrt(velocity[0] * velocity[0] + velocity[1] * velocity[1]);
+		speed *=  delta * .01f;
+		
 		range -= speed;
 
-		float cos = Helper.cos(rotation);
-		float sin = Helper.sin(rotation);
 		for (int i = 0; i < 8; i += 2)
 		{
-			points[i] += speed*cos;
-			points[i+1] += speed*sin;
+			points[i] += this.velocity[0];
+			points[i+1] += this.velocity[1];
 		}
 	}
 	

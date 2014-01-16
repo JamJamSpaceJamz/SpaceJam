@@ -21,10 +21,8 @@ public class CollisionChecker
 				{
 					while(obj2 != null)
 					{
-
 						if (obj2.data.shape.intersects(obj1.data.shape))
 						{
-							obj2.data.collide(obj1.data, delta);
 							obj1.data.collide(obj2.data, delta);
 						}
 						obj2 = obj2.next;
@@ -60,7 +58,7 @@ public class CollisionChecker
 	{
 		float[] iVel1, iVel2, fVel1, fVel2;
 		float icmVel1, icmVel2, fcmVel1, fcmVel2, VelCM;
-		int mass1, mass2;
+		float mass1, mass2;
 		
 		iVel1 = new float[2];
 		iVel2 = new float[2];
@@ -89,6 +87,9 @@ public class CollisionChecker
 			fVel1[i] = VelCM + fcmVel1;
 			fVel2[i] = VelCM + fcmVel2;			
 		}
+		CollisionChecker.backStep(object1, 20);
+		CollisionChecker.backStep(object2, 20);
+		
 		// Set new velocity
 		object1.setSpeed(fVel1);
 		object2.setSpeed(fVel2);
