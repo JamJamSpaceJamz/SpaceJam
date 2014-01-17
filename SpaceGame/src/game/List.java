@@ -1,5 +1,5 @@
 package game;
-
+import objects.Obj;
 public class List<Thing> 
 {
 	// the meat of the list, what it is holding
@@ -35,7 +35,11 @@ public class List<Thing>
 		wrapper.next = next;
 		if (next != null)
 			next.previous = wrapper;
-		
+		if (a instanceof Obj)
+		{
+			Obj b = (Obj) a;
+			b.objInst = (List<Obj>) wrapper;
+		}
 		next = wrapper;
 	}
 	

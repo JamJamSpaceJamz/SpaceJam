@@ -14,8 +14,9 @@ public class Bullet extends Obj
 {
 	private float range, width, hieght;
 	private float points[];
+	private float damage;
 
-	public Bullet(float[] location, float rotation, float range, List<Obj> inst)
+	public Bullet(float[] location, float rotation, float range, float damage, List<Obj> inst)
 	{
 		width = 2f;
 		hieght = 10f;
@@ -26,6 +27,7 @@ public class Bullet extends Obj
 		this.velocity = new float[2];
 		this.velocity[0] = 30 * Helper.cos(rotation);
 		this.velocity[1] = 30 * Helper.sin(rotation);
+		this.damage = damage;
 		System.out.println(velocity[0] + "  " + velocity[1]);
 
 		objInst = inst;
@@ -104,6 +106,7 @@ public class Bullet extends Obj
 		{
 			collided = true;
 			objInst.remove();
+			hitter.damage(damage);
 		}
 	}
 

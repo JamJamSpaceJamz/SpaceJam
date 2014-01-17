@@ -12,12 +12,12 @@ import org.newdawn.slick.geom.Polygon;
 public class Ship extends Obj
 {
 	public float[] location, acceleration;
-	private int rotateSpd, speed, size;
+	private int rotateSpd, speed, size, credit;
 	private boolean turnLeft, turnRight, accelerate, stop;
-	private float rotation, range;
+	private float rotation, range, damage;
 	private SimpleTest gameInst;
 
-	public Ship (int size, int speed, int rotateSpd, float range, SimpleTest inst)
+	public Ship (int size, int speed, int rotateSpd, float range, float health, SimpleTest inst)
 	{
 		location = new float[2];
 		location[0] = 200;
@@ -31,12 +31,15 @@ public class Ship extends Obj
 		this.rotateSpd = rotateSpd;
 		this.range = range;
 		this.mass = 75;
+		this.health = health;
+		damage = 30;
 		rotation = 0;
 		gameInst = inst;  
 	}
 
 	public void draw(Graphics g)
 	{
+		g.drawString("Credit: " + credit, 100, 0);
 		float[] points = new float[6];
 		points[0] = (size*Helper.cos(0 + rotation) + location[0]);
 		points[1] = (size*Helper.sin(0 + rotation) + location[1]);
@@ -151,7 +154,7 @@ public class Ship extends Obj
 		}
 		System.out.println("fire! " + counter);
 		List<Obj> wrapper = new List<Obj>();
-		Bullet shot = new Bullet(location, rotation, range, wrapper);
+		Bullet shot = new Bullet(location, rotation, range, damage, wrapper);
 		wrapper.data = shot; wrapper.previous = pointer;
 		pointer.next = wrapper;
 	}
@@ -169,5 +172,10 @@ public class Ship extends Obj
 		{
 			CollisionChecker.collision(this, hitter);
 		}
+	}
+	
+	public void credit(int amount)
+	{
+		credit += amount;
 	}
 }

@@ -13,7 +13,7 @@ public class Asteroid extends Obj
 	private final float TURNSPEED = 1f;
 	private float[] points, sizeVars, angles;
 	public float[] location;
-	private float size;
+	private float size, totalHealth;
 	private int direction;
 	
 	public Asteroid(float[] location, float size, List<Obj> objInst, SimpleTest gameInst)
@@ -27,7 +27,8 @@ public class Asteroid extends Obj
 		this.size = size;
 		this.objInst = objInst;
 		this.mass = this.size * 50;
-		
+		health = 50*size;
+		totalHealth = health;
 		if (Math.random() > .5)
 			direction = 1;
 		else
@@ -101,10 +102,34 @@ public class Asteroid extends Obj
 	{
 		collided = true;
 		if (hitter instanceof Bullet)
-			objInst.remove();
+		{
+			
+		}
 		else
 		{
 			CollisionChecker.collision(this, hitter);
 		}
+	}
+	
+	@Override
+	public void damage(float amount)
+	{
+		System.out.println("hit");
+		health -= amount;
+		// creates credits with a 1 in 10 chance
+		int dropChance = (int) (Math.random()*2);
+		if (dropChance == 1)
+		{
+			System.out.println("droppin");
+			int worth = (int) (Math.random() * 3 + 1);
+			int direction = (int) (Math.random() *360);
+			float[] location = new float[2];
+			location[0] = this.location[0] + Helper.cos(direction)*size*2.03f;
+			location[1] = this.location[1] + Helper.sin(direction)*size*2.03f;
+			Credit crd = new Credit(location, direction, worth*15, gameInst);
+			gameInst.creditList.add(crd);
+		}
+		if (health <= 0)
+			objInst.remove();
 	}
 }

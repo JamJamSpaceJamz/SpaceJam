@@ -10,13 +10,14 @@ public abstract class Obj
 {
 	protected Shape shape;
 	//  the objects speed and velocity
-	protected float[] velocity;// = new float[2];
+	protected float[] location, velocity;// = new float[2];
 	protected float mass;
 	protected boolean collided;
 	// the specific instance of the object in the game
 	// should only be used to remove the object from the game
-	protected List<Obj> objInst;
+	public List<Obj> objInst;
 	protected SimpleTest gameInst;
+	protected float health;
 	
 	// draws the object onto the main graphics g
 	abstract public void draw(Graphics gfloat);
@@ -37,7 +38,19 @@ public abstract class Obj
 		return velocity;
 	}
 	
+	public void damage(float dmg)
+	{
+		health -= dmg;
+		if (health <= 0)
+			objInst.remove();
+	}
+	
+	public void remove()
+	{
+		objInst.remove();
+	}
 	abstract public void collide(Obj hitter, int delta);
+	
 	
 	//abstract public float[] setSpeed(float[] speed);
 	

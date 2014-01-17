@@ -15,7 +15,7 @@ public class SimpleTest extends BasicGame
 {
 	private Ship ship;
 	public List<Obj> bulletList;
-	public List<Obj> astList;
+	public List<Obj> astList, creditList;
 	public List<List<Obj>> gameList;
 	public GameContainer container;
 	public SimpleTest() 
@@ -34,15 +34,16 @@ public class SimpleTest extends BasicGame
 		int speed = 3;
 		int rotation = 20;
 		float range = 40;
-		ship = new Ship(size, speed, rotation, range, this);
+		float damage = 30;
+		ship = new Ship(size, speed, rotation, range, damage, this);
 		List<Obj> shipList = new List<Obj>();
 		shipList.add(ship);
 		
 		
 		bulletList = new List<Obj>();
-		
+		creditList = new List<Obj>();
 		astList = new List<Obj>();
-		for (int i = 0; i < 2; i++)
+		for (int i = 0; i < 15; i++)
 		{
 			float[] loc = new float[2];
 			loc[0] = (float) (Math.random()* container.getWidth());
@@ -63,6 +64,7 @@ public class SimpleTest extends BasicGame
 		gameList.add(bulletList);
 		gameList.add(astList);
 		gameList.add(shipList);
+		gameList.add(creditList);
 	}
 
 	// updates every object (called once 

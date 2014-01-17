@@ -21,9 +21,12 @@ public class CollisionChecker
 				{
 					while(obj2 != null)
 					{
+						if (obj2.data == null || obj1.data == null)
+							System.out.println("null data");
 						if (obj2.data.shape.intersects(obj1.data.shape))
 						{
 							obj1.data.collide(obj2.data, delta);
+							obj2.data.collide(obj1.data, delta);
 						}
 						obj2 = obj2.next;
 					}
