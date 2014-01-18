@@ -70,14 +70,14 @@ public class Bullet extends Obj
 		}
 
 		float speed = (float)Math.sqrt(velocity[0] * velocity[0] + velocity[1] * velocity[1]);
-		speed *=  delta * .01f;
+		speed *=  delta * 0.01f;
 		
 		range -= speed;
 
 		for (int i = 0; i < 8; i += 2)
 		{
-			points[i] += this.velocity[0];
-			points[i+1] += this.velocity[1];
+			points[i] += this.velocity[0] * delta * 0.01f;
+			points[i+1] += this.velocity[1] * delta * 0.01f;
 		}
 	}
 	
@@ -110,6 +110,7 @@ public class Bullet extends Obj
 			collided = true;
 			objInst.remove();
 			hitter.damage(damage);
+			System.out.println("Bullet Hit Something!");
 		}
 	}
 

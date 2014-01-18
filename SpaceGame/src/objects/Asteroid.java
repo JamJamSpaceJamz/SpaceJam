@@ -102,7 +102,7 @@ public class Asteroid extends Obj
 		collided = true;
 		if (hitter instanceof Bullet)
 		{
-			
+			hitter.collide(this, delta);
 		}
 		else
 		{

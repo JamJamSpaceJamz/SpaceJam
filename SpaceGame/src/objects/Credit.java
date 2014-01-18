@@ -26,6 +26,7 @@ public class Credit extends Obj
 		this.direction = direction;
 		this.gameInst = gameInst;
 		this.amount = amount;
+		this.mass = 10;
 		size = 4;
 		shape = new Circle(location[0], location[1], size);
 		velocity = new float[2];
