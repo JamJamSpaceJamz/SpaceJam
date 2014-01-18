@@ -49,6 +49,23 @@ public abstract class Obj
 	{
 		objInst.remove();
 	}
+	
+	public float directionTo(Obj a)
+	{
+		float dx = -(this.location[0] - a.location[0]);
+		float dy = this.location[1] - a.location[1];
+		float dir = (float) (Math.atan2(dy, dx) * 180 / (Math.PI));
+		if (dir <= 0)
+			dir = 360 + dir;
+		return dir;
+	}
+	
+	public float distanceTo(Obj a)
+	{
+		float dx = this.location[0] - a.location[0];
+		float dy = this.location[1] - a.location[1];
+		return (float) Math.sqrt(dy*dy + dx*dx);
+	}
 	abstract public void collide(Obj hitter, int delta);
 	
 	

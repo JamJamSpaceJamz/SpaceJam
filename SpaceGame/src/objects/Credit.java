@@ -12,13 +12,14 @@ import org.newdawn.slick.geom.Circle;
 public class Credit extends Obj
 {
 	public int amount;
-	public int direction;
+	public float direction;
 	private Color color;
 	private int size;
+	private float speed;
 	
 	public Credit(float[] location, int direction, int amount, SimpleTest gameInst)
 	{
-		float speed = (float) (Math.random() * 1.5 + .5);
+		speed = (float) (Math.random() * 1.5 + .5);
 		
 		System.out.println(amount);
 		this.location = location;
@@ -39,7 +40,13 @@ public class Credit extends Obj
 		
 	}
 
-
+	public void changeDir(float dir)
+	{
+		this.direction = dir;
+		velocity[0] = (float) (speed*Math.cos(dir));
+		velocity[1] = (float) (speed*Math.sin(dir));
+		
+	}
 	public void draw(Graphics gfloat) 
 	{
 		shape = new Circle(location[0], location[1], size);
@@ -79,8 +86,11 @@ public class Credit extends Obj
 		if (hitter instanceof Ship)
 		{
 			Ship hit = (Ship) hitter;
-			hit.credit(amount);
-			this.remove(); 
+			if (hit.credit(amount))
+			{
+				System.out.println("removing");
+				this.remove(); 
+			}
 		}
 		
 	}

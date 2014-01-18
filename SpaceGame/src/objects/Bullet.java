@@ -18,9 +18,12 @@ public class Bullet extends Obj
 
 	public Bullet(float[] location, float rotation, float range, float damage, List<Obj> inst)
 	{
+		// adding so its not null, should fix later
+		this.location = location;
+		
 		width = 2f;
 		hieght = 10f;
-
+		
 		points = makePoints(location, rotation);
 		shape = new Polygon(points);
 		this.range = range;

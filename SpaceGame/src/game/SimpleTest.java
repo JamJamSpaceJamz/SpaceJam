@@ -1,11 +1,13 @@
 package game;
 
 import objects.Asteroid;
+import objects.Base;
 import objects.CollisionChecker;
 import objects.Obj;
 import objects.Ship;
 
 import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -15,9 +17,10 @@ public class SimpleTest extends BasicGame
 {
 	private Ship ship;
 	public List<Obj> bulletList;
-	public List<Obj> astList, creditList;
+	public List<Obj> astList, creditList, baseList;
 	public List<List<Obj>> gameList;
 	public GameContainer container;
+	
 	public SimpleTest() 
 	{
 		super("SpaceGame");
@@ -33,9 +36,10 @@ public class SimpleTest extends BasicGame
 		int size = 5;
 		int speed = 3;
 		int rotation = 20;
-		float range = 40;
-		float damage = 30;
-		ship = new Ship(size, speed, rotation, range, damage, this);
+		float range = 100;
+		float health = 30;
+		int capacity = 10;
+		ship = new Ship(size, speed, rotation, range, capacity, health, this);
 		List<Obj> shipList = new List<Obj>();
 		shipList.add(ship);
 		
@@ -59,12 +63,16 @@ public class SimpleTest extends BasicGame
 			wrapper.data = ast; wrapper.previous = pointer;
 			pointer.next = wrapper;
 		}
-		
+		baseList = new List<Obj>();
+		float[] baseLoc = {200f, 200f};
+		Base base = new Base(30, baseLoc, Color.green, this);
+		baseList.add(base);
 		gameList = new List<List<Obj>>();
 		gameList.add(bulletList);
 		gameList.add(astList);
 		gameList.add(shipList);
 		gameList.add(creditList);
+		gameList.add(baseList);
 	}
 
 	// updates every object (called once 

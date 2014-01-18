@@ -12,7 +12,6 @@ public class Asteroid extends Obj
 {
 	private final float TURNSPEED = 1f;
 	private float[] points, sizeVars, angles;
-	public float[] location;
 	private float size, totalHealth;
 	private int direction;
 	
