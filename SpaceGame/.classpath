@@ -11,7 +11,7 @@
 	<classpathentry kind="lib" path="lib/slick.jar" sourcepath="C:/My Stuff/Computer/Code/eclipse/slick/lib/slick.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/home/davidg/code/SpaceGameFolder/SpaceJam/lwjgl-2.9.1/native/linux"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/home/blake/Documents/SpaceJam/SpaceJam/lwjgl-2.9.1/native/linux"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/library"/>

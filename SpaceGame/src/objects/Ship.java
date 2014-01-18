@@ -23,8 +23,6 @@ public class Ship extends Obj
 		location[0] = 200;
 		location[1] = 200;
 		this.velocity = new float[2];
-		//this.velocity[0] = speed;
-		//this.velocity[1] = 0;
 		acceleration = new float[2];
 		this.speed = speed;
 		this.size = size;
@@ -168,7 +166,11 @@ public class Ship extends Obj
 
 	public void collide(Obj hitter, int delta)
 	{
-		if (!(hitter instanceof Bullet))
+		if (hitter instanceof Credit)
+		{
+			hitter.collide(this, delta);
+		} 
+		else if (!(hitter instanceof Bullet))
 		{
 			CollisionChecker.collision(this, hitter);
 		}
