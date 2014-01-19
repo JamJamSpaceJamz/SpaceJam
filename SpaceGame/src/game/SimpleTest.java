@@ -17,15 +17,11 @@ public class SimpleTest extends BasicGame
 {
 	private Ship ship;
 	public List<Obj> bulletList;
-	public List<Obj> astList, creditList, baseList;
+	public List<Obj> astList, creditList, baseList, turretList;
 	public List<List<Obj>> gameList;
 	public GameContainer container;
 	
-	public SimpleTest() 
-	{
-		super("SpaceGame");
-		
-	}
+	public SimpleTest() { super("SpaceGame"); }
 
 	// initializes every variable needed in SpaceJam
 	@Override
@@ -39,11 +35,11 @@ public class SimpleTest extends BasicGame
 		float range = 100;
 		float health = 30;
 		int capacity = 10;
-		ship = new Ship(size, speed, rotation, range, capacity, health, this);
+		ship = new Ship(size, speed, rotation, range, capacity, health, this, true);
 		List<Obj> shipList = new List<Obj>();
 		shipList.add(ship);
 		
-		
+		turretList = new List<Obj>();
 		bulletList = new List<Obj>();
 		creditList = new List<Obj>();
 		astList = new List<Obj>();
@@ -65,7 +61,7 @@ public class SimpleTest extends BasicGame
 		}
 		baseList = new List<Obj>();
 		float[] baseLoc = {200f, 200f};
-		Base base = new Base(30, baseLoc, Color.green, this);
+		Base base = new Base(30, baseLoc, Color.green, this, true);
 		baseList.add(base);
 		gameList = new List<List<Obj>>();
 		gameList.add(bulletList);
@@ -73,6 +69,7 @@ public class SimpleTest extends BasicGame
 		gameList.add(shipList);
 		gameList.add(creditList);
 		gameList.add(baseList);
+		gameList.add(turretList);
 	}
 
 	// updates every object (called once 

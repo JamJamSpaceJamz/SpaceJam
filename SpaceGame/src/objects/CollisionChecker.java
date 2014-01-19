@@ -89,8 +89,8 @@ public class CollisionChecker
 			fVel1[i] = VelCM + fcmVel1;
 			fVel2[i] = VelCM + fcmVel2;			
 		}
-		CollisionChecker.backStep(object1, 20);
-		CollisionChecker.backStep(object2, 20);
+		CollisionChecker.backStep(object1, 40);
+		CollisionChecker.backStep(object2, 40);
 		
 		// Set new velocity
 		object1.setSpeed(fVel1);

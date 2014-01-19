@@ -13,6 +13,7 @@ public abstract class Obj
 	protected float[] location, velocity;// = new float[2];
 	protected float mass;
 	protected boolean collided;
+	protected boolean team; // At some point we're going to need this.
 	// the specific instance of the object in the game
 	// should only be used to remove the object from the game
 	public List<Obj> objInst;

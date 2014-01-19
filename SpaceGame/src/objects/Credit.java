@@ -94,8 +94,5 @@ public class Credit extends Obj
 			}
 		}
 		
-	}
-	
-	
-	
+	}	
 }

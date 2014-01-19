@@ -18,7 +18,7 @@ public class Ship extends Obj
 	private int capacity, cargo;
 	private SimpleTest gameInst;
 
-	public Ship (int size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst)
+	public Ship (int size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst, boolean team)
 	{
 		location = new float[2];
 		location[0] = 200;
@@ -32,6 +32,7 @@ public class Ship extends Obj
 		this.capacity = capacity;
 		this.mass = 75;
 		this.health = health;
+		this.team = team;
 		damage = 30;
 		rotation = 0;
 		cargo = 0;
@@ -93,8 +94,8 @@ public class Ship extends Obj
 
 		if (!checkBorders() && accelerate )
 		{
-			acceleration[0] = (float) Helper.cos(rotation)*speed;
-			acceleration[1] = (float) Helper.sin(rotation)*speed;
+			acceleration[0] = (float) Helper.cos(rotation)*2; //speed;
+			acceleration[1] = (float) Helper.sin(rotation)*2;//speed;
 
 			velocity[0] += acceleration[0]*delta*.01f;
 			velocity[1] += acceleration[1]*delta*.01f;
@@ -109,6 +110,7 @@ public class Ship extends Obj
 			}
 		}
 	}
+	
 	private void pullCredits(List<Obj> inRange)
 	{
 		inRange = inRange.next;
@@ -122,6 +124,7 @@ public class Ship extends Obj
 			inRange = inRange.next;
 		}
 	}
+	
 	private List<Obj> objInRange()
 	{
 		List<Obj> inRange = new List<Obj>();
@@ -175,11 +178,12 @@ public class Ship extends Obj
 		}
 		return check;
 	}
+	
 	// creates a bullet and adds it to the game's bulletlist\
 	// (future work: recoil?)
 	public void fire()
 	{
-
+		
 		int counter = 0;
 		List<Obj> pointer = gameInst.bulletList;
 		while (pointer.next != null)
@@ -190,7 +194,8 @@ public class Ship extends Obj
 		}
 		List<Obj> wrapper = new List<Obj>();
 		Bullet shot = new Bullet(location, rotation, range, damage, wrapper);
-		wrapper.data = shot; wrapper.previous = pointer;
+		wrapper.data = shot; 
+		wrapper.previous = pointer;
 		pointer.next = wrapper;
 	}
 	
@@ -215,7 +220,7 @@ public class Ship extends Obj
 
 	public void collide(Obj hitter, int delta)
 	{
-		if (hitter instanceof Credit)
+		if (hitter instanceof Credit || hitter instanceof Turret)
 		{
 			hitter.collide(this, delta);
 		} 

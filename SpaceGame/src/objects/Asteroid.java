@@ -100,7 +100,7 @@ public class Asteroid extends Obj
 	public void collide(Obj hitter, int delta) 
 	{
 		collided = true;
-		if (hitter instanceof Bullet)
+		if (hitter instanceof Bullet || hitter instanceof Turret)
 		{
 			hitter.collide(this, delta);
 		}
