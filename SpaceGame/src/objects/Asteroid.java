@@ -97,27 +97,18 @@ public class Asteroid extends Obj
 	}
 	
 	@Override
-	public void collide(Obj hitter, int delta) 
+	public boolean collide(Obj hitter) 
 	{
-		collided = true;
-		if (hitter instanceof Bullet || hitter instanceof Turret)
-		{
-			hitter.collide(this, delta);
-		}
-		else
-		{
-			CollisionChecker.collision(this, hitter);
-		}
+		return true;
 	}
 	
 	@Override
 	public void damage(float amount)
 	{
-		System.out.println("hit");
 		health -= amount;
 		// creates credits with a 1 in 10 chance
 		int dropChance = (int) (Math.random()*2);
-		if (dropChance == 1)
+		if (dropChance == 100 )
 		{
 			System.out.println("droppin");
 			int worth = (int) (Math.random() * 3 + 1);
@@ -129,6 +120,9 @@ public class Asteroid extends Obj
 			gameInst.creditList.add(crd);
 		}
 		if (health <= 0)
+		{
+			System.out.println("removing asteroid");
 			objInst.remove();
+		}
 	}
 }

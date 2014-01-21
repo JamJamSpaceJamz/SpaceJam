@@ -25,7 +25,7 @@ public class CollisionChecker
 							System.out.println("null data");
 						if (obj2.data.shape.intersects(obj1.data.shape))
 						{
-							obj2.data.collide(obj1.data, delta);
+							collision(obj1.data, obj2.data);
 						}
 						obj2 = obj2.next;
 					}
@@ -40,7 +40,7 @@ public class CollisionChecker
 				obj1 = list1.data.next;
 		}
 	}
-	
+
 	// takes an object and a delta and reverts it to 
 	// how it was in the last frame
 	public static void backStep(Obj thing, int delta)
@@ -52,49 +52,53 @@ public class CollisionChecker
 		speed[0] *= -1;
 		speed[1] *= -1;
 	}
-	
+
 	// Takes two objects and calculates their change in
 	// velocity after collision using center of mass
 	// reference frame.
 	public static void collision(Obj object1, Obj object2)
 	{
-		float[] iVel1, iVel2, fVel1, fVel2;
-		float icmVel1, icmVel2, fcmVel1, fcmVel2, VelCM;
-		float mass1, mass2;
-		
-		iVel1 = new float[2];
-		iVel2 = new float[2];
-		fVel1 = new float[2];
-		fVel2 = new float[2];
-		
-		mass1 = object1.mass;
-		mass2 = object2.mass;
-		
-		// Perform calculation twice--once for each direction
-		for (int i = 0; i<2; i++)
+		// collide will now return true if the normal collision is supposed to happen
+		if (object1.collide(object2) && object2.collide(object1))
 		{
-			iVel1[i] = object1.velocity[i];
-			iVel2[i] = object2.velocity[i];
-			// Calculate the velocity of the objects' center of mass
-			VelCM = mass1 * iVel1[i] + mass2 * iVel2[i];
-			VelCM = VelCM / (mass1 + mass2);
-			// Calculate the objects' velocities in the center of mass
-			// reference frame
-			icmVel1 = iVel1[i] - VelCM;
-			icmVel2 = iVel2[i] - VelCM;
-			// Calculate final velocities in center of mass reference frame
-			fcmVel1 = -icmVel1;
-			fcmVel2 = -icmVel2;
-			// Convert back to ground reference frame
-			fVel1[i] = VelCM + fcmVel1;
-			fVel2[i] = VelCM + fcmVel2;			
+			float[] iVel1, iVel2, fVel1, fVel2;
+			float icmVel1, icmVel2, fcmVel1, fcmVel2, VelCM;
+			float mass1, mass2;
+
+			iVel1 = new float[2];
+			iVel2 = new float[2];
+			fVel1 = new float[2];
+			fVel2 = new float[2];
+
+			mass1 = object1.mass;
+			mass2 = object2.mass;
+
+			// Perform calculation twice--once for each direction
+			for (int i = 0; i<2; i++)
+			{
+				iVel1[i] = object1.velocity[i];
+				iVel2[i] = object2.velocity[i];
+				// Calculate the velocity of the objects' center of mass
+				VelCM = mass1 * iVel1[i] + mass2 * iVel2[i];
+				VelCM = VelCM / (mass1 + mass2);
+				// Calculate the objects' velocities in the center of mass
+				// reference frame
+				icmVel1 = iVel1[i] - VelCM;
+				icmVel2 = iVel2[i] - VelCM;
+				// Calculate final velocities in center of mass reference frame
+				fcmVel1 = -icmVel1;
+				fcmVel2 = -icmVel2;
+				// Convert back to ground reference frame
+				fVel1[i] = VelCM + fcmVel1;
+				fVel2[i] = VelCM + fcmVel2;			
+			}
+			CollisionChecker.backStep(object1, 40);
+			CollisionChecker.backStep(object2, 40);
+
+			// Set new velocity
+			object1.setSpeed(fVel1);
+			object2.setSpeed(fVel2);
 		}
-		CollisionChecker.backStep(object1, 40);
-		CollisionChecker.backStep(object2, 40);
-		
-		// Set new velocity
-		object1.setSpeed(fVel1);
-		object2.setSpeed(fVel2);
 	}
 
 }

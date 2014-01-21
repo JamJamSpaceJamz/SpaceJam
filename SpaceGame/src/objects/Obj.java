@@ -14,6 +14,7 @@ public abstract class Obj
 	protected float mass;
 	protected boolean collided;
 	protected boolean team; // At some point we're going to need this.
+	
 	// the specific instance of the object in the game
 	// should only be used to remove the object from the game
 	public List<Obj> objInst;
@@ -67,7 +68,8 @@ public abstract class Obj
 		float dy = this.location[1] - a.location[1];
 		return (float) Math.sqrt(dy*dy + dx*dx);
 	}
-	abstract public void collide(Obj hitter, int delta);
+	
+	abstract public boolean collide(Obj hitter);
 	
 	
 	//abstract public float[] setSpeed(float[] speed);

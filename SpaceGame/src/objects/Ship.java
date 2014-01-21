@@ -41,7 +41,7 @@ public class Ship extends Obj
 
 	public void draw(Graphics g)
 	{
-		
+
 		float[] points = new float[6];
 		points[0] = (size*Helper.cos(0 + rotation) + location[0]);
 		points[1] = (size*Helper.sin(0 + rotation) + location[1]);
@@ -100,7 +100,7 @@ public class Ship extends Obj
 			velocity[0] += acceleration[0]*delta*.01f;
 			velocity[1] += acceleration[1]*delta*.01f;
 		}
-		
+
 		for(int i = 0; i < 2; i++)
 		{           
 			location[i] += velocity[i]*delta*.01f;
@@ -110,7 +110,7 @@ public class Ship extends Obj
 			}
 		}
 	}
-	
+
 	private void pullCredits(List<Obj> inRange)
 	{
 		inRange = inRange.next;
@@ -124,7 +124,7 @@ public class Ship extends Obj
 			inRange = inRange.next;
 		}
 	}
-	
+
 	private List<Obj> objInRange()
 	{
 		List<Obj> inRange = new List<Obj>();
@@ -150,7 +150,7 @@ public class Ship extends Obj
 		boolean check = false;
 		int width = gameInst.container.getWidth();
 		int height = gameInst.container.getHeight();
-		
+
 		if (location[0] >= width)
 		{
 			check = true;
@@ -163,7 +163,7 @@ public class Ship extends Obj
 			if (velocity[0] < 0)
 				velocity[0] *= -.5f;
 		}
-		
+
 		if (location[1] >= height)
 		{
 			check = true;
@@ -178,27 +178,26 @@ public class Ship extends Obj
 		}
 		return check;
 	}
-	
+
 	// creates a bullet and adds it to the game's bulletlist\
 	// (future work: recoil?)
 	public void fire()
 	{
-		
+
 		int counter = 0;
 		List<Obj> pointer = gameInst.bulletList;
-		while (pointer.next != null)
-		{
-			counter++;
-
-			pointer = pointer.next;
-		}
 		List<Obj> wrapper = new List<Obj>();
 		Bullet shot = new Bullet(location, rotation, range, damage, wrapper);
 		wrapper.data = shot; 
 		wrapper.previous = pointer;
+		wrapper.next = pointer.next;
+		if (wrapper.next != null)
+		{
+			wrapper.next.previous = wrapper;
+		}
 		pointer.next = wrapper;
 	}
-	
+
 	private void drawCargo(Graphics g)
 	{
 		float cargoSize = 3;
@@ -218,26 +217,19 @@ public class Ship extends Obj
 		accelerate = acc;
 	}
 
-	public void collide(Obj hitter, int delta)
+	public boolean collide(Obj hitter)
 	{
-		if (hitter instanceof Credit || hitter instanceof Turret)
+		if (hitter instanceof Base)
 		{
-			hitter.collide(this, delta);
-		} 
-		else if (!(hitter instanceof Bullet))
-		{
-			if (hitter instanceof Base)
-			{
-				Base a = (Base) hitter;
-				a.credit(credit);
-				credit = 0;
-				cargo = 0;
-			}
-			else
-				CollisionChecker.collision(this, hitter);
+			Base a = (Base) hitter;
+			a.credit(credit);
+			credit = 0;
+			cargo = 0;
+			return false;
 		}
+		return true;
 	}
-	
+
 	public boolean credit(int amount)
 	{
 		boolean full = capacity == cargo;

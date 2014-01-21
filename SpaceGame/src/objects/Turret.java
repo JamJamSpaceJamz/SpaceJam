@@ -60,5 +60,7 @@ public class Turret extends Obj
 	}
 	
 	@Override
-	public void collide(Obj Hitter, int delta) {}
+	public boolean collide(Obj hitter) {
+		return true;
+	}
 }

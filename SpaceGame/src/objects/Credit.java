@@ -83,16 +83,18 @@ public class Credit extends Obj
 	}
 
 	@Override
-	public void collide(Obj hitter, int delta) {
+	public boolean collide(Obj hitter) 
+	{
 		if (hitter instanceof Ship)
 		{
 			Ship hit = (Ship) hitter;
 			if (hit.credit(amount))
 			{
 				System.out.println("removing");
-				this.remove(); 
+				this.remove();
+				return false;
 			}
 		}
-		
+		return true;
 	}	
 }

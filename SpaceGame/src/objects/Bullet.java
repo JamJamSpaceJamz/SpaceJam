@@ -97,21 +97,26 @@ public class Bullet extends Obj
 	}
 
 	@Override
-	public float[] setSpeed(float[] speed) {
-		// TODO Auto-generated method stub
+	public float[] setSpeed(float[] speed) 
+	{
 		return null;
 	}
 
 	@Override
-	public void collide(Obj hitter, int delta)
+	public boolean collide(Obj hitter)
 	{
 		if (hitter instanceof Asteroid)
 		{
+			System.out.println("remove"); 
 			collided = true;
-			objInst.remove();
+			this.remove();
 			hitter.damage(damage);
-			System.out.println("Bullet Hit Something!");
+			return false;
 		}
+		else if (hitter instanceof Ship)
+			return false;
+		
+		return true;
 	}
 
 }

@@ -71,6 +71,10 @@ public class Base extends Obj
 			dir = i*360f/numTurrets;
 			Turret turret = new Turret(this, dir, gameInst, wrapper);
 			wrapper.data = turret;
+			if (wrapper.next != null)
+			{
+				wrapper.next.previous = wrapper;
+			}
 			wrapper.previous = pointer;
 			pointer.next = wrapper;
 		}
@@ -134,9 +138,9 @@ public class Base extends Obj
 	}
 	
 	@Override
-	public void collide(Obj hitter, int delta) {
-		
-		
+	public boolean collide(Obj hitter) 
+	{
+		return true;
 	}
 
 }
