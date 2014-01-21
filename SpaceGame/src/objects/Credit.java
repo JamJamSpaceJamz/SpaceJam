@@ -15,11 +15,14 @@ public class Credit extends Obj
 	public float direction;
 	private Color color;
 	private int size;
-	private float speed;
+	private float speed, acc;
 	
 	public Credit(float[] location, int direction, int amount, SimpleTest gameInst)
 	{
-		speed = (float) (Math.random() * 1.5 + .5);
+		speed = (float) (Math.random());
+		
+		// hardcoded acceleration number
+		acc = 3;
 		
 		System.out.println(amount);
 		this.location = location;
@@ -32,6 +35,7 @@ public class Credit extends Obj
 		velocity = new float[2];
 		velocity[0] = (float) (speed * Math.cos(direction));
 		velocity[1] = (float) (speed * Math.sin(direction));
+		acceleration = new float[2];
 		if (amount == 15)
 			color = Color.lightGray;
 		else if (amount == 30)
@@ -44,8 +48,8 @@ public class Credit extends Obj
 	public void changeDir(float dir)
 	{
 		this.direction = dir;
-		velocity[0] = (float) (speed*Math.cos(dir));
-		velocity[1] = (float) (speed*Math.sin(dir));
+		acceleration[0] = (float) (acc*Math.cos(dir));
+		acceleration[1] = (float) (acc*Math.sin(dir));
 		
 	}
 	public void draw(Graphics gfloat) 
@@ -59,9 +63,11 @@ public class Credit extends Obj
 	public void update(int delta)
 	{
 		checkBorders();
-
+		velocity[0] += acceleration[0]*delta*.01f;
+		velocity[1] += acceleration[0]*delta*.01f;
 		location[0] += velocity[0]*delta*.01f;
 		location[1] += velocity[1]*delta*.01f;
+		acceleration = new float[2];
 	}
 	
 	private void checkBorders()

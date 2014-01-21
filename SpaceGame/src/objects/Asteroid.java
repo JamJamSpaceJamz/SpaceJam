@@ -106,7 +106,7 @@ public class Asteroid extends Obj
 	{
 		health -= amount;
 		// creates credits with a 1 in 10 chance
-		int dropChance = (int) (Math.random()*5);
+		int dropChance = (int) (Math.random()*2);
 		if (dropChance == 1 )
 		{
 			System.out.println("droppin");

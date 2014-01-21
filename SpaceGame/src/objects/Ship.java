@@ -18,6 +18,7 @@ public class Ship extends Obj
 	private boolean turnLeft, turnRight, accelerate, stop;
 	private float rotation, range, damage;
 	private int capacity, cargo;
+	private ArrayList<Obj> closeObj;
 	private SimpleTest gameInst;
 
 	public Ship (int size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst, boolean team)
@@ -86,8 +87,12 @@ public class Ship extends Obj
 	// with its new location
 	public void update(int delta)
 	{
-		ArrayList<Obj> inRange = objInRange();
-		pullCredits(inRange);
+		// only check for credits if ship is not full
+		if (cargo != capacity)
+		{
+			ArrayList<Obj> inRange = objInRange();
+			pullCredits(inRange);
+		}
 		float d = .01f*delta;
 		if (turnRight)
 			rotation += rotateSpd*.01f*delta;
@@ -120,7 +125,8 @@ public class Ship extends Obj
 			if (obj instanceof Credit)
 			{
 				Credit crd = (Credit) obj;
-				crd.changeDir(180 - crd.directionTo(this));
+				float dir = 180 - crd.directionTo(this);
+				crd.changeDir(dir);
 			}
 		}
 	}
