@@ -48,16 +48,10 @@ public class SimpleTest extends BasicGame
 			float[] loc = new float[2];
 			loc[0] = (float) (Math.random()* container.getWidth());
 			loc[1] = (float) (Math.random()* container.getHeight());
-			
-			List<Obj> pointer = astList;
-			while (pointer.next != null)
-			{
-				pointer = pointer.next;
-			}
-			List<Obj> wrapper = new List<Obj>();
-			Asteroid ast = new Asteroid(loc, (float) (Math.random() * 10 + 4), wrapper, this);
-			wrapper.data = ast; wrapper.previous = pointer;
-			pointer.next = wrapper;
+
+			Asteroid ast = new Asteroid(loc, (float) (Math.random() * 10 + 4), this);
+			astList.add(ast);
+
 		}
 		baseList = new List<Obj>();
 		float[] baseLoc = {200f, 200f};

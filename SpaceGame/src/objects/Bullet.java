@@ -96,11 +96,6 @@ public class Bullet extends Obj
 		return shape;
 	}
 
-	@Override
-	public float[] setSpeed(float[] speed) 
-	{
-		return null;
-	}
 
 	@Override
 	public boolean collide(Obj hitter)
@@ -113,7 +108,7 @@ public class Bullet extends Obj
 			hitter.damage(damage);
 			return false;
 		}
-		else if (hitter instanceof Ship)
+		else if (hitter instanceof Ship || hitter instanceof Credit || hitter instanceof Turret)
 			return false;
 		
 		return true;

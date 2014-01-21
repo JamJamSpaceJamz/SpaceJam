@@ -14,7 +14,7 @@ public class Turret extends Obj
 	private Base home;
 	private Color color;
 	
-	public Turret (Base home, float rotation, SimpleTest gameInst, List<Obj> objectInst)
+	public Turret (Base home, float rotation, SimpleTest gameInst)
 	{
 		this.size = 3f; 				// the radius of the turret
 		this.rotation = rotation; 		// angular position relative to the base it's bound to
@@ -23,7 +23,6 @@ public class Turret extends Obj
 		this.range = 10f; 				// distance the turret can see/shoot
 		this.health = 40f; 				// I have no idea what this should be.
 		this.gameInst = gameInst;
-		this.objInst = objectInst;
 		this.home = home; 				// the base the turret is bound to
 		this.team = home.team;
 		this.location = new float[2];

@@ -33,10 +33,19 @@ public abstract class Obj
 		return shape;
 	}
 	
-	public float[] setSpeed(float[] speed) 
+	public float[] setVel(float[] speed) 
 	{
 		if (speed != null)
+		{
 			velocity = speed;
+		}
+		if (velocity == null)
+		{
+			float[] temp = new float[2];
+			temp[0] = 1;
+			temp[1] = 1;
+			return temp;
+		}
 		return velocity;
 	}
 	

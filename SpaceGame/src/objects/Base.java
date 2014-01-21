@@ -31,6 +31,8 @@ public class Base extends Obj
 		
 		rotation = 0;
 		velocity = new float[2];
+		velocity[0] = 0;
+		velocity[1] = 0;
 		initPts();
 		generateTurrets(5);
 	}
@@ -63,20 +65,9 @@ public class Base extends Obj
 		float dir;
 		for (int i=0; i<numTurrets; i++)
 		{
-			while (pointer.next != null)
-			{
-				pointer = pointer.next;
-			}
-			List<Obj> wrapper = new List<Obj>();
 			dir = i*360f/numTurrets;
-			Turret turret = new Turret(this, dir, gameInst, wrapper);
-			wrapper.data = turret;
-			if (wrapper.next != null)
-			{
-				wrapper.next.previous = wrapper;
-			}
-			wrapper.previous = pointer;
-			pointer.next = wrapper;
+			Turret turret = new Turret(this, dir, gameInst);
+			pointer.add(turret);
 		}
 	}
 

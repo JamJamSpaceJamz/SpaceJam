@@ -1,5 +1,7 @@
 package objects;
 
+import java.util.ArrayList;
+
 import game.Helper;
 import game.List;
 import game.SimpleTest;
@@ -84,7 +86,7 @@ public class Ship extends Obj
 	// with its new location
 	public void update(int delta)
 	{
-		List<Obj> inRange = objInRange();
+		ArrayList<Obj> inRange = objInRange();
 		pullCredits(inRange);
 		float d = .01f*delta;
 		if (turnRight)
@@ -111,23 +113,21 @@ public class Ship extends Obj
 		}
 	}
 
-	private void pullCredits(List<Obj> inRange)
+	private void pullCredits(ArrayList<Obj> inRange)
 	{
-		inRange = inRange.next;
-		while (inRange != null)
+		for (Obj obj: inRange)
 		{
-			if (inRange.data instanceof Credit)
+			if (obj instanceof Credit)
 			{
-				Credit crd = (Credit) inRange.data;
+				Credit crd = (Credit) obj;
 				crd.changeDir(180 - crd.directionTo(this));
 			}
-			inRange = inRange.next;
 		}
 	}
 
-	private List<Obj> objInRange()
+	private ArrayList<Obj> objInRange()
 	{
-		List<Obj> inRange = new List<Obj>();
+		ArrayList<Obj> inRange = new ArrayList<Obj>();
 
 		List<List<Obj>> list1 = gameInst.gameList.next;
 		while(list1 != null)

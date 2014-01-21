@@ -15,7 +15,7 @@ public class Asteroid extends Obj
 	private float size, totalHealth;
 	private int direction;
 	
-	public Asteroid(float[] location, float size, List<Obj> objInst, SimpleTest gameInst)
+	public Asteroid(float[] location, float size, SimpleTest gameInst)
 	{
 		this.gameInst = gameInst;
 		this.velocity = new float[2];
@@ -24,7 +24,6 @@ public class Asteroid extends Obj
 		points = initPts(location, size);
 		this.location = location;
 		this.size = size;
-		this.objInst = objInst;
 		this.mass = this.size * 50;
 		health = 50*size;
 		totalHealth = health;
@@ -107,8 +106,8 @@ public class Asteroid extends Obj
 	{
 		health -= amount;
 		// creates credits with a 1 in 10 chance
-		int dropChance = (int) (Math.random()*2);
-		if (dropChance == 100 )
+		int dropChance = (int) (Math.random()*5);
+		if (dropChance == 1 )
 		{
 			System.out.println("droppin");
 			int worth = (int) (Math.random() * 3 + 1);
@@ -122,7 +121,7 @@ public class Asteroid extends Obj
 		if (health <= 0)
 		{
 			System.out.println("removing asteroid");
-			objInst.remove();
+			this.remove();
 		}
 	}
 }
