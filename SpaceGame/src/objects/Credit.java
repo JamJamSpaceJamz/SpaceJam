@@ -16,13 +16,14 @@ public class Credit extends Obj
 	private Color color;
 	private int size;
 	private float speed, acc;
+	private boolean hasTarget;
 	
 	public Credit(float[] location, int direction, int amount, SimpleTest gameInst)
 	{
 		speed = (float) (Math.random());
 		
 		// hardcoded acceleration number
-		acc = 3;
+		acc = 7;
 		
 		System.out.println(amount);
 		this.location = location;
@@ -30,7 +31,7 @@ public class Credit extends Obj
 		this.gameInst = gameInst;
 		this.amount = amount;
 		this.mass = 10;
-		size = 4;
+		size = 2;
 		shape = new Circle(location[0], location[1], size);
 		velocity = new float[2];
 		velocity[0] = (float) (speed * Math.cos(direction));
@@ -50,24 +51,28 @@ public class Credit extends Obj
 		this.direction = dir;
 		acceleration[0] = (float) (acc*Math.cos(dir));
 		acceleration[1] = (float) (acc*Math.sin(dir));
-		
+		hasTarget = true;
 	}
 	public void draw(Graphics gfloat) 
 	{
 		shape = new Circle(location[0], location[1], size);
 		gfloat.setColor(color);
-		gfloat.fill(shape);
-		
+		gfloat.fill(shape);	
 	}
 
 	public void update(int delta)
 	{
 		checkBorders();
 		velocity[0] += acceleration[0]*delta*.01f;
-		velocity[1] += acceleration[0]*delta*.01f;
+		velocity[1] += acceleration[1]*delta*.01f;
 		location[0] += velocity[0]*delta*.01f;
 		location[1] += velocity[1]*delta*.01f;
-		acceleration = new float[2];
+		if (!hasTarget)
+		{
+			acceleration[0] = -velocity[0];
+			acceleration[1] = -velocity[1];
+		}
+		hasTarget = false;
 	}
 	
 	private void checkBorders()
@@ -98,9 +103,20 @@ public class Credit extends Obj
 			{
 				System.out.println("removing");
 				this.remove();
-				return false;
+				
 			}
+			return false;
 		}
+		else if (hitter instanceof Base)
+		{
+			Base base = (Base) hitter;
+			base.credit(amount);
+			this.remove();
+			return false;
+		}
+		else if (hitter instanceof Credit)
+			return false;
+		
 		return true;
 	}	
 }

@@ -17,12 +17,13 @@ public class Ship extends Obj
 	private int rotateSpd, speed, size, credit;
 	private boolean turnLeft, turnRight, accelerate, stop;
 	private float rotation, range, damage;
-	private int capacity, cargo;
+	private int capacity, cargo, radarCoolDown, RADARDOWN;
 	private ArrayList<Obj> closeObj;
 	private SimpleTest gameInst;
 
 	public Ship (int size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst, boolean team)
 	{
+		RADARDOWN = 5;
 		location = new float[2];
 		location[0] = 200;
 		location[1] = 200;
@@ -64,8 +65,8 @@ public class Ship extends Obj
 		g.fill(shape);
 
 		// visual representation of the range of the ship
-		Circle circle = new Circle(location[0], location[1], range);
-		g.draw(circle);
+		//Circle circle = new Circle(location[0], location[1], range);
+		//g.draw(circle);
 	}
 
 	public void rotateLeft(boolean turn)
@@ -82,17 +83,31 @@ public class Ship extends Obj
 	{
 		stop = truth;
 	}
-
+	
+	// checks the objects around the ship and acts on them
+	private void radar()
+	{
+		// only check if the cooldown is zero
+				if (radarCoolDown == 0)
+				{
+					// resets cooldown
+					radarCoolDown = RADARDOWN;
+					// only check for credits if ship is not full and
+					if (cargo != capacity)
+					{
+						ArrayList<Obj> inRange = objInRange();
+						pullCredits(inRange);
+					}
+				}
+				// decrease cooldown
+				radarCoolDown -= 1;
+	}
+	
 	// is called once a frame and updates the ship
 	// with its new location
 	public void update(int delta)
 	{
-		// only check for credits if ship is not full
-		if (cargo != capacity)
-		{
-			ArrayList<Obj> inRange = objInRange();
-			pullCredits(inRange);
-		}
+		radar();
 		float d = .01f*delta;
 		if (turnRight)
 			rotation += rotateSpd*.01f*delta;
@@ -125,7 +140,7 @@ public class Ship extends Obj
 			if (obj instanceof Credit)
 			{
 				Credit crd = (Credit) obj;
-				float dir = 180 - crd.directionTo(this);
+				float dir = crd.directionTo(this);
 				crd.changeDir(dir);
 			}
 		}
@@ -207,11 +222,12 @@ public class Ship extends Obj
 	private void drawCargo(Graphics g)
 	{
 		float cargoSize = 3;
+		float ringSize = 3.5f;
 		for (int i = 0; i < cargo; i++)
 		{
-			float dir = 360/capacity * i;
-			Circle crgo = new Circle(location[0] + size*2.4f*Helper.cos(dir),
-					location[1] + size*2.4f*Helper.sin(dir), cargoSize);
+			float dir = 360/cargo * i + 360/cargo;
+			Circle crgo = new Circle(location[0] + size*ringSize*Helper.cos(dir),
+					location[1] + size*ringSize*Helper.sin(dir), cargoSize);
 			g.fill(crgo);
 		}
 	}

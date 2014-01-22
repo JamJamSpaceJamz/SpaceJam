@@ -34,7 +34,7 @@ public class SimpleTest extends BasicGame
 		int rotation = 20;
 		float range = 100;
 		float health = 30;
-		int capacity = 10;
+		int capacity = 15;
 		ship = new Ship(size, speed, rotation, range, capacity, health, this, true);
 		List<Obj> shipList = new List<Obj>();
 		shipList.add(ship);

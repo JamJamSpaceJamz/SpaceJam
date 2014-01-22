@@ -14,7 +14,7 @@ public class Asteroid extends Obj
 	private float[] points, sizeVars, angles;
 	private float size, totalHealth;
 	private int direction;
-	
+
 	public Asteroid(float[] location, float size, SimpleTest gameInst)
 	{
 		this.gameInst = gameInst;
@@ -32,7 +32,7 @@ public class Asteroid extends Obj
 		else
 			direction = -1;	
 	}
-	
+
 	private float[] initPts(float[] location, float size)
 	{
 		// 5 to 10 vertices for an asteroid
@@ -40,29 +40,29 @@ public class Asteroid extends Obj
 		float[] pts = new float[numPts*2];
 		sizeVars = new float[numPts];
 		angles = new float[numPts];
-		
+
 		for (int i = 0; i < numPts; i++)
 		{
 			float degree = (float) (Math.random()*360/numPts + i*360/numPts);
 			angles[i] = degree;
-			
+
 			float sizeVar = (float) (Math.random()*size/2);
 			sizeVars[i] = sizeVar;
 			pts[2*i] = (size + sizeVar)*Helper.cos(degree) + location[0];
 			pts[2*i + 1] = (size + sizeVar)*Helper.sin(degree) + location[1];
 		}
-		
+
 		return pts;
 	}
-	
+
 	public void draw(Graphics g)
 	{
-		
+
 		shape = new Polygon(points);
 		g.setColor(Color.gray);
 		g.fill(shape);
 	}
-	
+
 	public void update(int delta)
 	{
 		checkBorders();
@@ -72,35 +72,35 @@ public class Asteroid extends Obj
 			points[2*i] = (size + sizeVars[i])*Helper.cos(angles[i]) + location[0];
 			points[2*i + 1] = (size + sizeVars[i])*Helper.sin(angles[i]) + location[1];
 		}
-		
+
 		location[0] += velocity[0]*delta*.01f;
 		location[1] += velocity[1]*delta*.01f;
 	}
-	
+
 	private void checkBorders()
 	{
 		// the amount the asteroid is allowed out of bounds
 		int outOfBounds = 3;
 		int width = gameInst.container.getWidth() + outOfBounds;
 		int height = gameInst.container.getHeight() + outOfBounds;
-		
+
 		if (location[0] > width)
 			location[0] = -outOfBounds;
 		if (location[0] < -outOfBounds)
 			location[0] = width;
-		
+
 		if (location[1] > height)
 			location[1] = -outOfBounds;
 		if (location[1] < -outOfBounds)
 			location[1] = height;
 	}
-	
+
 	@Override
 	public boolean collide(Obj hitter) 
 	{
 		return true;
 	}
-	
+
 	@Override
 	public void damage(float amount)
 	{
@@ -117,6 +117,7 @@ public class Asteroid extends Obj
 			location[1] = this.location[1] + Helper.sin(direction)*size*2.03f;
 			Credit crd = new Credit(location, direction, worth*15, gameInst);
 			gameInst.creditList.add(crd);
+
 		}
 		if (health <= 0)
 		{

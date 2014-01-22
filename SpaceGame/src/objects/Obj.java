@@ -63,11 +63,11 @@ public abstract class Obj
 	
 	public float directionTo(Obj a)
 	{
-		float dx = -(this.location[0] - a.location[0]);
-		float dy =  (this.location[1] - a.location[1]);
-		float dir = (float) (Math.atan2(dy, dx) * 180 / (Math.PI));
-		if (dir <= 0)
-			dir = 360 + dir;
+		float dx =  - (this.location[0] - a.location[0]);
+		float dy =  - (this.location[1] - a.location[1]);
+		float dir = (float) (Math.atan2(dy, dx));
+		//if (dir <= 0)
+			//dir = 360 + dir;
 		return dir;
 	}
 	
