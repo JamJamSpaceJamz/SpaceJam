@@ -5,6 +5,8 @@ import objects.Base;
 import objects.CollisionChecker;
 import objects.Obj;
 import objects.Ship;
+import objects.AutonomousShip;
+import objects.UserShip;
 
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
@@ -16,7 +18,7 @@ import org.newdawn.slick.AppGameContainer;
 public class SimpleTest extends BasicGame 
 {
 	private Ship ship;
-	public List<Obj> bulletList;
+	public List<Obj> bulletList, shipList;
 	public List<Obj> astList, creditList, baseList, turretList;
 	public List<List<Obj>> gameList;
 	public GameContainer container;
@@ -35,8 +37,10 @@ public class SimpleTest extends BasicGame
 		float range = 100;
 		float health = 30;
 		int capacity = 15;
-		ship = new Ship(size, speed, rotation, range, capacity, health, this, true);
-		List<Obj> shipList = new List<Obj>();
+		// Change the following line to set the type of ship.
+		ship = new AutonomousShip(size, speed, rotation, range, capacity, health, this, true);
+		shipList = new List<Obj>();
+		
 		shipList.add(ship);
 		
 		turretList = new List<Obj>();

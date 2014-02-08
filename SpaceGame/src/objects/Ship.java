@@ -11,15 +11,15 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Polygon;
 
-public class Ship extends Obj
+public abstract class Ship extends Obj
 {
 	public float[] acceleration;
-	private int rotateSpd, speed, size, credit;
-	private boolean turnLeft, turnRight, accelerate, stop;
-	private float rotation, range, damage;
-	private int capacity, cargo, radarCoolDown, RADARDOWN;
-	private ArrayList<Obj> closeObj;
-	private SimpleTest gameInst;
+	protected int delta, rotateSpd, speed, size, credit;
+	protected boolean turnLeft, turnRight, accelerate, stop;
+	protected float rotation, range, damage;
+	protected int capacity, cargo, radarCoolDown, RADARDOWN;
+	protected ArrayList<Obj> closeObj;
+	protected SimpleTest gameInst;
 
 	public Ship (int size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst, boolean team)
 	{
@@ -69,69 +69,36 @@ public class Ship extends Obj
 		//g.draw(circle);
 	}
 
-	public void rotateLeft(boolean turn)
-	{
-		turnLeft = turn;    
-	}
+	abstract public void accelerate(boolean acc);
+	
+	abstract public void rotateLeft(boolean turn);
 
-	public void rotateRight(boolean turn)
-	{
-		turnRight = turn;    
-	}
+	abstract public void rotateRight(boolean turn);
 
-	public void stop(boolean truth)
-	{
-		stop = truth;
-	}
+	abstract public void stop(boolean truth);
 	
 	// checks the objects around the ship and acts on them
-	private void radar()
+	protected void radar()
 	{
 		// only check if the cooldown is zero
-				if (radarCoolDown == 0)
-				{
-					// resets cooldown
-					radarCoolDown = RADARDOWN;
-					// only check for credits if ship is not full and
-					if (cargo != capacity)
-					{
-						ArrayList<Obj> inRange = objInRange();
-						pullCredits(inRange);
-					}
-				}
-				// decrease cooldown
-				radarCoolDown -= 1;
+		if (radarCoolDown == 0)
+		{
+			// resets cooldown
+			radarCoolDown = RADARDOWN;
+			// only check for credits if ship is not full and
+			if (cargo != capacity)
+			{
+				ArrayList<Obj> inRange = objInRange();
+				pullCredits(inRange);
+			}
+		}
+		// decrease cooldown
+		radarCoolDown -= 1;
 	}
 	
 	// is called once a frame and updates the ship
 	// with its new location
-	public void update(int delta)
-	{
-		radar();
-		float d = .01f*delta;
-		if (turnRight)
-			rotation += rotateSpd*.01f*delta;
-		if (turnLeft)
-			rotation -= rotateSpd*.01f*delta;
-
-		if (!checkBorders() && accelerate )
-		{
-			acceleration[0] = (float) Helper.cos(rotation)*2; //speed;
-			acceleration[1] = (float) Helper.sin(rotation)*2;//speed;
-
-			velocity[0] += acceleration[0]*delta*.01f;
-			velocity[1] += acceleration[1]*delta*.01f;
-		}
-
-		for(int i = 0; i < 2; i++)
-		{           
-			location[i] += velocity[i]*delta*.01f;
-			if (stop)
-			{
-				velocity[i] -= velocity[i]/10 * d;
-			}
-		}
-	}
+	abstract public void update(int dt);
 
 	private void pullCredits(ArrayList<Obj> inRange)
 	{
@@ -166,7 +133,8 @@ public class Ship extends Obj
 		}
 		return inRange;
 	}
-	private boolean checkBorders()
+
+	protected boolean checkBorders()
 	{
 		boolean check = false;
 		int width = gameInst.container.getWidth();
@@ -230,13 +198,6 @@ public class Ship extends Obj
 					location[1] + size*ringSize*Helper.sin(dir), cargoSize);
 			g.fill(crgo);
 		}
-	}
-
-	// changes acceleration to false or true
-	// (needed because of the way keypresses work)
-	public void accelerate(boolean acc)
-	{
-		accelerate = acc;
 	}
 
 	public boolean collide(Obj hitter)

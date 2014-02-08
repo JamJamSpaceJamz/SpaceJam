@@ -8,6 +8,8 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Circle;
 
+import objects.Obj;
+
 public class Turret extends Obj
 {
 	private float size, range, rotation, distance;
