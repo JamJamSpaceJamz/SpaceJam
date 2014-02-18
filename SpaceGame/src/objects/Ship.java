@@ -16,6 +16,7 @@ public abstract class Ship extends Obj
 	public float[] acceleration;
 	protected int delta, rotateSpd, speed, size, credit;
 	protected boolean turnLeft, turnRight, accelerate, stop;
+	// NOTE ROTATION SEEMS TO BE IN DEGREES
 	protected float rotation, range, damage;
 	protected int capacity, cargo, radarCoolDown, RADARDOWN;
 	protected ArrayList<Obj> closeObj, objectsInRange;

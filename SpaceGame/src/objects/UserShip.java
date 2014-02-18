@@ -23,10 +23,21 @@ public class UserShip extends Ship
 		if (turnLeft)
 			rotation -= rotateSpd*.01f*delta;
 
+		
+		// Still working on setting a max speed for the ship.
 		if (!checkBorders() && accelerate )
 		{
-			acceleration[0] = (float) Helper.cos(rotation)*2; //speed;
-			acceleration[1] = (float) Helper.sin(rotation)*2; //speed;
+			double velMagnitude = Math.sqrt(velocity[0]*velocity[0]+velocity[1]*velocity[1]);
+			double velDirection = Math.atan2(velocity[1], velocity[0]);
+			
+			if (velMagnitude < 5 || Math.abs(velDirection - rotation) > 0.25)
+			{
+				acceleration[0] = (float) Helper.cos(rotation)*2; //speed;
+				acceleration[1] = (float) Helper.sin(rotation)*2; //speed;
+			} else {
+				acceleration[0] = 0;
+				acceleration[1] = 0;
+			}
 
 			velocity[0] += acceleration[0]*delta*.01f;
 			velocity[1] += acceleration[1]*delta*.01f;

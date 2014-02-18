@@ -68,7 +68,7 @@ public abstract class Obj
 		float dir = (float) (Math.atan2(dy, dx));
 		//if (dir <= 0)
 		//dir = 360 + dir;
-		return dir;
+		return (float)Math.toDegrees(dir);
 	}
 	
 	public float distanceTo(Obj a)

@@ -38,7 +38,7 @@ public class SimpleTest extends BasicGame
 		float health = 30;
 		int capacity = 15;
 		// Change the following line to set the type of ship.
-		ship = new UserShip(size, speed, rotation, range, capacity, health, this, true);
+		ship = new AutonomousShip(size, speed, rotation, range, capacity, health, this, true);
 		shipList = new List<Obj>();
 		
 		shipList.add(ship);
@@ -57,9 +57,9 @@ public class SimpleTest extends BasicGame
 			astList.add(ast);
 		}
 		baseList = new List<Obj>();
-		float[] baseLoc = {200f, 200f};
-		Base base = new Base(30, baseLoc, Color.green, this, true);
-		baseList.add(base);
+		//float[] baseLoc = {200f, 200f};
+		//Base base = new Base(30, baseLoc, Color.green, this, true);
+		//baseList.add(base);
 		gameList = new List<List<Obj>>();
 		gameList.add(bulletList);
 		gameList.add(astList);

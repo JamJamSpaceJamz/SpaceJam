@@ -33,19 +33,18 @@ public class AutonomousShip extends Ship
 	{
 		stop(); // Make sure the asteroid does not go out of range
 		float angularDistance = directionTo(target) - rotation;
-		if (angularDistance > .5)
+		if (angularDistance > 1.5)
 		{
 			System.out.println("Aiming\t" + angularDistance);
 			rotateRight();
 		}
-		else if (angularDistance < -.5)
+		else if (angularDistance < -1.5)
 		{
 			System.out.println("Aiming\t" + angularDistance);
 			rotateLeft();
 		}
 		else
 		{
-			stopRotation();
 			System.out.println("Attacking\t" + angularDistance);
 			fire();
 		}
@@ -87,12 +86,12 @@ public class AutonomousShip extends Ship
 	}
 	
 	public void accelerate()
-	{
+	{		
 		if (!this.checkBorders())
 		{
 			acceleration[0] = (float) Helper.cos(rotation)*2; //speed;
 			acceleration[1] = (float) Helper.sin(rotation)*2; //speed;
-
+		
 			velocity[0] += acceleration[0]*delta*.01f;
 			velocity[1] += acceleration[1]*delta*.01f;
 			
@@ -131,14 +130,6 @@ public class AutonomousShip extends Ship
 		velocity[1] -= velocity[1]/10 * delta*.01f;
 		
 		setLocation();
-	}
-	
-	public void stopRotation()
-	{
-		System.out.print("Stopping\t");
-		rotateSpd = 0;
-		//rotateSpd -= rotateSpd/10 * delta*.01f;
-		//rotation += rotateSpd*delta*.01f;
 	}
 	
 	public void setLocation()
