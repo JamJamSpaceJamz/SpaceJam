@@ -67,7 +67,7 @@ public abstract class Obj
 		float dy =  - (this.location[1] - a.location[1]);
 		float dir = (float) (Math.atan2(dy, dx));
 		//if (dir <= 0)
-			//dir = 360 + dir;
+		//dir = 360 + dir;
 		return dir;
 	}
 	

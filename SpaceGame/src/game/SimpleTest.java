@@ -38,7 +38,7 @@ public class SimpleTest extends BasicGame
 		float health = 30;
 		int capacity = 15;
 		// Change the following line to set the type of ship.
-		ship = new AutonomousShip(size, speed, rotation, range, capacity, health, this, true);
+		ship = new UserShip(size, speed, rotation, range, capacity, health, this, true);
 		shipList = new List<Obj>();
 		
 		shipList.add(ship);
@@ -55,7 +55,6 @@ public class SimpleTest extends BasicGame
 
 			Asteroid ast = new Asteroid(loc, (float) (Math.random() * 10 + 4), this);
 			astList.add(ast);
-
 		}
 		baseList = new List<Obj>();
 		float[] baseLoc = {200f, 200f};
@@ -88,7 +87,6 @@ public class SimpleTest extends BasicGame
 			}
 			pointer = pointer.next;
 		}
-		
 	}
 	
 	// checks for keyPresses
@@ -102,10 +100,7 @@ public class SimpleTest extends BasicGame
 		else if (c == 'w')
 			ship.accelerate(true);
 		else if (c == ' ')
-		{
-			//System.out.println(ship.location[0] + "  " + ship.location[1]);
 			ship.fire();
-		}
 		else if (c == 's')
 			ship.stop(true);
 	}

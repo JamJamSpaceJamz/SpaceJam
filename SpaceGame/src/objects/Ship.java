@@ -18,7 +18,7 @@ public abstract class Ship extends Obj
 	protected boolean turnLeft, turnRight, accelerate, stop;
 	protected float rotation, range, damage;
 	protected int capacity, cargo, radarCoolDown, RADARDOWN;
-	protected ArrayList<Obj> closeObj;
+	protected ArrayList<Obj> closeObj, objectsInRange;
 	protected SimpleTest gameInst;
 
 	public Ship (int size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst, boolean team)
@@ -45,7 +45,6 @@ public abstract class Ship extends Obj
 
 	public void draw(Graphics g)
 	{
-
 		float[] points = new float[6];
 		points[0] = (size*Helper.cos(0 + rotation) + location[0]);
 		points[1] = (size*Helper.sin(0 + rotation) + location[1]);
@@ -85,11 +84,11 @@ public abstract class Ship extends Obj
 		{
 			// resets cooldown
 			radarCoolDown = RADARDOWN;
+			objectsInRange = objInRange();
 			// only check for credits if ship is not full and
 			if (cargo != capacity)
 			{
-				ArrayList<Obj> inRange = objInRange();
-				pullCredits(inRange);
+				pullCredits(objectsInRange);
 			}
 		}
 		// decrease cooldown
@@ -172,7 +171,6 @@ public abstract class Ship extends Obj
 	// (future work: recoil?)
 	public void fire()
 	{
-
 		int counter = 0;
 		List<Obj> pointer = gameInst.bulletList;
 		List<Obj> wrapper = new List<Obj>();
