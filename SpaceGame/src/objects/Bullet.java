@@ -16,22 +16,25 @@ public class Bullet extends Obj
 	private float points[];
 	private float damage;
 
-	public Bullet(float[] location, float rotation, float range, float damage, List<Obj> inst)
+	public Bullet(float[] location, float rotation, float range, float damage, List<Obj> inst, boolean team)
 	{
 		// adding so its not null, should fix later
 		this.location = location;
+		
+		float INITIAL_SPEED = 30;
 		
 		width = 2f;
 		hieght = 10f;
 		
 		points = makePoints(location, rotation);
 		shape = new Polygon(points);
+		this.team = team;
 		this.range = range;
 		this.velocity = new float[2];
-		this.velocity[0] = 30 * Helper.cos(rotation);
-		this.velocity[1] = 30 * Helper.sin(rotation);
+		this.velocity[0] = INITIAL_SPEED * Helper.cos(rotation);
+		this.velocity[1] = INITIAL_SPEED * Helper.sin(rotation);
 		this.damage = damage;
-		System.out.println(velocity[0] + "  " + velocity[1]);
+//		System.out.println(velocity[0] + "  " + velocity[1]);
 
 		objInst = inst;
 	}
@@ -65,9 +68,7 @@ public class Bullet extends Obj
 	{
 		//  removes this bullet from the list if it has gone too far
 		if (range <= 0)
-		{
-			objInst.remove();
-		}
+			objInst.remove();		
 
 		float speed = (float)Math.sqrt(velocity[0] * velocity[0] + velocity[1] * velocity[1]);
 		speed *=  delta * 0.01f;
@@ -102,7 +103,7 @@ public class Bullet extends Obj
 	{
 		if (hitter instanceof Asteroid)
 		{
-			System.out.println("remove"); 
+//			System.out.println("remove"); 
 			collided = true;
 			this.remove();
 			hitter.damage(damage);
@@ -110,6 +111,9 @@ public class Bullet extends Obj
 		}
 		else if (hitter instanceof Ship || hitter instanceof Credit || hitter instanceof Turret)
 			return false;
+		else if (hitter instanceof Base && hitter.team == this.team)
+			// This condition currently exists because bullets are bouncing off of the inside of the base.
+			return false; 
 		
 		return true;
 	}

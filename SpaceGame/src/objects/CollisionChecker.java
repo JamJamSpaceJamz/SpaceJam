@@ -55,7 +55,7 @@ public class CollisionChecker
 
 	private static void checkandUpdate(Obj obj1, Obj obj2)
 	{
-
+		// David, why is this function here?
 	}
 
 	// Takes two objects and calculates their change in

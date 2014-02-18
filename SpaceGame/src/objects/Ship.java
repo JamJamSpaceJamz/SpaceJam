@@ -14,17 +14,19 @@ import org.newdawn.slick.geom.Polygon;
 public abstract class Ship extends Obj
 {
 	public float[] acceleration;
-	protected int delta, rotateSpd, speed, size, credit;
+	protected int delta, rotateSpd, size, credit;
 	protected boolean turnLeft, turnRight, accelerate, stop;
-	// NOTE ROTATION SEEMS TO BE IN DEGREES
-	protected float rotation, range, damage;
-	protected int capacity, cargo, radarCoolDown, RADARDOWN;
+	// NOTE ROTATION IS IN DEGREES
+	protected float rotation, range, damage, speed;
+	protected int capacity, cargo, weaponCoolDown, radarCoolDown; 
+	final protected int COOLDOWN;
+	final protected float MAX_SPEED = 15;
 	protected ArrayList<Obj> closeObj, objectsInRange;
 	protected SimpleTest gameInst;
 
 	public Ship (int size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst, boolean team)
 	{
-		RADARDOWN = 5;
+		COOLDOWN = 5;
 		location = new float[2];
 		location[0] = 200;
 		location[1] = 200;
@@ -65,8 +67,8 @@ public abstract class Ship extends Obj
 		g.fill(shape);
 
 		// visual representation of the range of the ship
-		//Circle circle = new Circle(location[0], location[1], range);
-		//g.draw(circle);
+//		Circle circle = new Circle(location[0], location[1], range);
+//		g.draw(circle);
 	}
 
 	abstract public void accelerate(boolean acc);
@@ -84,7 +86,7 @@ public abstract class Ship extends Obj
 		if (radarCoolDown == 0)
 		{
 			// resets cooldown
-			radarCoolDown = RADARDOWN;
+			radarCoolDown = COOLDOWN;
 			objectsInRange = objInRange();
 			// only check for credits if ship is not full and
 			if (cargo != capacity)
@@ -172,18 +174,25 @@ public abstract class Ship extends Obj
 	// (future work: recoil?)
 	public void fire()
 	{
-		int counter = 0;
-		List<Obj> pointer = gameInst.bulletList;
-		List<Obj> wrapper = new List<Obj>();
-		Bullet shot = new Bullet(location, rotation, range, damage, wrapper);
-		wrapper.data = shot; 
-		wrapper.previous = pointer;
-		wrapper.next = pointer.next;
-		if (wrapper.next != null)
+		if (weaponCoolDown == 0)
 		{
-			wrapper.next.previous = wrapper;
+			// reset cooldown
+			weaponCoolDown = COOLDOWN;
+			
+			List<Obj> pointer = gameInst.bulletList;
+			List<Obj> wrapper = new List<Obj>();
+			Bullet shot = new Bullet(location, rotation, range, damage, wrapper, this.team);
+			wrapper.data = shot; 
+			wrapper.previous = pointer;
+			wrapper.next = pointer.next;
+			if (wrapper.next != null)
+			{
+				wrapper.next.previous = wrapper;
+			}
+			pointer.next = wrapper;
+		} else {
+			--weaponCoolDown;
 		}
-		pointer.next = wrapper;
 	}
 
 	private void drawCargo(Graphics g)
@@ -220,7 +229,7 @@ public abstract class Ship extends Obj
 			credit += amount;
 			cargo++;
 		}
-		System.out.println(!full);
+//		System.out.println(!full);
 		return !full;
 	}
 }

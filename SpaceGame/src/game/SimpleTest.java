@@ -57,9 +57,9 @@ public class SimpleTest extends BasicGame
 			astList.add(ast);
 		}
 		baseList = new List<Obj>();
-		//float[] baseLoc = {200f, 200f};
-		//Base base = new Base(30, baseLoc, Color.green, this, true);
-		//baseList.add(base);
+		float[] baseLoc = {200f, 200f};
+		Base base = new Base(30, baseLoc, Color.green, this, true);
+		baseList.add(base);
 		gameList = new List<List<Obj>>();
 		gameList.add(bulletList);
 		gameList.add(astList);

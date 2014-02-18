@@ -17,26 +17,24 @@ public class UserShip extends Ship
 	{
 		delta = dt;
 		radar();
+		
 		float d = .01f*delta;
+		
 		if (turnRight)
 			rotation += rotateSpd*.01f*delta;
 		if (turnLeft)
 			rotation -= rotateSpd*.01f*delta;
-
 		
-		// Still working on setting a max speed for the ship.
 		if (!checkBorders() && accelerate )
 		{
-			double velMagnitude = Math.sqrt(velocity[0]*velocity[0]+velocity[1]*velocity[1]);
-			double velDirection = Math.atan2(velocity[1], velocity[0]);
+			speed = (float)Math.sqrt(velocity[0]*velocity[0]+velocity[1]*velocity[1]);
 			
-			if (velMagnitude < 5 || Math.abs(velDirection - rotation) > 0.25)
+			if (speed <= MAX_SPEED)
 			{
 				acceleration[0] = (float) Helper.cos(rotation)*2; //speed;
 				acceleration[1] = (float) Helper.sin(rotation)*2; //speed;
 			} else {
-				acceleration[0] = 0;
-				acceleration[1] = 0;
+				stop(true);
 			}
 
 			velocity[0] += acceleration[0]*delta*.01f;
@@ -51,6 +49,9 @@ public class UserShip extends Ship
 				velocity[i] -= velocity[i]/10 * d;
 			}
 		}
+		
+		if (weaponCoolDown > 0)
+			--weaponCoolDown;
 	}
 	
 	// changes acceleration to false or true

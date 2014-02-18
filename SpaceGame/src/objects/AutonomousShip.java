@@ -17,37 +17,39 @@ public class AutonomousShip extends Ship
 		delta = dt;
 		
 		radar();
+		hunt();
+	}
+	
+	// Search the map for a new asteroid to shoot
+	protected void hunt()
+	{
 		// fly to closest asteroid until a certain distance away
 		// shoot asteroid. repeat
 		if (asteroidInRange())
 		{
-			System.out.print("Asteroid in range\t");
 			Asteroid target = findClosestAsteroid();
-			attackAsteroid(target);
+			if (target != null)
+				attackAsteroid(target);
 		} else {
-			accelerate();
+			findAsteroids();
 		}
+	}
+	
+	protected void findAsteroids()
+	{
+		cruiseControl(10);
 	}
 	
 	protected void attackAsteroid(Asteroid target)
 	{
 		stop(); // Make sure the asteroid does not go out of range
 		float angularDistance = directionTo(target) - rotation;
-		if (angularDistance > 1.5)
-		{
-			System.out.println("Aiming\t" + angularDistance);
+		if (angularDistance > 5)
 			rotateRight();
-		}
-		else if (angularDistance < -1.5)
-		{
-			System.out.println("Aiming\t" + angularDistance);
+		else if (angularDistance < -5)
 			rotateLeft();
-		}
 		else
-		{
-			System.out.println("Attacking\t" + angularDistance);
 			fire();
-		}
 	}
 	
 	protected boolean asteroidInRange()
@@ -76,7 +78,6 @@ public class AutonomousShip extends Ship
 				}
 			}
 		}
-		System.out.print("Target acquired\t\t");
 		return retAst;
 	}
 	
@@ -134,7 +135,20 @@ public class AutonomousShip extends Ship
 	
 	public void setLocation()
 	{
+		speed = (float) Math.sqrt(velocity[0]*velocity[0] + velocity[1]*velocity[1]);
+		
 		location[0] += velocity[0]*delta*.01f;
 		location[1] += velocity[1]*delta*.01f;
+	}
+	
+	// This method allows the user to set a speed for the ship
+	public void cruiseControl(double desiredSpeed)
+	{
+		if (desiredSpeed <= MAX_SPEED && speed < desiredSpeed)
+			accelerate();
+		else if (speed > MAX_SPEED || speed > desiredSpeed)
+			stop();
+		else 
+			setLocation();
 	}
 }

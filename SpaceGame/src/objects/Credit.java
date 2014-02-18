@@ -15,7 +15,8 @@ public class Credit extends Obj
 	public float direction;
 	private Color color;
 	private int size;
-	private float speed, acc;
+	private float speed;
+	final private float ACC;
 	private boolean hasTarget;
 	
 	public Credit(float[] location, int direction, int amount, SimpleTest gameInst)
@@ -23,9 +24,9 @@ public class Credit extends Obj
 		speed = (float) (Math.random());
 		
 		// hardcoded acceleration number
-		acc = 7;
+		ACC = 7;
 		
-		System.out.println(amount);
+//		System.out.println(amount);
 		this.location = location;
 		this.direction = direction;
 		this.gameInst = gameInst;
@@ -49,8 +50,8 @@ public class Credit extends Obj
 	public void changeDir(float dir)
 	{
 		this.direction = dir;
-		acceleration[0] = (float) (acc*Math.cos(dir));
-		acceleration[1] = (float) (acc*Math.sin(dir));
+		acceleration[0] = (float) (ACC*Math.cos(dir));
+		acceleration[1] = (float) (ACC*Math.sin(dir));
 		hasTarget = true;
 	}
 	public void draw(Graphics gfloat) 
@@ -101,7 +102,7 @@ public class Credit extends Obj
 			Ship hit = (Ship) hitter;
 			if (hit.credit(amount))
 			{
-				System.out.println("removing");
+//				System.out.println("removing");
 				this.remove();
 				
 			}
