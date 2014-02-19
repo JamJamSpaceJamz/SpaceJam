@@ -15,12 +15,13 @@ public abstract class Ship extends Obj
 {
 	public float[] acceleration;
 	protected int delta, rotateSpd, size, credit;
-	protected boolean turnLeft, turnRight, accelerate, stop;
+	protected boolean turnLeft, turnRight, accelerate, stop, isFullCredits;
 	// NOTE ROTATION IS IN DEGREES
 	protected float rotation, range, damage, speed;
 	protected int capacity, cargo, weaponCoolDown, radarCoolDown; 
 	final protected int COOLDOWN;
 	final protected float MAX_SPEED = 15;
+	final protected float[] baseLocation = new float[2];
 	protected ArrayList<Obj> closeObj, objectsInRange;
 	protected SimpleTest gameInst;
 
@@ -30,6 +31,9 @@ public abstract class Ship extends Obj
 		location = new float[2];
 		location[0] = 200;
 		location[1] = 200;
+		// baseLocation assumes that the ship spawns inside the base.
+		baseLocation[0] = location[0];
+		baseLocation[1] = location[1];
 		this.velocity = new float[2];
 		acceleration = new float[2];
 		this.speed = speed;
@@ -113,6 +117,49 @@ public abstract class Ship extends Obj
 				crd.changeDir(dir);
 			}
 		}
+	}
+	
+	protected void navigateTo(Obj a)
+	{
+		float angularDistance = directionTo(a) - this.rotation;
+		if (angularDistance > 5)
+		{
+			this.rotateRight(true);
+			this.stop(true);
+		}
+		else if (angularDistance < -5)
+		{
+			this.rotateLeft(true);
+			this.stop(true);
+		}
+		else if (distanceTo(a) > 0)
+			accelerate(true);
+		else
+			stop(true);
+	}
+	
+	protected void navigateTo(float x, float y)
+	{
+		float angularDistance = directionTo(x, y) - this.rotation;
+		if (angularDistance > 5)
+		{
+			this.rotateRight(true);
+			this.stop(true);
+		}
+		else if (angularDistance < -5)
+		{
+			this.rotateLeft(true);
+			this.stop(true);
+		}
+		else if (distanceTo(x, y) > 0)
+			accelerate(true);
+		else
+			stop(true);
+	}
+	
+	protected void returnToBase()
+	{
+		navigateTo(baseLocation[0], baseLocation[1]);
 	}
 
 	private ArrayList<Obj> objInRange()
@@ -216,6 +263,7 @@ public abstract class Ship extends Obj
 			a.credit(credit);
 			credit = 0;
 			cargo = 0;
+			isFullCredits = false;
 			return false;
 		}
 		return true;
@@ -224,6 +272,7 @@ public abstract class Ship extends Obj
 	public boolean credit(int amount)
 	{
 		boolean full = capacity == cargo;
+		isFullCredits = full;
 		if (!full)
 		{
 			credit += amount;

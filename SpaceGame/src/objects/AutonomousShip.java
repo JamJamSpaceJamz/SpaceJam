@@ -17,7 +17,10 @@ public class AutonomousShip extends Ship
 		delta = dt;
 		
 		radar();
-		hunt();
+		if (isFullCredits)
+			returnToBase();
+		else		
+			hunt();
 	}
 	
 	// Search the map for a new asteroid to shoot
@@ -88,7 +91,7 @@ public class AutonomousShip extends Ship
 	
 	public void accelerate()
 	{		
-		if (!this.checkBorders())
+		if (speed <= MAX_SPEED)
 		{
 			acceleration[0] = (float) Helper.cos(rotation)*2; //speed;
 			acceleration[1] = (float) Helper.sin(rotation)*2; //speed;
@@ -98,6 +101,8 @@ public class AutonomousShip extends Ship
 			
 			setLocation();
 		}
+		else
+			stop();
 	}
 
 	public void rotateLeft(boolean turn)
@@ -135,6 +140,8 @@ public class AutonomousShip extends Ship
 	
 	public void setLocation()
 	{
+		checkBorders();
+		
 		speed = (float) Math.sqrt(velocity[0]*velocity[0] + velocity[1]*velocity[1]);
 		
 		location[0] += velocity[0]*delta*.01f;
@@ -144,9 +151,9 @@ public class AutonomousShip extends Ship
 	// This method allows the user to set a speed for the ship
 	public void cruiseControl(double desiredSpeed)
 	{
-		if (desiredSpeed <= MAX_SPEED && speed < desiredSpeed)
+		if (speed < desiredSpeed)
 			accelerate();
-		else if (speed > MAX_SPEED || speed > desiredSpeed)
+		else if (speed > desiredSpeed)
 			stop();
 		else 
 			setLocation();
