@@ -122,12 +122,12 @@ public abstract class Ship extends Obj
 	protected void navigateTo(Obj a)
 	{
 		float angularDistance = directionTo(a) - this.rotation;
-		if (angularDistance > 5)
+		if (angularDistance > 3)
 		{
 			this.rotateRight(true);
 			this.stop(true);
 		}
-		else if (angularDistance < -5)
+		else if (angularDistance < -3)
 		{
 			this.rotateLeft(true);
 			this.stop(true);
@@ -141,12 +141,12 @@ public abstract class Ship extends Obj
 	protected void navigateTo(float x, float y)
 	{
 		float angularDistance = directionTo(x, y) - this.rotation;
-		if (angularDistance > 5)
+		if (angularDistance > 3)
 		{
 			this.rotateRight(true);
 			this.stop(true);
 		}
-		else if (angularDistance < -5)
+		else if (angularDistance < -3)
 		{
 			this.rotateLeft(true);
 			this.stop(true);

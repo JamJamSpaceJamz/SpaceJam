@@ -50,8 +50,8 @@ public class Credit extends Obj
 	public void changeDir(float dir)
 	{
 		this.direction = dir;
-		acceleration[0] = (float) (ACC*Math.cos(dir));
-		acceleration[1] = (float) (ACC*Math.sin(dir));
+		acceleration[0] = (float) (ACC*Helper.cos(dir));
+		acceleration[1] = (float) (ACC*Helper.sin(dir));
 		hasTarget = true;
 	}
 	public void draw(Graphics gfloat) 
