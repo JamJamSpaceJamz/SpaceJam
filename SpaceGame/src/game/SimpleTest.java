@@ -14,8 +14,10 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 
-public class SimpleTest extends BasicGame 
+public class SimpleTest extends BasicGameState
 {
 	private Ship ship;
 	public List<Obj> bulletList, shipList;
@@ -23,16 +25,53 @@ public class SimpleTest extends BasicGame
 	public List<List<Obj>> gameList;
 	public GameContainer container;
 	
-	public SimpleTest() { super("SpaceGame"); }
+	public SimpleTest() { super(); }
 
-	// initializes every variable needed in SpaceJam
+
+	
+	
+	
+	// checks for keyPresses
 	@Override
-	public void init(GameContainer container) throws SlickException 
+	public void keyPressed(int key, char c)
 	{
+		if (c == 'a')
+			ship.rotateLeft(true);
+		else if (c == 'd')
+			ship.rotateRight(true);
+		else if (c == 'w')
+			ship.accelerate(true);
+		else if (c == ' ')
+			ship.fire();
+		else if (c == 's')
+			ship.stop(true);
+	}
+	
+	// checks for keyReleases
+	@Override
+	public void keyReleased(int key, char c)
+	{
+		if (c == 'a')
+			ship.rotateLeft(false);
+		else if (c == 'd')
+			ship.rotateRight(false);
+		else if (c == 'w')
+			ship.accelerate(false);
+		else if (c == 's')
+			ship.stop(false);
+	}
+	
+	
+	
+
+
+	@Override
+	public void init(GameContainer container, StateBasedGame arg1)
+			throws SlickException {
+		int size = 5;
+		int speed = 3;		
 		this.container = container;
 		container.setTargetFrameRate(60);
-		int size = 5;
-		int speed = 3;
 		int rotation = 20;
 		float range = 100;
 		float health = 30;
@@ -67,63 +106,12 @@ public class SimpleTest extends BasicGame
 		gameList.add(creditList);
 		gameList.add(baseList);
 		gameList.add(turretList);
+		
 	}
 
-	// updates every object (called once 
-	// per frame before draw)
 	@Override
-	public void update(GameContainer container, int delta) throws SlickException 
-	{
-		//ship.update(delta);
-		CollisionChecker.checkAll(gameList, delta);
-		List<List<Obj>> pointer = gameList.next;
-		while(pointer != null)
-		{
-			List<Obj> pointer1 = pointer.data.next;
-			while (pointer1 != null)
-			{
-				pointer1.data.update(delta);
-				pointer1 = pointer1.next;
-			}
-			pointer = pointer.next;
-		}
-	}
-	
-	// checks for keyPresses
-	@Override
-	public void keyPressed(int key, char c)
-	{
-		if (c == 'a')
-			ship.rotateLeft(true);
-		else if (c == 'd')
-			ship.rotateRight(true);
-		else if (c == 'w')
-			ship.accelerate(true);
-		else if (c == ' ')
-			ship.fire();
-		else if (c == 's')
-			ship.stop(true);
-	}
-	
-	// checks for keyReleases
-	@Override
-	public void keyReleased(int key, char c)
-	{
-		if (c == 'a')
-			ship.rotateLeft(false);
-		else if (c == 'd')
-			ship.rotateRight(false);
-		else if (c == 'w')
-			ship.accelerate(false);
-		else if (c == 's')
-			ship.stop(false);
-	}
-	
-	// draws each of the shapes (called after update)
-	@Override
-	public void render(GameContainer container, Graphics g) throws SlickException 
-	{
-		
+	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g)
+			throws SlickException {
 		g.setLineWidth(.3f);
 		//System.out.println(container.getHeight() + "  " + container.getWidth());
 		//ship.draw(g);
@@ -141,18 +129,29 @@ public class SimpleTest extends BasicGame
 		}
 		
 	}
-	
-	// starts the game (Do not touch this)
-	public static void main(String[] args) 
-	{
-		try 
-		{
-			AppGameContainer app = new AppGameContainer(new SimpleTest());
-			app.start();
-		} 
-		catch (SlickException e) 
-		{
-			e.printStackTrace();
-		}
+
+	@Override
+	public void update(GameContainer arg0, StateBasedGame arg1, int delta)
+			throws SlickException {
+		//ship.update(delta);
+				CollisionChecker.checkAll(gameList, delta);
+				List<List<Obj>> pointer = gameList.next;
+				while(pointer != null)
+				{
+					List<Obj> pointer1 = pointer.data.next;
+					while (pointer1 != null)
+					{
+						pointer1.data.update(delta);
+						pointer1 = pointer1.next;
+					}
+					pointer = pointer.next;
+				}
+		
+	}
+
+	@Override
+	public int getID() {
+		// TODO Auto-generated method stub
+		return 2;
 	}
 }
