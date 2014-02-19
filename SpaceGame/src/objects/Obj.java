@@ -63,18 +63,31 @@ public abstract class Obj
 	
 	public float directionTo(Obj a)
 	{
-		float dx =  - (this.location[0] - a.location[0]);
-		float dy =  - (this.location[1] - a.location[1]);
-		float dir = (float) (Math.atan2(dy, dx));
-		//if (dir <= 0)
-		//dir = 360 + dir;
-		return (float)Math.toDegrees(dir);
+		float dx =  a.location[0] - this.location[0];
+		float dy =  a.location[1] - this.location[1];
+		float dir = (float) Math.atan2(dy, dx);
+		return (float) Math.toDegrees(dir);
+	}
+	
+	public float directionTo(float x, float y)
+	{
+		float dx = x - this.location[0];
+		float dy = y - this.location[1];
+		float dir = (float) Math.atan2(dy, dx);
+		return (float) Math.toDegrees(dir);
 	}
 	
 	public float distanceTo(Obj a)
 	{
 		float dx = this.location[0] - a.location[0];
 		float dy = this.location[1] - a.location[1];
+		return (float) Math.sqrt(dy*dy + dx*dx);
+	}
+	
+	public float distanceTo(float x, float y)
+	{
+		float dx = this.location[0] - x;
+		float dy = this.location[1] - y;
 		return (float) Math.sqrt(dy*dy + dx*dx);
 	}
 	
