@@ -5,6 +5,10 @@ Coded by David Gilhooley and Blake Lawson
 
 Hello and welcome to the wonderful world of SpaceJam! Named for its obvious space theme and the fact that game coding is typically called a "game jam", this game is being developed strictly by two Princeton students in their spare time. 
 
+How To Run
+==========
+We typically pull the files and open an eclipse workspace right ontop of it. However, one detail needs to be changed in order for it to work. In eclipse, open configure build path and change the Native library location. The file that you should change it to is lwgl-2.9.1/native/ and then your OS.
+
 Game Vision
 ===========
 
