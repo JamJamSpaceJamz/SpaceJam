@@ -20,7 +20,7 @@ public abstract class Ship extends Obj
 	protected float rotation, range, damage, speed;
 	protected int capacity, cargo, weaponCoolDown, radarCoolDown; 
 	final protected int COOLDOWN;
-	final protected float MAX_SPEED = 15;
+	final protected float MAX_SPEED = 12;
 	final protected float[] baseLocation = new float[2];
 	protected ArrayList<Obj> closeObj, objectsInRange;
 	protected SimpleTest gameInst;

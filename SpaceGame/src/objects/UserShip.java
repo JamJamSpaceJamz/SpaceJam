@@ -29,16 +29,16 @@ public class UserShip extends Ship
 		{
 			speed = (float)Math.sqrt(velocity[0]*velocity[0]+velocity[1]*velocity[1]);
 			
-			if (speed <= MAX_SPEED)
+			if (speed < MAX_SPEED)
 			{
 				acceleration[0] = (float) Helper.cos(rotation)*2; //speed;
 				acceleration[1] = (float) Helper.sin(rotation)*2; //speed;
+				stop(false);
+				velocity[0] += acceleration[0]*delta*.01f;
+				velocity[1] += acceleration[1]*delta*.01f;
 			} else {
 				stop(true);
 			}
-
-			velocity[0] += acceleration[0]*delta*.01f;
-			velocity[1] += acceleration[1]*delta*.01f;
 		}
 
 		for(int i = 0; i < 2; i++)
