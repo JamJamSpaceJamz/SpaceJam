@@ -69,10 +69,6 @@ public abstract class Ship extends Obj
 		g.setColor(Color.green);
 		drawCargo(g);
 		g.fill(shape);
-
-		// visual representation of the range of the ship
-//		Circle circle = new Circle(location[0], location[1], range);
-//		g.draw(circle);
 	}
 
 	abstract public void accelerate(boolean acc);
@@ -277,8 +273,9 @@ public abstract class Ship extends Obj
 		{
 			credit += amount;
 			cargo++;
+			if (cargo == capacity) 
+				isFullCredits = true;
 		}
-//		System.out.println(!full);
 		return !full;
 	}
 }

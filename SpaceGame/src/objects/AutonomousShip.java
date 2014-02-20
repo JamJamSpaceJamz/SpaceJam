@@ -5,6 +5,11 @@ import game.SimpleTest;
 
 public class AutonomousShip extends Ship
 {
+	private final int SEARCH_TIMER = 100;
+	private int timer = 0;
+	private float dir = 0;
+	private float[] searchDirection = { (float)(2.0*Math.random() - 1.0), (float)(2.0*Math.random() - 1.0) };
+	
 	public AutonomousShip (int size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst, boolean team)
 	{
 		// Use Ship constructor.
@@ -23,7 +28,7 @@ public class AutonomousShip extends Ship
 			hunt();
 	}
 	
-	// Search the map for a new asteroid to shoot
+	// Destroy asteroids around the map
 	protected void hunt()
 	{
 		// fly to closest asteroid until a certain distance away
@@ -38,9 +43,38 @@ public class AutonomousShip extends Ship
 		}
 	}
 	
+	// Search the map for a new asteroid to shoot
 	protected void findAsteroids()
 	{
-		cruiseControl(10);
+		// Fly forward for a set period of time, then turn to a random 
+		// direction and try again. In the future, investigate 
+		// non-random function to cover the map more efficiently.
+		if (timer >= SEARCH_TIMER)
+		{
+			if (dir - rotation > 3)
+			{
+				rotateRight();
+				stop();
+			}
+			else if (dir - rotation < -3)
+			{
+				rotateLeft();
+				stop();
+			}
+			else
+			{
+				searchDirection[0] = (float)(2.0*Math.random() - 1.0) + this.location[0];
+				searchDirection[1] = (float)(2.0*Math.random() - 1.0) + this.location[1];
+				dir = directionTo(searchDirection[0], searchDirection[1]);
+				timer = 0;
+			}
+			
+		}
+		else
+		{
+			cruiseControl(10);
+			++timer;
+		}
 	}
 	
 	protected void attackAsteroid(Asteroid target)

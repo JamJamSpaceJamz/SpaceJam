@@ -10,7 +10,7 @@ public abstract class Obj
 {
 	protected Shape shape;
 	//  the objects speed and velocity
-	protected float[] location, velocity, acceleration;// = new float[2];
+	protected float[] location, velocity, acceleration;
 	protected float mass;
 	protected boolean collided;
 	protected boolean team; // At some point we're going to need this.
