@@ -108,7 +108,6 @@ public class Asteroid extends Obj
 		int dropChance = (int) (Math.random()*2);
 		if (dropChance == 1 )
 		{
-//			System.out.println("droppin");
 			int worth = (int) (Math.random() * 3 + 1);
 			int direction = (int) (Math.random() *360);
 			float[] location = new float[2];

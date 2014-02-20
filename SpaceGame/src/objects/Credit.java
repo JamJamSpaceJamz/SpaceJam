@@ -26,7 +26,6 @@ public class Credit extends Obj
 		// hardcoded acceleration number
 		ACC = 7;
 		
-//		System.out.println(amount);
 		this.location = location;
 		this.direction = direction;
 		this.gameInst = gameInst;
@@ -102,9 +101,7 @@ public class Credit extends Obj
 			Ship hit = (Ship) hitter;
 			if (hit.credit(amount))
 			{
-//				System.out.println("removing");
 				this.remove();
-				
 			}
 			return false;
 		}

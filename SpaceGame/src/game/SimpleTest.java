@@ -38,16 +38,19 @@ public class SimpleTest extends BasicGame
 		float health = 30;
 		int capacity = 15;
 		// Change the following line to set the type of ship.
-		ship = new AutonomousShip(size, speed, rotation, range, capacity, health, this, true);
+		ship = new UserShip(size, speed, rotation, range, capacity, health, this, true);
+		Ship autoShip = new AutonomousShip(size, speed, rotation, range, capacity, health, this, true);
 		shipList = new List<Obj>();
 		
 		shipList.add(ship);
+		shipList.add(autoShip);
 		
 		turretList = new List<Obj>();
 		bulletList = new List<Obj>();
 		creditList = new List<Obj>();
 		astList = new List<Obj>();
-		for (int i = 0; i < 15; i++)
+		// Generate all asteroids
+		for (int i = 0; i < 25; i++)
 		{
 			float[] loc = new float[2];
 			loc[0] = (float) (Math.random()* container.getWidth());
@@ -74,7 +77,6 @@ public class SimpleTest extends BasicGame
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException 
 	{
-		//ship.update(delta);
 		CollisionChecker.checkAll(gameList, delta);
 		List<List<Obj>> pointer = gameList.next;
 		while(pointer != null)
@@ -124,9 +126,7 @@ public class SimpleTest extends BasicGame
 	public void render(GameContainer container, Graphics g) throws SlickException 
 	{
 		
-		g.setLineWidth(.3f);
-		//System.out.println(container.getHeight() + "  " + container.getWidth());
-		//ship.draw(g);
+		g.setLineWidth(0.3f);
 
 		List<List<Obj>> pointer = gameList.next;
 		while(pointer != null)
