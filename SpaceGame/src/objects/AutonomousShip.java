@@ -80,11 +80,7 @@ public class AutonomousShip extends Ship
 	protected void attackAsteroid(Asteroid target)
 	{
 		stop(); // Make sure the asteroid does not go out of range
-		float angularDistance = directionTo(target) - rotation;
-		if (angularDistance > 5)
-			rotateRight();
-		else if (angularDistance < -5)
-			rotateLeft();
+		if (!turnTo(directionTo(target)));
 		else
 			fire();
 	}
@@ -120,11 +116,16 @@ public class AutonomousShip extends Ship
 	
 	public void accelerate(boolean acc)
 	{
-		accelerate();
+		if (acc)
+			accelerate();
+		else
+			accelerate = acc;
 	}
 	
 	public void accelerate()
 	{		
+		accelerate = true;
+		
 		if (speed <= MAX_SPEED)
 		{
 			acceleration[0] = (float) Helper.cos(rotation)*2; //speed;
@@ -141,31 +142,48 @@ public class AutonomousShip extends Ship
 
 	public void rotateLeft(boolean turn)
 	{
-		rotateLeft();
+		if (turn)
+			rotateLeft();
+		else
+			turnLeft = turn;
 	}
 	
 	public void rotateLeft()
 	{
+		turnLeft = true;
 		rotation -= rotateSpd * .01f * delta;
+		if (rotation < -360)
+			rotation += 360;
 	}
 	
 	public void rotateRight(boolean turn)
 	{
-		rotateRight();
+		if (turn)
+			rotateRight();
+		else 
+			turnRight = turn;
 	}
 	
 	public void rotateRight()
 	{
+		turnRight = true;
 		rotation += rotateSpd * .01f * delta;
+		if (rotation > 360)
+			rotation -= 360;
 	}
 	
 	public void stop(boolean truth)
 	{
-		stop();
+		if (truth)
+			stop();
+		else 
+			stop = truth;
 	}
 	
 	public void stop()
 	{
+		stop = true;
+		
 		velocity[0] -= velocity[0]/10 * delta*.01f;
 		velocity[1] -= velocity[1]/10 * delta*.01f;
 		

@@ -117,17 +117,8 @@ public abstract class Ship extends Obj
 	
 	protected void navigateTo(Obj a)
 	{
-		float angularDistance = directionTo(a) - this.rotation;
-		if (angularDistance > 3)
-		{
-			this.rotateRight(true);
-			this.stop(true);
-		}
-		else if (angularDistance < -3)
-		{
-			this.rotateLeft(true);
-			this.stop(true);
-		}
+		if (!turnTo(directionTo(a)))
+			stop(true);
 		else if (distanceTo(a) > 0)
 			accelerate(true);
 		else
@@ -136,17 +127,8 @@ public abstract class Ship extends Obj
 	
 	protected void navigateTo(float x, float y)
 	{
-		float angularDistance = directionTo(x, y) - this.rotation;
-		if (angularDistance > 3)
-		{
-			this.rotateRight(true);
-			this.stop(true);
-		}
-		else if (angularDistance < -3)
-		{
-			this.rotateLeft(true);
-			this.stop(true);
-		}
+		if (!turnTo(directionTo(x, y)))
+			stop(true);
 		else if (distanceTo(x, y) > 0)
 			accelerate(true);
 		else
@@ -156,6 +138,32 @@ public abstract class Ship extends Obj
 	protected void returnToBase()
 	{
 		navigateTo(baseLocation[0], baseLocation[1]);
+	}
+	
+	//protected boolean turnTo(float angle)
+	public boolean turnTo(float angle)
+	{
+		return turnTo(angle, 3.0f);
+	}
+	
+	protected boolean turnTo(float angle, float accuracy)
+	{
+		// angle in degrees
+		float angularDistance = angle - rotation;
+		if (angularDistance > accuracy)
+		{
+			this.rotateRight(true);
+			return false;
+		}
+		if (angularDistance < -accuracy)
+		{
+			this.rotateLeft(true);
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 
 	private ArrayList<Obj> objInRange()
