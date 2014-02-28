@@ -23,14 +23,11 @@ public abstract class Ship extends Obj
 	final protected float MAX_SPEED = 12;
 	final protected float[] baseLocation = new float[2];
 	protected ArrayList<Obj> closeObj, objectsInRange;
-	protected SimpleTest gameInst;
 
-	public Ship (int size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst, boolean team)
+	public Ship (float[] spawn, int size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst, int team)
 	{
 		COOLDOWN = 5;
-		location = new float[2];
-		location[0] = 200;
-		location[1] = 200;
+		location = spawn;
 		// baseLocation assumes that the ship spawns inside the base.
 		baseLocation[0] = location[0];
 		baseLocation[1] = location[1];
@@ -177,40 +174,6 @@ public abstract class Ship extends Obj
 				obj1 = list1.data.next;
 		}
 		return inRange;
-	}
-
-	protected boolean checkBorders()
-	{
-		boolean check = false;
-		int width = gameInst.container.getWidth();
-		int height = gameInst.container.getHeight();
-
-		if (location[0] >= width)
-		{
-			check = true;
-			if (velocity[0] > 0)
-				velocity[0] *= -.5f;
-		}
-		if (location[0] <= 0)
-		{
-			check = true;
-			if (velocity[0] < 0)
-				velocity[0] *= -.5f;
-		}
-
-		if (location[1] >= height)
-		{
-			check = true;
-			if (velocity[1] > 0)
-				velocity[1] *= -.5f;
-		}
-		if (location[1] <= 0)
-		{
-			check = true;
-			if (velocity[1] < 0)
-				velocity[1] *= -.5f;
-		}
-		return check;
 	}
 
 	// creates a bullet and adds it to the game's bulletlist\

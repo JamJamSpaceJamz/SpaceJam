@@ -141,19 +141,18 @@ public class SimpleTest extends BasicGameState
 	public void update(GameContainer arg0, StateBasedGame arg1, int delta)
 			throws SlickException {
 		//ship.update(delta);
-				CollisionChecker.checkAll(gameList, delta);
-				List<List<Obj>> pointer = gameList.next;
-				while(pointer != null)
-				{
-					List<Obj> pointer1 = pointer.data.next;
-					while (pointer1 != null)
-					{
-						pointer1.data.update(delta);
-						pointer1 = pointer1.next;
-					}
-					pointer = pointer.next;
-				}
-		
+		CollisionChecker.checkAll(gameList, delta);
+		List<List<Obj>> pointer = gameList.next;
+		while(pointer != null)
+		{
+			List<Obj> pointer1 = pointer.data.next;
+			while (pointer1 != null)
+			{
+				pointer1.data.update(delta);
+				pointer1 = pointer1.next;
+			}
+			pointer = pointer.next;
+		}
 	}
 
 	@Override

@@ -5,9 +5,9 @@ import game.SimpleTest;
 
 public class UserShip extends Ship
 {
-	public UserShip(int size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst, boolean team)
+	public UserShip(float[] spawn, int size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst, int team)
 	{
-		super(size, speed, rotateSpd, range, capacity, health, inst, team);
+		super(spawn, size, speed, rotateSpd, range, capacity, health, inst, team);
 	}
 	
 	// is called once a frame and updates the ship

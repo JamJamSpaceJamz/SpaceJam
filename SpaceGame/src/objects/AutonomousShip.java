@@ -10,10 +10,10 @@ public class AutonomousShip extends Ship
 	private float dir = 0;
 	private float[] searchDirection = { (float)(2.0*Math.random() - 1.0), (float)(2.0*Math.random() - 1.0) };
 	
-	public AutonomousShip (int size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst, boolean team)
+	public AutonomousShip (float[] spawn, int size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst, int team)
 	{
 		// Use Ship constructor.
-		super(size, speed, rotateSpd, range, capacity, health, inst, team);
+		super(spawn, size, speed, rotateSpd, range, capacity, health, inst, team);
 	}
 	
 	@Override

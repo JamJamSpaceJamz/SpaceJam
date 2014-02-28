@@ -13,7 +13,7 @@ public abstract class Obj
 	protected float[] location, velocity, acceleration;
 	protected float mass;
 	protected boolean collided;
-	protected boolean team; // At some point we're going to need this.
+	protected int team; // At some point we're going to need this.
 	
 	// the specific instance of the object in the game
 	// should only be used to remove the object from the game
@@ -59,6 +59,40 @@ public abstract class Obj
 	public void remove()
 	{
 		objInst.remove();
+	}
+	
+	protected boolean checkBorders()
+	{
+		boolean check = false;
+		int width = gameInst.container.getWidth();
+		int height = gameInst.container.getHeight();
+		
+		if (location[0] >= width)
+		{
+			check = true;
+			if (velocity[0] > 0)
+				velocity[0] *= -.5f;
+		}
+		if (location[0] <= 0)
+		{
+			check = true;
+			if (velocity[0] < 0)
+				velocity[0] *= -.5f;
+		}
+		
+		if (location[1] >= height)
+		{
+			check = true;
+			if (velocity[1] > 0)
+				velocity[1] *= -.5f;
+		}
+		if (location[1] <= 0)
+		{
+			check = true;
+			if (velocity[1] < 0)
+				velocity[1] *= -.5f;
+		}
+		return check;
 	}
 	
 	public float directionTo(Obj a)
