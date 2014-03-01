@@ -15,7 +15,6 @@ public class Base extends Obj
 	private final float size, range;
 	private final float TURNSPEED = 0.5f;
 	private final Color color;
-	private Team team;
 	private float rotation;
 	private float[] points;
 	private int credit;

@@ -15,7 +15,7 @@ public class Team
 	private SimpleTest gameInst;
 	
 	// Make sure to update this enum if more lists are added to this class.
-	public enum objectType { BULLETS, SHIPS, BASES, TURRETS }
+	public enum objectType { BULLET, SHIP, BASE, TURRET, USERSHIP, AUTOSHIP }
 	
 	public Team(int teamNum, SimpleTest gameInst)
 	{
@@ -28,42 +28,39 @@ public class Team
 	
 	private void startingUnits()
 	{
-		// Add a base. All initial values could/should be tweaked.
-		final float[] BASESPAWN = {200f, 200f}; // TODO: Add method to set base location based on team number.
-		final float BASESIZE = 30;
-		final Color BASECOLOR = Color.green;
-		Base mainBase = new Base(BASESIZE, BASESPAWN, BASECOLOR, gameInst, Team);
-		baseList.add(mainBase);
+		addUnit(objectType.BASE);
 		
 		// Add three miner ships. Two autonomous; One user controlled.
-		final int AUTOSHIPS = 2, USERSHIPS = 1, SHIP_SPEED = 3, SHIP_SIZE = 5;
-		final int SHIP_ROTATION = 20, SHIP_CAPACITY = 15; // TODO: Set initial rotation based on spawn location.
-		final float SHIP_RANGE = 100, SHIP_HEALTH = 30;
-		float[] shipSpawn = {200f, 200f}; // TODO: Add method to set unique spawn locations for each ship.
-		for (int i=0; i<AUTOSHIPS; i++)
+		final int AUTOSHIPS = 2, USERSHIPS = 1;
+		addUnit(objectType.AUTOSHIP, AUTOSHIPS);
+		addUnit(objectType.USERSHIP, USERSHIPS);	
+	}
+	
+	public void addUnit(objectType a, int quantity)
+	{
+		switch(a)
 		{
-			Ship ship = new AutonomousShip(shipSpawn, SHIP_SIZE, SHIP_SPEED, SHIP_ROTATION,
-										   SHIP_RANGE, SHIP_CAPACITY, SHIP_HEALTH, gameInst, Team);
-			shipList.add(ship);
+			case SHIP:
+			case AUTOSHIP:
+				addAutoShip(quantity);
+				break;
+			case USERSHIP:
+				addUserShip(quantity);
+				break;
+			case BASE:
+				addBase();
+				break;
 		}
-		for (int i=0; i<USERSHIPS; i++)
-		{
-			Ship ship = new UserShip(shipSpawn, SHIP_SIZE, SHIP_SPEED, SHIP_ROTATION, 
-					  				 SHIP_RANGE, SHIP_CAPACITY, SHIP_HEALTH, gameInst, Team);
-			shipList.add(ship);
-		}
-		
-
 	}
 	
 	public void addUnit(objectType a)
 	{
-		
+		addUnit(a, 1);
 	}
 	
-	public void removeUnit(objectType a)
+	public void removeUnit(Obj a)
 	{
-		
+		a.remove();
 	}
 	
 	// Make sure to update this method if more lists are added to this class.
@@ -71,10 +68,10 @@ public class Team
 	{
 		switch(a)
 		{
-			case BULLETS: return bulletList;
-			case SHIPS:	  return shipList;
-			case BASES:	  return baseList;
-			case TURRETS: return turretList;
+			case BULLET:  return bulletList;
+			case SHIP:	  return shipList;
+			case BASE:	  return baseList;
+			case TURRET:  return turretList;
 			default:      return null;
 		}
 	}
@@ -82,5 +79,53 @@ public class Team
 	public int getTeam()
 	{
 		return Team;
+	}
+	
+	private void addAutoShip(int quantity)
+	{
+		final int SHIP_SPEED = 3, SHIP_SIZE = 5;
+		final int SHIP_ROTATION = 20, SHIP_CAPACITY = 15; // TODO: Set initial rotation based on spawn location.
+		final float SHIP_RANGE = 100, SHIP_HEALTH = 30;
+		float[] shipSpawn = {200f, 200f}; // TODO: Add method to set unique spawn locations for each ship.
+		for (int i=0; i<quantity; i++)
+		{
+			Ship ship = new AutonomousShip(shipSpawn, SHIP_SIZE, SHIP_SPEED, SHIP_ROTATION,
+										   SHIP_RANGE, SHIP_CAPACITY, SHIP_HEALTH, gameInst, this);
+			shipList.add(ship);
+		}
+	}
+	
+	private void addAutoShip()
+	{
+		addAutoShip(1);
+	}
+	
+	private void addUserShip(int quantity)
+	{
+		final int SHIP_SPEED = 3, SHIP_SIZE = 5;
+		final int SHIP_ROTATION = 20, SHIP_CAPACITY = 15; // TODO: Set initial rotation based on spawn location.
+		final float SHIP_RANGE = 100, SHIP_HEALTH = 30;
+		float[] shipSpawn = {200f, 200f}; // TODO: Add method to set unique spawn locations for each ship.
+		for (int i=0; i<quantity; i++)
+		{
+			Ship ship = new UserShip(shipSpawn, SHIP_SIZE, SHIP_SPEED, SHIP_ROTATION,
+										   SHIP_RANGE, SHIP_CAPACITY, SHIP_HEALTH, gameInst, this);
+			shipList.add(ship);
+		}
+	}
+	
+	private void addUserShip()
+	{
+		addUserShip(1);
+	}
+	
+	private void addBase()
+	{
+		// Add a base. All initial values could/should be tweaked.
+		final float[] BASESPAWN = {200f, 200f}; // TODO: Add method to set base location based on team number.
+		final float BASESIZE = 30;
+		final Color BASECOLOR = Color.green;
+		Base mainBase = new Base(BASESIZE, BASESPAWN, BASECOLOR, gameInst, this);
+		baseList.add(mainBase);
 	}
 }

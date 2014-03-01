@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import game.Helper;
 import game.List;
 import game.SimpleTest;
+import game.Team;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -24,7 +25,7 @@ public abstract class Ship extends Obj
 	final protected float[] baseLocation = new float[2];
 	protected ArrayList<Obj> closeObj, objectsInRange;
 
-	public Ship (float[] spawn, int size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst, int team)
+	public Ship (float[] spawn, int size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst, Team team)
 	{
 		COOLDOWN = 5;
 		location = spawn;

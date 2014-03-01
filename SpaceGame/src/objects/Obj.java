@@ -2,6 +2,7 @@ package objects;
 
 import game.List;
 import game.SimpleTest;
+import game.Team;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Shape;
@@ -13,7 +14,7 @@ public abstract class Obj
 	protected float[] location, velocity, acceleration;
 	protected float mass;
 	protected boolean collided;
-	protected int team; // At some point we're going to need this.
+	protected Team team; // At some point we're going to need this.
 	
 	// the specific instance of the object in the game
 	// should only be used to remove the object from the game
