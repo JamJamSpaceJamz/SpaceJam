@@ -8,14 +8,14 @@ import objects.Obj;
 import objects.Ship;
 import objects.UserShip;
 
-public class Team 
+public abstract class Team 
 {
 	private final int Team;
-	private List<Obj> bulletList, shipList, baseList, turretList;
+	private List<Obj> astList, baseList, bulletList, shipList, turretList;
 	private SimpleTest gameInst;
 	
 	// Make sure to update this enum if more lists are added to this class.
-	public enum objectType { BULLET, SHIP, BASE, TURRET, USERSHIP, AUTOSHIP }
+	public enum objectType { ASTERIOD, AUTOSHIP, BASE, BULLET, SHIP, TURRET, USERSHIP }
 	
 	public Team(int teamNum, SimpleTest gameInst)
 	{
@@ -26,14 +26,14 @@ public class Team
 		
 	}
 	
-	private void startingUnits()
+	private abstract void startingUnits()
 	{
-		addUnit(objectType.BASE);
-		
-		// Add three miner ships. Two autonomous; One user controlled.
-		final int AUTOSHIPS = 2, USERSHIPS = 1;
-		addUnit(objectType.AUTOSHIP, AUTOSHIPS);
-		addUnit(objectType.USERSHIP, USERSHIPS);	
+//		addUnit(objectType.BASE);
+//		
+//		// Add three miner ships. Two autonomous; One user controlled.
+//		final int AUTOSHIPS = 2, USERSHIPS = 1;
+//		addUnit(objectType.AUTOSHIP, AUTOSHIPS);
+//		addUnit(objectType.USERSHIP, USERSHIPS);	
 	}
 	
 	public void addUnit(objectType a, int quantity)
