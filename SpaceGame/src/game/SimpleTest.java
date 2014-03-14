@@ -4,9 +4,6 @@ import objects.Asteroid;
 import objects.Base;
 import objects.CollisionChecker;
 import objects.Obj;
-import objects.Ship;
-import objects.AutonomousShip;
-import objects.UserShip;
 
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
@@ -16,6 +13,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+import ships.AutonomousShip;
+import ships.Ship;
+import ships.UserShip;
 
 public class SimpleTest extends BasicGameState
 {
@@ -42,11 +43,11 @@ public class SimpleTest extends BasicGameState
 		
 		// This stuff will all be changed when Team class is properly implemented.
 		ship = new UserShip(size, speed, rotation, range, capacity, health, this, true);
-		Ship autoShip = new AutonomousShip(size, speed, rotation, range, capacity, health, this, true);
+		//Ship autoShip = new AutonomousShip(size, speed, rotation, range, capacity, health, this, true);
 		shipList = new List<Obj>();
 		
 		shipList.add(ship);
-		shipList.add(autoShip);
+		//shipList.add(autoShip);
 		
 		turretList = new List<Obj>();
 		bulletList = new List<Obj>();

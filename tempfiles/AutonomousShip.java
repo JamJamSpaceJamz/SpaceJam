@@ -23,13 +23,10 @@ public class AutonomousShip extends Ship
 		delta = dt;
 		
 		radar();
-		if (isFullCredits)
-			returnToBase();
-		else		
-			hunt();
+		hunt();
 	}
 	
-	// Destroy asteroids around the map
+	// Search the map for a new asteroid to shoot
 	protected void hunt()
 	{
 		// fly to closest asteroid until a certain distance away
@@ -44,44 +41,19 @@ public class AutonomousShip extends Ship
 		}
 	}
 	
-	// Search the map for a new asteroid to shoot
 	protected void findAsteroids()
 	{
-		// Fly forward for a set period of time, then turn to a random 
-		// direction and try again. In the future, investigate 
-		// non-random function to cover the map more efficiently.
-		if (timer >= SEARCH_TIMER)
-		{
-			if (dir - rotation > 3)
-			{
-				rotateRight();
-				stop();
-			}
-			else if (dir - rotation < -3)
-			{
-				rotateLeft();
-				stop();
-			}
-			else
-			{
-				searchDirection[0] = (float)(2.0*Math.random() - 1.0) + this.location[0];
-				searchDirection[1] = (float)(2.0*Math.random() - 1.0) + this.location[1];
-				dir = directionTo(searchDirection[0], searchDirection[1]);
-				timer = 0;
-			}
-			
-		}
-		else
-		{
-			cruiseControl(10);
-			++timer;
-		}
+		cruiseControl(10);
 	}
 	
 	protected void attackAsteroid(Asteroid target)
 	{
 		stop(); // Make sure the asteroid does not go out of range
-		if (!turnTo(directionTo(target)));
+		float angularDistance = directionTo(target) - rotation;
+		if (angularDistance > 5)
+			rotateRight();
+		else if (angularDistance < -5)
+			rotateLeft();
 		else
 			fire();
 	}
@@ -117,17 +89,12 @@ public class AutonomousShip extends Ship
 	
 	public void accelerate(boolean acc)
 	{
-		if (acc)
-			accelerate();
-		else
-			accelerate = acc;
+		accelerate();
 	}
 	
 	public void accelerate()
 	{		
-		accelerate = true;
-		
-		if (speed <= MAX_SPEED)
+		if (!this.checkBorders())
 		{
 			acceleration[0] = (float) Helper.cos(rotation)*2; //speed;
 			acceleration[1] = (float) Helper.sin(rotation)*2; //speed;
@@ -137,54 +104,35 @@ public class AutonomousShip extends Ship
 			
 			setLocation();
 		}
-		else
-			stop();
 	}
 
 	public void rotateLeft(boolean turn)
 	{
-		if (turn)
-			rotateLeft();
-		else
-			turnLeft = turn;
+		rotateLeft();
 	}
 	
 	public void rotateLeft()
 	{
-		turnLeft = true;
 		rotation -= rotateSpd * .01f * delta;
-		if (rotation < -360)
-			rotation += 360;
 	}
 	
 	public void rotateRight(boolean turn)
 	{
-		if (turn)
-			rotateRight();
-		else 
-			turnRight = turn;
+		rotateRight();
 	}
 	
 	public void rotateRight()
 	{
-		turnRight = true;
 		rotation += rotateSpd * .01f * delta;
-		if (rotation > 360)
-			rotation -= 360;
 	}
 	
 	public void stop(boolean truth)
 	{
-		if (truth)
-			stop();
-		else 
-			stop = truth;
+		stop();
 	}
 	
 	public void stop()
 	{
-		stop = true;
-		
 		velocity[0] -= velocity[0]/10 * delta*.01f;
 		velocity[1] -= velocity[1]/10 * delta*.01f;
 		
@@ -193,8 +141,6 @@ public class AutonomousShip extends Ship
 	
 	public void setLocation()
 	{
-		checkBorders();
-		
 		speed = (float) Math.sqrt(velocity[0]*velocity[0] + velocity[1]*velocity[1]);
 		
 		location[0] += velocity[0]*delta*.01f;
@@ -204,9 +150,9 @@ public class AutonomousShip extends Ship
 	// This method allows the user to set a speed for the ship
 	public void cruiseControl(double desiredSpeed)
 	{
-		if (speed < desiredSpeed)
+		if (desiredSpeed <= MAX_SPEED && speed < desiredSpeed)
 			accelerate();
-		else if (speed > desiredSpeed)
+		else if (speed > MAX_SPEED || speed > desiredSpeed)
 			stop();
 		else 
 			setLocation();

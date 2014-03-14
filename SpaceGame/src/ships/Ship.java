@@ -1,4 +1,4 @@
-package objects;
+package ships;
 
 import java.util.ArrayList;
 
@@ -6,6 +6,11 @@ import game.Helper;
 import game.List;
 import game.SimpleTest;
 import game.Team;
+
+import objects.Base;
+import objects.Bullet;
+import objects.Credit;
+import objects.Obj;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -20,7 +25,7 @@ public abstract class Ship extends Obj
 	// NOTE ROTATION IS IN DEGREES
 	protected float rotation, range, damage, speed;
 	protected int capacity, cargo, weaponCoolDown, radarCoolDown; 
-	final protected int COOLDOWN;
+	protected int COOLDOWN;
 	final protected float MAX_SPEED = 12;
 	final protected float[] baseLocation = new float[2];
 	protected ArrayList<Obj> closeObj, objectsInRange;
@@ -144,6 +149,10 @@ public abstract class Ship extends Obj
 		return turnTo(angle, 3.0f);
 	}
 	
+	/*
+	 * Turns to a given angle with a given speed 
+	 *  TODO TURN THE CORRECT DISTANCE AND WORK OUT A MAX TURN SPEED
+	 */
 	protected boolean turnTo(float angle, float accuracy)
 	{
 		// angle in degrees
@@ -194,17 +203,9 @@ public abstract class Ship extends Obj
 			// reset cooldown
 			weaponCoolDown = COOLDOWN;
 			
-			List<Obj> pointer = gameInst.bulletList;
-			List<Obj> wrapper = new List<Obj>();
-			Bullet shot = new Bullet(location, rotation, range, damage, wrapper, this.team);
-			wrapper.data = shot; 
-			wrapper.previous = pointer;
-			wrapper.next = pointer.next;
-			if (wrapper.next != null)
-			{
-				wrapper.next.previous = wrapper;
-			}
-			pointer.next = wrapper;
+			
+			Bullet shot = new Bullet(location, rotation, range, damage, this.team);
+			gameInst.bulletList.add(shot);
 		} else {
 			--weaponCoolDown;
 		}

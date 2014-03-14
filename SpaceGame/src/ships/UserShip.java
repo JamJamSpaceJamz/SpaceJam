@@ -1,4 +1,4 @@
-package objects;
+package ships;
 
 import game.Helper;
 import game.SimpleTest;
