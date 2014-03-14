@@ -39,6 +39,8 @@ public class SimpleTest extends BasicGameState
 		float health = 30;
 		int capacity = 15;
 		// Change the following line to set the type of ship.
+		
+		// This stuff will all be changed when Team class is properly implemented.
 		ship = new UserShip(size, speed, rotation, range, capacity, health, this, true);
 		Ship autoShip = new AutonomousShip(size, speed, rotation, range, capacity, health, this, true);
 		shipList = new List<Obj>();
