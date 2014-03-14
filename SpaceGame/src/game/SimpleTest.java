@@ -7,6 +7,7 @@ import objects.Obj;
 import objects.Ship;
 import objects.AutonomousShip;
 import objects.UserShip;
+import game.Team.objectType;
 
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
@@ -20,8 +21,10 @@ import org.newdawn.slick.state.StateBasedGame;
 public class SimpleTest extends BasicGameState
 {
 	private Ship ship;
-	public List<Obj> bulletList, shipList;
-	public List<Obj> astList, creditList, baseList, turretList;
+	public Team neutralTeam;
+	public List<Team> playerTeams, allTeams;
+//	public List<Obj> bulletList, shipList;
+//	public List<Obj> astList, creditList, baseList, turretList;
 	public List<List<Obj>> gameList;
 	public GameContainer container;
 	
@@ -38,41 +41,67 @@ public class SimpleTest extends BasicGameState
 		float range = 100;
 		float health = 30;
 		int capacity = 15;
-		// Change the following line to set the type of ship.
+		final int NUM_PLAYERS = 1;
 		
-		// This stuff will all be changed when Team class is properly implemented.
-		ship = new UserShip(size, speed, rotation, range, capacity, health, this, true);
-		Ship autoShip = new AutonomousShip(size, speed, rotation, range, capacity, health, this, true);
-		shipList = new List<Obj>();
-		
-		shipList.add(ship);
-		shipList.add(autoShip);
-		
-		turretList = new List<Obj>();
-		bulletList = new List<Obj>();
-		creditList = new List<Obj>();
-		astList = new List<Obj>();
-		// Generate all asteroids
-		for (int i = 0; i < 25; i++)
+		// Make the NPCs
+		neutralTeam = new NeutralTeam(0, this);
+		allTeams.add(neutralTeam);
+		// Make a team for each player
+		for (int i = 1; i <= NUM_PLAYERS; i++)
 		{
-			float[] loc = new float[2];
-			loc[0] = (float) (Math.random()* container.getWidth());
-			loc[1] = (float) (Math.random()* container.getHeight());
-
-			Asteroid ast = new Asteroid(loc, (float) (Math.random() * 10 + 4), this);
-			astList.add(ast);
+			Team newPlayer = new PlayerTeam(i, this);
+			playerTeams.add(newPlayer);
+			allTeams.add(newPlayer);
 		}
-		baseList = new List<Obj>();
-		float[] baseLoc = {200f, 200f};
-		Base base = new Base(30, baseLoc, Color.green, this, true);
-		baseList.add(base);
+//		
+//		// Change the following line to set the type of ship.
+//		
+//		// This stuff will all be changed when Team class is properly implemented.
+//		ship = new UserShip(size, speed, rotation, range, capacity, health, this, true);
+//		Ship autoShip = new AutonomousShip(size, speed, rotation, range, capacity, health, this, true);
+//		
+//		Team
+//		
+//		shipList = new List<Obj>();
+//		
+//		shipList.add(ship);
+//		shipList.add(autoShip);
+//		
+//		turretList = new List<Obj>();
+//		bulletList = new List<Obj>();
+//		creditList = new List<Obj>();
+//		astList = new List<Obj>();
+//		// Generate all asteroids
+//		for (int i = 0; i < 25; i++)
+//		{
+//			float[] loc = new float[2];
+//			loc[0] = (float) (Math.random()* container.getWidth());
+//			loc[1] = (float) (Math.random()* container.getHeight());
+//
+//			Asteroid ast = new Asteroid(loc, (float) (Math.random() * 10 + 4), this);
+//			astList.add(ast);
+//		}
+//		baseList = new List<Obj>();
+//		float[] baseLoc = {200f, 200f};
+//		Base base = new Base(30, baseLoc, Color.green, this, true);
+//		baseList.add(base);
+		
+		
 		gameList = new List<List<Obj>>();
-		gameList.add(bulletList);
-		gameList.add(astList);
-		gameList.add(shipList);
-		gameList.add(creditList);
-		gameList.add(baseList);
-		gameList.add(turretList);		
+		
+		Team pointer = allTeams.data;
+		while (pointer != null)
+		{
+			gameList.add(pointer.getList(objectType.ASTEROID));
+			gameList.add(pointer.getList(objectType.BASE));
+			gameList.add(pointer.getList(objectType.BULLET));
+			gameList.add(pointer.getList(objectType.CREDIT));
+			gameList.add(pointer.getList(objectType.SHIP));
+			gameList.add(pointer.getList(objectType.TURRET));	
+			
+			// TODO: David, can you check that I'm using your list class correctly?
+			pointer = allTeams.next.data;
+		}		
 	}
 
 	@Override
