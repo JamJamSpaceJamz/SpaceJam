@@ -8,6 +8,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Shape;
 
+import ships.Ship;
+
 import java.lang.Math;
 
 public class Bullet extends Obj
@@ -16,7 +18,7 @@ public class Bullet extends Obj
 	private float points[];
 	private float damage;
 
-	public Bullet(float[] location, float rotation, float range, float damage, List<Obj> inst, boolean team)
+	public Bullet(float[] location, float rotation, float range, float damage, boolean team)
 	{
 		// adding so its not null, should fix later
 		this.location = location;
@@ -36,7 +38,6 @@ public class Bullet extends Obj
 		this.damage = damage;
 //		System.out.println(velocity[0] + "  " + velocity[1]);
 
-		objInst = inst;
 	}
 
 	private float[] makePoints(float[] loc, float rotation)
