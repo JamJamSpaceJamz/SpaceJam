@@ -1,13 +1,14 @@
 package ships;
 
 import game.SimpleTest;
+import game.Team;
 
 public class Fighter  extends AutonomousShip
 {
-	public Fighter(boolean team, SimpleTest inst) 
+	public Fighter(float[] spawn, Team team, SimpleTest inst) 
 	{
 		// size, speed, rotateSpd, range, capacity, health, inst, team
-		super(5, 3, 20, 100, 15, 30, inst, team); 
+		super(spawn, 5, 3, 20, 100, 15, 30, inst, team); 
 	}
 
 	@Override

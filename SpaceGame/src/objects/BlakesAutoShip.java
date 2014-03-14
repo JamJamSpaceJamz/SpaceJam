@@ -2,13 +2,14 @@ package objects;
 
 import ships.AutonomousShip;
 import game.SimpleTest;
+import game.Team;
 
 public class BlakesAutoShip extends AutonomousShip
 {
 
-	public BlakesAutoShip(int size, int speed, int rotateSpd, float range,
-			int capacity, float health, SimpleTest inst, boolean team) {
-		super(size, speed, rotateSpd, range, capacity, health, inst, team);
+	public BlakesAutoShip(float[] spawn, int size, int speed, int rotateSpd, float range,
+			int capacity, float health, SimpleTest inst, Team team) {
+		super(spawn, size, speed, rotateSpd, range, capacity, health, inst, team);
 	}
 	
 	// Destroy asteroids around the map

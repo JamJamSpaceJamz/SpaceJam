@@ -2,11 +2,11 @@ package game;
 
 import org.newdawn.slick.Color;
 
-import objects.AutonomousShip;
+import ships.AutonomousShip;
 import objects.Base;
 import objects.Obj;
-import objects.Ship;
-import objects.UserShip;
+import ships.Ship;
+import ships.UserShip;
 
 public abstract class Team 
 {

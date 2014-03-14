@@ -4,7 +4,7 @@ import objects.Asteroid;
 import objects.Obj;
 import game.Helper;
 import game.SimpleTest;
-
+import game.Team;
 public abstract class AutonomousShip extends Ship
 {
 	protected final int SEARCH_TIMER = 100;
@@ -12,10 +12,10 @@ public abstract class AutonomousShip extends Ship
 	protected float dir = 0;
 	protected float[] searchDirection = { (float)(2.0*Math.random() - 1.0), (float)(2.0*Math.random() - 1.0) };
 	
-	public AutonomousShip (int size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst, boolean team)
+	public AutonomousShip (float[] spawn, int size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst, Team team)
 	{
 		// Use Ship constructor.
-		super(size, speed, rotateSpd, range, capacity, health, inst, team);
+		super(spawn, size, speed, rotateSpd, range, capacity, health, inst, team);
 	}
 		
 	protected void attackTarget(Obj target)
