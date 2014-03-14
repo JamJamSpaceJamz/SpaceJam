@@ -2,6 +2,7 @@ package objects;
 
 import game.Helper;
 import game.List;
+import game.Team;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -16,7 +17,7 @@ public class Bullet extends Obj
 	private float points[];
 	private float damage;
 
-	public Bullet(float[] location, float rotation, float range, float damage, List<Obj> inst, boolean team)
+	public Bullet(float[] location, float rotation, float range, float damage, List<Obj> inst, Team team)
 	{
 		// adding so its not null, should fix later
 		this.location = location;

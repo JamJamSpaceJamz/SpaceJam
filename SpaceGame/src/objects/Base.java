@@ -4,6 +4,7 @@ package objects;
 import game.Helper;
 import game.List;
 import game.SimpleTest;
+import game.Team;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -11,15 +12,14 @@ import org.newdawn.slick.geom.Polygon;
 
 public class Base extends Obj
 {
-	private float size;
+	private final float size, range;
+	private final float TURNSPEED = 0.5f;
+	private final Color color;
 	private float rotation;
-	private float range;
-	private Color color;
 	private float[] points;
-	private float TURNSPEED = 0.5f;
 	private int credit;
 	
-	public Base(float size, float[] loc, Color color, SimpleTest gameInst, boolean team)
+	public Base(float size, float[] loc, Color color, SimpleTest gameInst, Team team)
 	{
 		credit = 0;
 		this.size = size;
@@ -28,6 +28,7 @@ public class Base extends Obj
 		this.gameInst = gameInst;
 		this.mass = 1000;
 		this.team = team;
+		this.range = 100;
 		
 		rotation = 0;
 		velocity = new float[2];
@@ -92,40 +93,6 @@ public class Base extends Obj
 	public void credit(int amount)
 	{
 		credit += amount;
-	}
-	
-	private boolean checkBorders()
-	{
-		boolean check = false;
-		int width = gameInst.container.getWidth();
-		int height = gameInst.container.getHeight();
-		
-		if (location[0] >= width)
-		{
-			check = true;
-			if (velocity[0] > 0)
-				velocity[0] *= -.5f;
-		}
-		if (location[0] <= 0)
-		{
-			check = true;
-			if (velocity[0] < 0)
-				velocity[0] *= -.5f;
-		}
-		
-		if (location[1] >= height)
-		{
-			check = true;
-			if (velocity[1] > 0)
-				velocity[1] *= -.5f;
-		}
-		if (location[1] <= 0)
-		{
-			check = true;
-			if (velocity[1] < 0)
-				velocity[1] *= -.5f;
-		}
-		return check;
 	}
 	
 	@Override
