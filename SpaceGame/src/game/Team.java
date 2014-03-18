@@ -12,7 +12,8 @@ public abstract class Team
 {
 	protected final int Team;
 	protected SimpleTest gameInst;
-	private List<Obj> astList, baseList, bulletList, creditList, shipList, turretList;
+	protected List<Obj> allUnits, astList, baseList, bulletList, creditList, shipList, turretList;
+	
 	
 	// Make sure to update this enum if more lists are added to this class.
 	public enum objectType { ASTEROID, AUTOSHIP, BASE, BULLET, CREDIT, SHIP, TURRET, USERSHIP }
@@ -21,6 +22,7 @@ public abstract class Team
 	{
 		Team = teamNum;
 		this.gameInst = gameInst; 
+		this.allUnits = new List<Obj>();
 		
 		startingUnits();
 	}
@@ -28,6 +30,11 @@ public abstract class Team
 	protected abstract void startingUnits();
 	
 	protected abstract void addUnit(objectType a, int quantity, Obj thing);
+	
+	protected void updateAllUnits(Obj thing)
+	{
+		allUnits.add(thing);
+	}
 	
 	public void addUnit(objectType a, Obj thing)
 	{
@@ -66,8 +73,13 @@ public abstract class Team
 		}
 	}
 	
+	public List<Obj> getAllUnits()
+	{
+		return allUnits;
+	}
+	
 	public int getTeam()
 	{
 		return Team;
-	}
+	}	
 }

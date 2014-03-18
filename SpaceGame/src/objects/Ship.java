@@ -29,6 +29,7 @@ public abstract class Ship extends Obj
 	{
 		COOLDOWN = 5;
 		
+		this.location = new float[2];
 		this.location[0] = spawn[0];
 		this.location[1] = spawn[1];
 		this.velocity = new float[2];

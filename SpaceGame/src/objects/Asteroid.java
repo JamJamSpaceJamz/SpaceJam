@@ -3,6 +3,7 @@ package objects;
 import game.Helper;
 import game.List;
 import game.SimpleTest;
+import game.Team;
 import game.Team.objectType;
 
 import org.newdawn.slick.Color;
@@ -16,9 +17,10 @@ public class Asteroid extends Obj
 	private float size, totalHealth;
 	private int direction;
 
-	public Asteroid(float[] location, float size, SimpleTest gameInst)
+	public Asteroid(float[] location, float size, SimpleTest gameInst, Team team)
 	{
 		this.gameInst = gameInst;
+		this.team = team;
 		this.velocity = new float[2];
 		this.velocity[0] = (float) (0.1*Math.random());
 		this.velocity[1] = (float) (0.1*Math.random());
@@ -97,7 +99,7 @@ public class Asteroid extends Obj
 			float[] location = new float[2];
 			location[0] = this.location[0] + Helper.cos(direction)*size*2.03f;
 			location[1] = this.location[1] + Helper.sin(direction)*size*2.03f;
-			Credit crd = new Credit(location, direction, worth*15, gameInst);
+			Credit crd = new Credit(location, direction, worth*15, gameInst, team);
 			team.addUnit(objectType.CREDIT, crd);
 		}
 		if (health <= 0)

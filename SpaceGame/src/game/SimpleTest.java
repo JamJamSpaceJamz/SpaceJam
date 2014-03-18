@@ -21,8 +21,8 @@ import org.newdawn.slick.state.StateBasedGame;
 public class SimpleTest extends BasicGameState
 {
 	private Ship ship;
-	public Team neutralTeam;
-	public List<Team> playerTeams, allTeams;
+	public Team[] allTeams;// neutralTeam;
+//	public List<Team> playerTeams, allTeams;
 //	public List<Obj> bulletList, shipList;
 //	public List<Obj> astList, creditList, baseList, turretList;
 	public List<List<Obj>> gameList;
@@ -42,17 +42,27 @@ public class SimpleTest extends BasicGameState
 		float health = 30;
 		int capacity = 15;
 		final int NUM_PLAYERS = 1;
+		allTeams = new Team[NUM_PLAYERS + 1];
 		
-		// Make the NPCs
-		neutralTeam = new NeutralTeam(0, this);
-		allTeams.add(neutralTeam);
+		// Make the NPCs (all ways team 0)
+		allTeams[0] = new NeutralTeam(0, this);
+		
 		// Make a team for each player
 		for (int i = 1; i <= NUM_PLAYERS; i++)
 		{
-			Team newPlayer = new PlayerTeam(i, this);
-			playerTeams.add(newPlayer);
-			allTeams.add(newPlayer);
+			allTeams[i] = new PlayerTeam(i, this);
 		}
+		
+//		// Make the NPCs
+//		neutralTeam = new NeutralTeam(0, this);
+//		//allTeams.add(neutralTeam);
+//		// Make a team for each player
+//		for (int i = 1; i <= NUM_PLAYERS; i++)
+//		{
+//			Team newPlayer = new PlayerTeam(i, this);
+//			playerTeams.add(newPlayer);
+//			//allTeams.add(newPlayer);
+//		}
 //		
 //		// Change the following line to set the type of ship.
 //		
@@ -89,19 +99,26 @@ public class SimpleTest extends BasicGameState
 		
 		gameList = new List<List<Obj>>();
 		
-		Team pointer = allTeams.data;
-		while (pointer != null)
+		// Fill gameList
+		for (int i = 0; i <= NUM_PLAYERS; i++)
 		{
-			gameList.add(pointer.getList(objectType.ASTEROID));
-			gameList.add(pointer.getList(objectType.BASE));
-			gameList.add(pointer.getList(objectType.BULLET));
-			gameList.add(pointer.getList(objectType.CREDIT));
-			gameList.add(pointer.getList(objectType.SHIP));
-			gameList.add(pointer.getList(objectType.TURRET));	
-			
-			// TODO: David, can you check that I'm using your list class correctly?
-			pointer = allTeams.next.data;
-		}		
+			gameList.add(allTeams[i].getAllUnits());
+		}
+		
+//		
+//		Team pointer = allTeams.data;
+//		while (pointer != null)
+//		{
+//			gameList.add(pointer.getList(objectType.ASTEROID));
+//			gameList.add(pointer.getList(objectType.BASE));
+//			gameList.add(pointer.getList(objectType.BULLET));
+//			gameList.add(pointer.getList(objectType.CREDIT));
+//			gameList.add(pointer.getList(objectType.SHIP));
+//			gameList.add(pointer.getList(objectType.TURRET));	
+//			
+//			// TODO: David, can you check that I'm using your list class correctly?
+//			pointer = allTeams.next.data;
+//		}		
 	}
 
 	@Override

@@ -1,11 +1,10 @@
 package objects;
 
-
 import game.Helper;
 import game.SimpleTest;
+import game.Team;
 
 import org.newdawn.slick.Color;
-
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Circle;
 
@@ -19,7 +18,7 @@ public class Credit extends Obj
 	final private float ACC;
 	private boolean hasTarget;
 	
-	public Credit(float[] location, int direction, int amount, SimpleTest gameInst)
+	public Credit(float[] location, int direction, int amount, SimpleTest gameInst, Team team)
 	{
 		speed = (float) (Math.random());
 		
@@ -28,6 +27,7 @@ public class Credit extends Obj
 		
 		this.location = location;
 		this.direction = direction;
+		this.team = team;
 		this.gameInst = gameInst;
 		this.amount = amount;
 		this.mass = 10;

@@ -20,10 +20,15 @@ public class PlayerTeam extends Team
 	@Override
 	protected void startingUnits() 
 	{
+		this.baseList   = new List<Obj>();
+		this.shipList   = new List<Obj>();
+		this.bulletList = new List<Obj>();
+		this.turretList = new List<Obj>();
+		
 		addUnit(objectType.BASE);
 		
 		// Add three miner ships. Two autonomous; One user controlled.
-		final int AUTOSHIPS = 2, USERSHIPS = 1;
+		final int AUTOSHIPS = 1, USERSHIPS = 0;
 		addUnit(objectType.AUTOSHIP, AUTOSHIPS);
 		addUnit(objectType.USERSHIP, USERSHIPS);	
 	}
@@ -55,13 +60,19 @@ public class PlayerTeam extends Team
 	private void addTurret(Obj thing)
 	{
 		if (thing instanceof Turret)
+		{
 			this.getList(objectType.TURRET).add(thing);
+			this.updateAllUnits(thing);
+		}
 	}
 	
 	private void addBullet(Obj thing)
 	{
 		if (thing instanceof Bullet)
+		{
 			this.getList(objectType.BULLET).add(thing);
+			this.updateAllUnits(thing);
+		}
 	}
 	
 	private void addAutoShip(int quantity)
@@ -75,6 +86,7 @@ public class PlayerTeam extends Team
 			Ship ship = new AutonomousShip(shipSpawn, SHIP_SIZE, SHIP_SPEED, SHIP_ROTATION,
 										   SHIP_RANGE, SHIP_CAPACITY, SHIP_HEALTH, gameInst, this);
 			this.getList(objectType.AUTOSHIP).add(ship);
+			this.updateAllUnits(ship);
 		}
 	}
 	
@@ -89,6 +101,7 @@ public class PlayerTeam extends Team
 			Ship ship = new UserShip(shipSpawn, SHIP_SIZE, SHIP_SPEED, SHIP_ROTATION,
 										   SHIP_RANGE, SHIP_CAPACITY, SHIP_HEALTH, gameInst, this);
 			this.getList(objectType.USERSHIP).add(ship);
+			this.updateAllUnits(ship);
 		}
 	}
 	
@@ -100,6 +113,7 @@ public class PlayerTeam extends Team
 		final Color BASECOLOR = Color.green;
 		Base mainBase = new Base(BASESIZE, BASESPAWN, BASECOLOR, gameInst, this);
 		this.getList(objectType.BASE).add(mainBase);
+		this.updateAllUnits(mainBase);
 	}
 }
 
