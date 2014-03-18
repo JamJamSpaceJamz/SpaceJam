@@ -153,7 +153,7 @@ public abstract class Ship extends Obj
 	
 	protected void returnToBase()
 	{
-		navigateTo(team.getList(objectType.BASE).data);
+		navigateTo(team.getList(objectType.BASE).next.data);
 	}
 
 	private ArrayList<Obj> objInRange()
