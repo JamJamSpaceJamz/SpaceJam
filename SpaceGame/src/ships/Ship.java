@@ -6,6 +6,7 @@ import game.Helper;
 import game.List;
 import game.SimpleTest;
 import game.Team;
+import game.Team.objectType;
 
 import objects.Base;
 import objects.Bullet;
@@ -22,23 +23,22 @@ public abstract class Ship extends Obj
 	public float[] acceleration;
 	protected int delta, rotateSpd, size, credit;
 	protected boolean turnLeft, turnRight, accelerate, stop, isFullCredits;
-	// NOTE ROTATION IS IN DEGREES
+	// NOTE: ROTATION IS IN DEGREES
 	protected float rotation, range, damage, speed;
 	protected int capacity, cargo, weaponCoolDown, radarCoolDown; 
 	protected int COOLDOWN;
 	final protected float MAX_SPEED = 12;
-	final protected float[] baseLocation = new float[2];
 	protected ArrayList<Obj> closeObj, objectsInRange;
 
 	public Ship (float[] spawn, int size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst, Team team)
 	{
 		COOLDOWN = 5;
-		location = spawn;
-		// baseLocation assumes that the ship spawns inside the base.
-		baseLocation[0] = location[0];
-		baseLocation[1] = location[1];
+		
+		this.location = new float[2];
+		this.location[0] = spawn[0];
+		this.location[1] = spawn[1];
 		this.velocity = new float[2];
-		acceleration = new float[2];
+		this.acceleration = new float[2];
 		this.speed = speed;
 		this.size = size;
 		this.rotateSpd = rotateSpd;
@@ -47,10 +47,10 @@ public abstract class Ship extends Obj
 		this.mass = 75;
 		this.health = health;
 		this.team = team;
-		damage = 30;
-		rotation = 0;
-		cargo = 0;
-		gameInst = inst;  
+		this.damage = 30;
+		this.rotation = 0;
+		this.cargo = 0;
+		this.gameInst = inst;  
 	}
 
 	public void draw(Graphics g)
@@ -140,7 +140,7 @@ public abstract class Ship extends Obj
 	
 	protected void returnToBase()
 	{
-		navigateTo(baseLocation[0], baseLocation[1]);
+		navigateTo(team.getList(objectType.BASE).next.data);
 	}
 	
 	//protected boolean turnTo(float angle)
@@ -202,10 +202,9 @@ public abstract class Ship extends Obj
 		{
 			// reset cooldown
 			weaponCoolDown = COOLDOWN;
-			
-			
+
 			Bullet shot = new Bullet(location, rotation, range, damage, this.team);
-			gameInst.bulletList.add(shot);
+			team.addUnit(objectType.BULLET, shot);
 		} else {
 			--weaponCoolDown;
 		}

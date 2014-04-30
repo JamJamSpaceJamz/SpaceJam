@@ -2,8 +2,10 @@ package game;
 
 import objects.AutonomousShip;
 import objects.Base;
+import objects.Bullet;
 import objects.Obj;
 import objects.Ship;
+import objects.Turret;
 import objects.UserShip;
 
 import org.newdawn.slick.Color;
@@ -18,16 +20,21 @@ public class PlayerTeam extends Team
 	@Override
 	protected void startingUnits() 
 	{
+		this.baseList   = new List<Obj>();
+		this.shipList   = new List<Obj>();
+		this.bulletList = new List<Obj>();
+		this.turretList = new List<Obj>();
+		
 		addUnit(objectType.BASE);
 		
 		// Add three miner ships. Two autonomous; One user controlled.
-		final int AUTOSHIPS = 2, USERSHIPS = 1;
+		final int AUTOSHIPS = 1, USERSHIPS = 0;
 		addUnit(objectType.AUTOSHIP, AUTOSHIPS);
 		addUnit(objectType.USERSHIP, USERSHIPS);	
 	}
 	
-	@Override // Add a generic objects that will have a known spawn location.
-	protected void addUnit(objectType a, int quantity) 
+	@Override 
+	protected void addUnit(objectType a, int quantity, Obj thing)
 	{
 		switch(a)
 		{
@@ -42,19 +49,30 @@ public class PlayerTeam extends Team
 				addBase();
 				break;
 			case BULLET:
-				addBullet(quantity);
+				addBullet(thing);
+				break;
+			case TURRET:
+				addTurret(thing);
+				break;
 		}
 	}
 	
-	// Add objects that have a spawn location that is dependent upon another object
-	protected void addUnit(objectType a, int quantity, Obj thing)
+	private void addTurret(Obj thing)
 	{
-		
+		if (thing instanceof Turret)
+		{
+			this.getList(objectType.TURRET).add(thing);
+			this.updateAllUnits(thing);
+		}
 	}
 	
-	private void addBullet(int quantity)
+	private void addBullet(Obj thing)
 	{
-		// TODO: David, figure this out.
+		if (thing instanceof Bullet)
+		{
+			this.getList(objectType.BULLET).add(thing);
+			this.updateAllUnits(thing);
+		}
 	}
 	
 	private void addAutoShip(int quantity)
@@ -67,7 +85,8 @@ public class PlayerTeam extends Team
 		{
 			Ship ship = new AutonomousShip(shipSpawn, SHIP_SIZE, SHIP_SPEED, SHIP_ROTATION,
 										   SHIP_RANGE, SHIP_CAPACITY, SHIP_HEALTH, gameInst, this);
-			shipList.add(ship);
+			this.getList(objectType.AUTOSHIP).add(ship);
+			this.updateAllUnits(ship);
 		}
 	}
 	
@@ -81,7 +100,8 @@ public class PlayerTeam extends Team
 		{
 			Ship ship = new UserShip(shipSpawn, SHIP_SIZE, SHIP_SPEED, SHIP_ROTATION,
 										   SHIP_RANGE, SHIP_CAPACITY, SHIP_HEALTH, gameInst, this);
-			shipList.add(ship);
+			this.getList(objectType.USERSHIP).add(ship);
+			this.updateAllUnits(ship);
 		}
 	}
 	
@@ -92,7 +112,8 @@ public class PlayerTeam extends Team
 		final float BASESIZE = 30;
 		final Color BASECOLOR = Color.green;
 		Base mainBase = new Base(BASESIZE, BASESPAWN, BASECOLOR, gameInst, this);
-		baseList.add(mainBase);
+		this.getList(objectType.BASE).add(mainBase);
+		this.updateAllUnits(mainBase);
 	}
 }
 

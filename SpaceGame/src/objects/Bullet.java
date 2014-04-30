@@ -19,7 +19,6 @@ public class Bullet extends Obj
 	private float points[];
 	private float damage;
 
-
 	public Bullet(float[] location, float rotation, float range, float damage, Team team)
 	{
 		// adding so its not null, should fix later
@@ -40,6 +39,7 @@ public class Bullet extends Obj
 		this.damage = damage;
 //		System.out.println(velocity[0] + "  " + velocity[1]);
 
+//		objInst = inst;
 	}
 
 	private float[] makePoints(float[] loc, float rotation)

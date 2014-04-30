@@ -3,6 +3,8 @@ package objects;
 import game.Helper;
 import game.List;
 import game.SimpleTest;
+import game.Team;
+import game.Team.objectType;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -15,9 +17,10 @@ public class Asteroid extends Obj
 	private float size, totalHealth;
 	private int direction;
 
-	public Asteroid(float[] location, float size, SimpleTest gameInst)
+	public Asteroid(float[] location, float size, SimpleTest gameInst, Team team)
 	{
 		this.gameInst = gameInst;
+		this.team = team;
 		this.velocity = new float[2];
 		this.velocity[0] = (float) (0.1*Math.random());
 		this.velocity[1] = (float) (0.1*Math.random());
@@ -77,23 +80,6 @@ public class Asteroid extends Obj
 		location[1] += velocity[1]*delta*.01f;
 	}
 
-//	private void checkBorders()
-//	{
-//		// the amount the asteroid is allowed out of bounds
-//		int outOfBounds = 3;
-//		int width = gameInst.container.getWidth() + outOfBounds;
-//		int height = gameInst.container.getHeight() + outOfBounds;
-//
-//		if (location[0] > width)
-//			location[0] = -outOfBounds;
-//		if (location[0] < -outOfBounds)
-//			location[0] = width;
-//		if (location[1] > height)
-//			location[1] = -outOfBounds;
-//		if (location[1] < -outOfBounds)
-//			location[1] = height;
-//	}
-
 	@Override
 	public boolean collide(Obj hitter) 
 	{
@@ -113,9 +99,8 @@ public class Asteroid extends Obj
 			float[] location = new float[2];
 			location[0] = this.location[0] + Helper.cos(direction)*size*2.03f;
 			location[1] = this.location[1] + Helper.sin(direction)*size*2.03f;
-			Credit crd = new Credit(location, direction, worth*15, gameInst);
-			gameInst.creditList.add(crd);
-
+			Credit crd = new Credit(location, direction, worth*15, gameInst, team);
+			team.addUnit(objectType.CREDIT, crd);
 		}
 		if (health <= 0)
 		{

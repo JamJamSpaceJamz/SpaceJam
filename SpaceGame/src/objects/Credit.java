@@ -1,11 +1,10 @@
 package objects;
 
-
 import game.Helper;
 import game.SimpleTest;
+import game.Team;
 
 import org.newdawn.slick.Color;
-
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Circle;
 
@@ -21,7 +20,7 @@ public class Credit extends Obj
 	final private float ACC;
 	private boolean hasTarget;
 	
-	public Credit(float[] location, int direction, int amount, SimpleTest gameInst)
+	public Credit(float[] location, int direction, int amount, SimpleTest gameInst, Team team)
 	{
 		speed = (float) (Math.random());
 		
@@ -30,6 +29,7 @@ public class Credit extends Obj
 		
 		this.location = location;
 		this.direction = direction;
+		this.team = team;
 		this.gameInst = gameInst;
 		this.amount = amount;
 		this.mass = 10;
@@ -77,24 +77,6 @@ public class Credit extends Obj
 		hasTarget = false;
 	}
 	
-//	private void checkBorders()
-//	{
-//		// the amount the asteroid is allowed out of bounds
-//		int outOfBounds = 3;
-//		int width = gameInst.container.getWidth() + outOfBounds;
-//		int height = gameInst.container.getHeight() + outOfBounds;
-//		
-//		if (location[0] > width)
-//			location[0] = -outOfBounds;
-//		if (location[0] < -outOfBounds)
-//			location[0] = width;
-//		
-//		if (location[1] > height)
-//			location[1] = -outOfBounds;
-//		if (location[1] < -outOfBounds)
-//			location[1] = height;
-//	}
-
 	@Override
 	public boolean collide(Obj hitter) 
 	{

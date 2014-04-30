@@ -8,9 +8,7 @@ public class List<Thing>
 	public List<Thing> previous, next;
 	
 	// empty initializer
-	public List()
-	{
-	}
+	public List() {}
 	
 	public List(Thing data, List<Thing> previous)
 	{
@@ -41,6 +39,5 @@ public class List<Thing>
 			b.objInst = (List<Obj>) wrapper;
 		}
 		next = wrapper;
-	}
-	
+	}	
 }

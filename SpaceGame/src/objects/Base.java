@@ -5,6 +5,7 @@ import game.Helper;
 import game.List;
 import game.SimpleTest;
 import game.Team;
+import game.Team.objectType;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -62,13 +63,15 @@ public class Base extends Obj
 	
 	private void generateTurrets(int numTurrets)
 	{
-		List<Obj> pointer = gameInst.turretList;		
+		//List<Obj> pointer = gameInst.turretList;		
 		float dir;
 		for (int i=0; i<numTurrets; i++)
 		{
 			dir = i*360f/numTurrets;
 			Turret turret = new Turret(this, dir, gameInst);
-			pointer.add(turret);
+			team.addUnit(objectType.TURRET, turret);
+			
+	//		pointer.add(turret);
 		}
 	}
 

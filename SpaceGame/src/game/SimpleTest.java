@@ -5,6 +5,8 @@ import objects.Base;
 import objects.CollisionChecker;
 import objects.Obj;
 
+import game.Team.objectType;
+
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -21,8 +23,7 @@ import ships.UserShip;
 public class SimpleTest extends BasicGameState
 {
 	private Ship ship;
-	public List<Obj> bulletList, shipList;
-	public List<Obj> astList, creditList, baseList, turretList;
+	public Team[] allTeams;    // neutralTeam;
 	public List<List<Obj>> gameList;
 	public GameContainer container;
 	
@@ -39,41 +40,25 @@ public class SimpleTest extends BasicGameState
 		float range = 100;
 		float health = 30;
 		int capacity = 15;
-		// Change the following line to set the type of ship.
+		final int NUM_PLAYERS = 1;
+		allTeams = new Team[NUM_PLAYERS + 1];
 		
-		// This stuff will all be changed when Team class is properly implemented.
-		ship = new UserShip(size, speed, rotation, range, capacity, health, this, true);
-		//Ship autoShip = new AutonomousShip(size, speed, rotation, range, capacity, health, this, true);
-		shipList = new List<Obj>();
+		// Make the NPCs (all ways team 0)
+		allTeams[0] = new NeutralTeam(0, this);
 		
-		shipList.add(ship);
-		//shipList.add(autoShip);
-		
-		turretList = new List<Obj>();
-		bulletList = new List<Obj>();
-		creditList = new List<Obj>();
-		astList = new List<Obj>();
-		// Generate all asteroids
-		for (int i = 0; i < 25; i++)
+		// Make a team for each player
+		for (int i = 1; i <= NUM_PLAYERS; i++)
 		{
-			float[] loc = new float[2];
-			loc[0] = (float) (Math.random()* container.getWidth());
-			loc[1] = (float) (Math.random()* container.getHeight());
-
-			Asteroid ast = new Asteroid(loc, (float) (Math.random() * 10 + 4), this);
-			astList.add(ast);
+			allTeams[i] = new PlayerTeam(i, this);
 		}
-		baseList = new List<Obj>();
-		float[] baseLoc = {200f, 200f};
-		Base base = new Base(30, baseLoc, Color.green, this, true);
-		baseList.add(base);
+		
 		gameList = new List<List<Obj>>();
-		gameList.add(bulletList);
-		gameList.add(astList);
-		gameList.add(shipList);
-		gameList.add(creditList);
-		gameList.add(baseList);
-		gameList.add(turretList);		
+		
+		// Fill gameList
+		for (int i = 0; i <= NUM_PLAYERS; i++)
+		{
+			gameList.add(allTeams[i].getAllUnits());
+		}	
 	}
 
 	@Override
