@@ -3,7 +3,7 @@ package ships;
 import game.SimpleTest;
 import game.Team;
 
-public class Fighter  extends AutonomousShip
+public class Fighter extends AutonomousShip
 {
 	public Fighter(float[] spawn, Team team, SimpleTest inst) 
 	{
@@ -13,7 +13,6 @@ public class Fighter  extends AutonomousShip
 
 	@Override
 	public void update(int dt) {
-	
 		
 	}
 }

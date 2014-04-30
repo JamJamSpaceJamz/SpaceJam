@@ -1,12 +1,13 @@
 package game;
 
-import objects.AutonomousShip;
+import ships.AutonomousShip;
 import objects.Base;
 import objects.Bullet;
 import objects.Obj;
-import objects.Ship;
+import ships.Ship;
 import objects.Turret;
-import objects.UserShip;
+import ships.UserShip;
+import ships.Fighter;
 
 import org.newdawn.slick.Color;
 
@@ -83,8 +84,7 @@ public class PlayerTeam extends Team
 		float[] shipSpawn = {200f, 200f}; // TODO: Add method to set unique spawn locations for each ship.
 		for (int i=0; i<quantity; i++)
 		{
-			Ship ship = new AutonomousShip(shipSpawn, SHIP_SIZE, SHIP_SPEED, SHIP_ROTATION,
-										   SHIP_RANGE, SHIP_CAPACITY, SHIP_HEALTH, gameInst, this);
+			Ship ship = new Fighter(shipSpawn, this, gameInst);
 			this.getList(objectType.AUTOSHIP).add(ship);
 			this.updateAllUnits(ship);
 		}
