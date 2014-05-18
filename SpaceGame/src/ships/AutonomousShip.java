@@ -10,6 +10,7 @@ public abstract class AutonomousShip extends Ship
 	protected final int SEARCH_TIMER = 100;
 	protected int timer = 0;
 	protected float dir = 0;
+	// Initialize searchDirection with a random direction between -1 and +1
 	protected float[] searchDirection = { (float)(2.0*Math.random() - 1.0), (float)(2.0*Math.random() - 1.0) };
 	
 	public AutonomousShip (float[] spawn, int size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst, Team team)
@@ -67,11 +68,12 @@ public abstract class AutonomousShip extends Ship
 	{		
 		accelerate = true;
 		
+
 		if (speed <= MAX_SPEED)
 		{
 			acceleration[0] = (float) Helper.cos(rotation)*2; //speed;
 			acceleration[1] = (float) Helper.sin(rotation)*2; //speed;
-		
+			
 			velocity[0] += acceleration[0]*delta*.01f;
 			velocity[1] += acceleration[1]*delta*.01f;
 			

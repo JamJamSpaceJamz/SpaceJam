@@ -13,6 +13,8 @@ public class Fighter extends AutonomousShip
 
 	@Override
 	public void update(int dt) {
+		delta = dt;
+		radar();
 		
 	}
 }

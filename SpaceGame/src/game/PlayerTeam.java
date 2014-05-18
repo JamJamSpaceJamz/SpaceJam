@@ -8,6 +8,7 @@ import ships.Ship;
 import objects.Turret;
 import ships.UserShip;
 import ships.Fighter;
+import ships.BlakeShip;
 
 import org.newdawn.slick.Color;
 
@@ -29,7 +30,7 @@ public class PlayerTeam extends Team
 		addUnit(objectType.BASE);
 		
 		// Add three miner ships. Two autonomous; One user controlled.
-		final int AUTOSHIPS = 1, USERSHIPS = 0;
+		final int AUTOSHIPS = 5, USERSHIPS = 0;
 		addUnit(objectType.AUTOSHIP, AUTOSHIPS);
 		addUnit(objectType.USERSHIP, USERSHIPS);	
 	}
@@ -78,12 +79,13 @@ public class PlayerTeam extends Team
 	
 	private void addAutoShip(int quantity)
 	{
-		final int SHIP_SPEED = 3, SHIP_SIZE = 5;
-		final int SHIP_ROTATION = 20, SHIP_CAPACITY = 15; // TODO: Set initial rotation based on spawn location.
-		final float SHIP_RANGE = 100, SHIP_HEALTH = 30;
-		float[] shipSpawn = {200f, 200f}; // TODO: Add method to set unique spawn locations for each ship.
+//		final int SHIP_SPEED = 3, SHIP_SIZE = 5;
+//		final int SHIP_ROTATION = 20, SHIP_CAPACITY = 15; // TODO: Set initial rotation based on spawn location.
+//		final float SHIP_RANGE = 100, SHIP_HEALTH = 30;
 		for (int i=0; i<quantity; i++)
 		{
+			float[] shipSpawn = genSpawnLocation();
+			
 			Ship ship = new Fighter(shipSpawn, this, gameInst);
 			this.getList(objectType.AUTOSHIP).add(ship);
 			this.updateAllUnits(ship);
@@ -95,9 +97,11 @@ public class PlayerTeam extends Team
 		final int SHIP_SPEED = 3, SHIP_SIZE = 5;
 		final int SHIP_ROTATION = 20, SHIP_CAPACITY = 15; // TODO: Set initial rotation based on spawn location.
 		final float SHIP_RANGE = 100, SHIP_HEALTH = 30;
-		float[] shipSpawn = {200f, 200f}; // TODO: Add method to set unique spawn locations for each ship.
+		
 		for (int i=0; i<quantity; i++)
 		{
+			float[] shipSpawn = genSpawnLocation();
+			
 			Ship ship = new UserShip(shipSpawn, SHIP_SIZE, SHIP_SPEED, SHIP_ROTATION,
 										   SHIP_RANGE, SHIP_CAPACITY, SHIP_HEALTH, gameInst, this);
 			this.getList(objectType.USERSHIP).add(ship);
@@ -114,6 +118,24 @@ public class PlayerTeam extends Team
 		Base mainBase = new Base(BASESIZE, BASESPAWN, BASECOLOR, gameInst, this);
 		this.getList(objectType.BASE).add(mainBase);
 		this.updateAllUnits(mainBase);
+	}
+	
+	private float[] genSpawnLocation() {
+		float SPAWN_DIST = 100;
+		
+		// Get location of this team's base.
+		float[] retVal = new float[2];
+		Base thisBase = (Base) this.baseList.next.data;
+		float[] baseLoc = thisBase.getLocation();
+		
+		// Generate random angle for spawn relative to base.
+		float spawnAngle = 360f * (float) Math.random();
+
+		// Set spawn location.
+		retVal[0] = baseLoc[0] + SPAWN_DIST * Helper.cos(spawnAngle);
+		retVal[1] = baseLoc[1] + SPAWN_DIST * Helper.sin(spawnAngle);
+		
+		return retVal;
 	}
 }
 
