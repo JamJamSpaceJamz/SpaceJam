@@ -8,6 +8,7 @@ import ships.Ship;
 import objects.Turret;
 import ships.UserShip;
 import ships.Fighter;
+import ships.BlakeShip;
 
 import org.newdawn.slick.Color;
 
