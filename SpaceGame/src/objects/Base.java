@@ -103,5 +103,8 @@ public class Base extends Obj
 	{
 		return true;
 	}
-
+	
+	public float[] getLocation() {
+		return this.location;
+	}
 }
