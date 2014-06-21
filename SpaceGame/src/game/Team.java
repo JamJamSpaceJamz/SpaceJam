@@ -10,7 +10,7 @@ import ships.UserShip;
 
 public abstract class Team 
 {
-	protected final int Team;
+	protected final int team;
 	protected SimpleTest gameInst;
 	protected List<Obj> allUnits, astList, baseList, bulletList, creditList, shipList, turretList;
 	
@@ -20,7 +20,7 @@ public abstract class Team
 	
 	public Team(int teamNum, SimpleTest gameInst)
 	{
-		Team = teamNum;
+		team = teamNum;
 		this.gameInst = gameInst; 
 		this.allUnits = new List<Obj>();
 		
@@ -80,6 +80,6 @@ public abstract class Team
 	
 	public int getTeam()
 	{
-		return Team;
+		return team;
 	}	
 }

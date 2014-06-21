@@ -84,7 +84,7 @@ public class PlayerTeam extends Team
 //		final float SHIP_RANGE = 100, SHIP_HEALTH = 30;
 		for (int i=0; i<quantity; i++)
 		{
-			float[] shipSpawn = genSpawnLocation();
+			float[] shipSpawn = genShipSpawnLocation();
 			
 			Ship ship = new BlakeShip(shipSpawn, this, gameInst);
 			this.getList(objectType.AUTOSHIP).add(ship);
@@ -100,7 +100,7 @@ public class PlayerTeam extends Team
 		
 		for (int i=0; i<quantity; i++)
 		{
-			float[] shipSpawn = genSpawnLocation();
+			float[] shipSpawn = genShipSpawnLocation();
 			
 			Ship ship = new UserShip(shipSpawn, SHIP_SIZE, SHIP_SPEED, SHIP_ROTATION,
 										   SHIP_RANGE, SHIP_CAPACITY, SHIP_HEALTH, gameInst, this);
@@ -112,7 +112,7 @@ public class PlayerTeam extends Team
 	private void addBase()
 	{
 		// Add a base. All initial values could/should be tweaked.
-		final float[] BASESPAWN = {200f, 200f}; // TODO: Add method to set base location based on team number.
+		final float[] BASESPAWN = baseSpawnLocation();
 		final float BASESIZE = 30;
 		final Color BASECOLOR = Color.green;
 		Base mainBase = new Base(BASESIZE, BASESPAWN, BASECOLOR, gameInst, this);
@@ -120,8 +120,8 @@ public class PlayerTeam extends Team
 		this.updateAllUnits(mainBase);
 	}
 	
-	private float[] genSpawnLocation() {
-		float SPAWN_DIST = 100;
+	private float[] genShipSpawnLocation() {
+		float SPAWN_DIST = 70;
 		
 		// Get location of this team's base.
 		float[] retVal = new float[2];
@@ -136,6 +136,36 @@ public class PlayerTeam extends Team
 		retVal[1] = baseLoc[1] + SPAWN_DIST * Helper.sin(spawnAngle);
 		
 		return retVal;
+	}
+	
+	private float[] baseSpawnLocation() {
+		int teamNum = this.getTeam();
+		float[] spawn = new float[2];
+		float width  = this.gameInst.container.getWidth();
+		float height = this.gameInst.container.getHeight();
+		float dx =  width / 8f;
+		float dy = height / 8f;
+		
+		switch(teamNum) {
+			case 1:
+				spawn[0] = dx;
+				spawn[1] = dy;
+				return spawn;
+			case 2:
+				spawn[0] =  width - dx;
+				spawn[1] = height - dy;
+				return spawn;
+			case 3:
+				spawn[0] = width - dx;
+				spawn[1] = dy;
+				return spawn;
+			case 4:
+				spawn[0] = dx;
+				spawn[1] = height - dy;
+				return spawn;
+			default:
+				return null;
+		}
 	}
 }
 
