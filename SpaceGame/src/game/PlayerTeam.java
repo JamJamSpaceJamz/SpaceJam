@@ -86,7 +86,7 @@ public class PlayerTeam extends Team
 		{
 			float[] shipSpawn = genSpawnLocation();
 			
-			Ship ship = new Fighter(shipSpawn, this, gameInst);
+			Ship ship = new BlakeShip(shipSpawn, this, gameInst);
 			this.getList(objectType.AUTOSHIP).add(ship);
 			this.updateAllUnits(ship);
 		}
