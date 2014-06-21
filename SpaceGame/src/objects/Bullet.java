@@ -108,6 +108,9 @@ public class Bullet extends Obj
 		{
 //			System.out.println("remove"); 
 			collided = true;
+			float[] vel = hitter.velocity;
+			vel[0] += velocity[0]/100;
+			vel[1] += velocity[1]/100;
 			this.remove();
 			hitter.damage(damage);
 			return false;
