@@ -53,11 +53,6 @@ public class CollisionChecker
 		thingVel[1] *= -1;
 	}
 
-	private static void checkandUpdate(Obj obj1, Obj obj2)
-	{
-		// David, why is this function here?
-	}
-
 	// Takes two objects and calculates their change in
 	// velocity after collision using center of mass
 	// reference frame.
@@ -68,46 +63,57 @@ public class CollisionChecker
 		{
 			if (object2.collide(object1))
 			{
-				float[] iVel1, iVel2, fVel1, fVel2;
-				float icmVel1, icmVel2, fcmVel1, fcmVel2, VelCM;
-				float mass1, mass2;
-
-				iVel1 = new float[2];
-				iVel2 = new float[2];
-				fVel1 = new float[2];
-				fVel2 = new float[2];
-
-				mass1 = object1.mass;
-				mass2 = object2.mass;
-
-				// Perform calculation twice--once for each direction
-				for (int i = 0; i<2; i++)
-				{
-					iVel1[i] = object1.velocity[i];
-					iVel2[i] = object2.velocity[i];
-					// Calculate the velocity of the objects' center of mass
-					VelCM = mass1 * iVel1[i] + mass2 * iVel2[i];
-					VelCM = VelCM / (mass1 + mass2);
-					// Calculate the objects' velocities in the center of mass
-					// reference frame
-					icmVel1 = iVel1[i] - VelCM;
-					icmVel2 = iVel2[i] - VelCM;
-					// Calculate final velocities in center of mass reference frame
-					fcmVel1 = -icmVel1;
-					fcmVel2 = -icmVel2;
-					// Convert back to ground reference frame
-					fVel1[i] = VelCM + fcmVel1;
-					fVel2[i] = VelCM + fcmVel2;			
+				if (object1 instanceof Base) {
+					baseCollision(object2);
+				} else if (object2 instanceof Base) {
+					baseCollision(object1);
+				} else {
+					float[] iVel1, iVel2, fVel1, fVel2;
+					float icmVel1, icmVel2, fcmVel1, fcmVel2, VelCM;
+					float mass1, mass2;
+	
+					iVel1 = new float[2];
+					iVel2 = new float[2];
+					fVel1 = new float[2];
+					fVel2 = new float[2];
+	
+					mass1 = object1.mass;
+					mass2 = object2.mass;
+	
+					// Perform calculation twice--once for each direction
+					for (int i = 0; i<2; i++)
+					{
+						iVel1[i] = object1.velocity[i];
+						iVel2[i] = object2.velocity[i];
+						// Calculate the velocity of the objects' center of mass
+						VelCM = mass1 * iVel1[i] + mass2 * iVel2[i];
+						VelCM = VelCM / (mass1 + mass2);
+						// Calculate the objects' velocities in the center of mass
+						// reference frame
+						icmVel1 = iVel1[i] - VelCM;
+						icmVel2 = iVel2[i] - VelCM;
+						// Calculate final velocities in center of mass reference frame
+						fcmVel1 = -icmVel1;
+						fcmVel2 = -icmVel2;
+						// Convert back to ground reference frame
+						fVel1[i] = VelCM + fcmVel1;
+						fVel2[i] = VelCM + fcmVel2;			
+					}
+					CollisionChecker.backStep(object1, 40);
+					CollisionChecker.backStep(object2, 40);
+	
+					// Set new velocity
+					object1.setVel(fVel1);
+					object2.setVel(fVel2);
 				}
-				CollisionChecker.backStep(object1, 40);
-				CollisionChecker.backStep(object2, 40);
-
-				// Set new velocity
-				object1.setVel(fVel1);
-				object2.setVel(fVel2);
 			}
 		}
 	}
 
+	public static void baseCollision(Obj object) {
+		CollisionChecker.backStep(object, 40);
+		object.velocity[0] *= -0.5f;
+		object.velocity[1] *= -0.5f;
+	}
 }
 

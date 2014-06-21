@@ -149,6 +149,7 @@ public class SimpleTest extends BasicGameState
 
 	@Override
 	public int getID() {
+		// For SimpleTest menu
 		// TODO Auto-generated method stub
 		return 2;
 	}
