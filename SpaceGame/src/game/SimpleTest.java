@@ -107,6 +107,10 @@ public class SimpleTest extends BasicGameState
 			((PlayerTeam) allTeams[1]).addAutoShip(1, true);
 		else if (c == '2')
 			((PlayerTeam) allTeams[2]).addAutoShip(1, true);
+		else if (c == '3')
+			((PlayerTeam) allTeams[3]).addAutoShip(1, true);
+		else if (c == '4')
+			((PlayerTeam) allTeams[4]).addAutoShip(1, true);
 		else if (c == 'o')
 		{
 			if (toggle == 3) toggle = 0;
