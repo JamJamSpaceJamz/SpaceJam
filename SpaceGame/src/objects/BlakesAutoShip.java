@@ -15,15 +15,25 @@ public class BlakesAutoShip extends AutonomousShip
 	// Destroy asteroids around the map
 	protected void hunt()
 	{
-		// fly to closest asteroid until a certain distance away
-		// shoot asteroid. repeat
-		if (asteroidInRange())
-		{
-			Asteroid target = findClosestAsteroid();
+		System.out.println("can I even print???");
+		// TODO: This method can be done a lot better..............
+		if (enemyInRange()) {
+			System.out.println("Found enemy.");
+			Obj target = findClosestEnemy();
 			if (target != null)
-				attackAsteroid(target);
-		} else {
-			findAsteroids();
+				System.out.println("Target acquired.");
+				attack(target);
+		} else {		
+			// fly to closest asteroid until a certain distance away
+			// shoot asteroid. repeat
+			if (asteroidInRange())
+			{
+				Asteroid target = findClosestAsteroid();
+				if (target != null)
+					attack(target);
+			} else {
+				findAsteroids();
+			}
 		}
 	}
 	
@@ -31,7 +41,7 @@ public class BlakesAutoShip extends AutonomousShip
 	public void update(int dt)
 	{
 		delta = dt;
-		
+		System.out.println("PRINT SOMETHING!!!!");
 		radar();
 		if (isFullCredits)
 			returnToBase();
@@ -39,7 +49,7 @@ public class BlakesAutoShip extends AutonomousShip
 			hunt();
 	}
 	
-	// strip objectsInRange to just asteroids
+	// return closest asteroid of those in range
 	protected Asteroid findClosestAsteroid()
 	{
 		Asteroid retAst = null;
@@ -56,6 +66,21 @@ public class BlakesAutoShip extends AutonomousShip
 			}
 		}
 		return retAst;
+	}
+	
+	// TODO: combine this method with findClosestAsteroid()
+	protected Obj findClosestEnemy() {
+		Obj retObj = null;
+		float closestDistance = range;
+		for (Obj obj: objectsInRange) {
+			if (obj.getTeam() != this.getTeam()) {
+				if (distanceTo(obj) < closestDistance) {
+					closestDistance = distanceTo(obj);
+					retObj = obj;
+				}
+			}
+		}
+		return retObj;
 	}
 	
 	// Search the map for a new asteroid to shoot
@@ -92,7 +117,7 @@ public class BlakesAutoShip extends AutonomousShip
 			}
 		}
 		
-		protected void attackAsteroid(Asteroid target)
+		protected void attack(Obj target)
 		{
 			stop(); // Make sure the asteroid does not go out of range
 			if (!turnTo(directionTo(target)));
@@ -102,6 +127,7 @@ public class BlakesAutoShip extends AutonomousShip
 		
 		protected boolean asteroidInRange()
 		{
+			System.out.println("In asteroidInRange()");
 			for (Obj obj: objectsInRange)
 			{
 				if (obj instanceof Asteroid)
@@ -109,5 +135,17 @@ public class BlakesAutoShip extends AutonomousShip
 			}
 			return false;
 		}
-
+		
+		// TODO: this method should be combined with asteroidInRange()
+		protected boolean enemyInRange() {
+			System.out.println("In enemyInRange()");
+			for (Obj obj: objectsInRange) {
+				System.out.print("obj team = " + obj.getTeam());
+				System.out.print(" this team = " + this.getTeam() + "\n");
+				if (obj.getTeam() != this.getTeam() && obj.getTeam() != 0) {
+					return true;
+				}
+			}
+			return false;
+		}
 }

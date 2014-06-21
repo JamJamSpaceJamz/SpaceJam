@@ -15,7 +15,7 @@ public abstract class Obj
 	protected float[] location, velocity, acceleration;
 	protected float mass;
 	protected boolean collided;
-	protected Team team; // At some point we're going to need this.
+	protected Team team;
 	
 	// the specific instance of the object in the game
 	// should only be used to remove the object from the game
@@ -144,8 +144,11 @@ public abstract class Obj
 		return (float) Math.sqrt(dy*dy + dx*dx);
 	}
 	
-	abstract public boolean collide(Obj hitter);
+	public int getTeam() {
+		return this.team.getTeam();
+	}
 	
+	abstract public boolean collide(Obj hitter);
 	
 	//abstract public float[] setSpeed(float[] speed);
 	

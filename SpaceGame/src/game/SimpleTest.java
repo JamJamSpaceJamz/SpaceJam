@@ -44,7 +44,7 @@ public class SimpleTest extends BasicGameState
 		float range = 100;
 		float health = 30;
 		int capacity = 15;
-		final int NUM_PLAYERS = 2;
+		final int NUM_PLAYERS = 4;
 		allTeams = new Team[NUM_PLAYERS + 1];
 		
 		// Make the NPCs (always team 0)
