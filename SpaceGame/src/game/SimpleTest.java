@@ -27,13 +27,17 @@ public class SimpleTest extends BasicGameState
 	public List<List<Obj>> gameList;
 	public GameContainer container;
 	
+	// tells game what options to show
+	public int toggle;
+	
 	public SimpleTest() { super(); }
 
 	@Override
 	public void init(GameContainer container, StateBasedGame arg1)
 			throws SlickException {
 		int size = 5;
-		int speed = 3;		
+		int speed = 3;	
+		toggle = 0;
 		this.container = container;
 		container.setTargetFrameRate(60);
 		int rotation = 20;
@@ -103,6 +107,11 @@ public class SimpleTest extends BasicGameState
 			((PlayerTeam) allTeams[1]).addAutoShip(1, true);
 		else if (c == '2')
 			((PlayerTeam) allTeams[2]).addAutoShip(1, true);
+		else if (c == 'o')
+		{
+			if (toggle == 3) toggle = 0;
+			else toggle++;
+		}
 //		if (c == 'a')
 //			ship.rotateLeft(true);
 //		else if (c == 'd')

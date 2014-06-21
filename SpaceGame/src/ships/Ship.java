@@ -21,6 +21,9 @@ import org.newdawn.slick.geom.Polygon;
 public abstract class Ship extends Obj
 {
 	public float[] acceleration;
+	
+	
+	
 	protected int delta, rotateSpd, size, credit;
 	protected boolean turnLeft, turnRight, accelerate, stop, isFullCredits;
 	// NOTE: ROTATION IS IN DEGREES
@@ -48,18 +51,32 @@ public abstract class Ship extends Obj
 		this.health = health;
 		this.team = team;
 		this.damage = 30;
-		this.rotation = 0;
+		
 		this.cargo = 0;
 		this.gameInst = inst;  
+		this.rotation = initRotation(location);
 		makeShape();
 	}
 
+	private float initRotation(float[] loc)
+	{
+		float rotate = directionTo(gameInst.container.getWidth() / 2, gameInst.container.getHeight() / 2);
+		System.out.println(rotate);
+		return rotate;
+	}
+	
 	public void draw(Graphics g)
 	{
 		makeShape();
 
 		g.setColor(getColor());
-		drawCargo(g);
+		if (gameInst.toggle == 1 || gameInst.toggle == 2)
+			drawCargo(g);
+		if (gameInst.toggle == 2)
+		{
+			Circle circle = new Circle(location[0], location[1], range);
+			g.draw(circle);
+		}
 		g.fill(shape);
 	}
 	
