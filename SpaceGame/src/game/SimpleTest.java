@@ -43,7 +43,7 @@ public class SimpleTest extends BasicGameState
 		final int NUM_PLAYERS = 2;
 		allTeams = new Team[NUM_PLAYERS + 1];
 		
-		// Make the NPCs (all ways team 0)
+		// Make the NPCs (always team 0)
 		allTeams[0] = new NeutralTeam(0, this);
 		
 		// Make a team for each player
@@ -99,16 +99,20 @@ public class SimpleTest extends BasicGameState
 	@Override
 	public void keyPressed(int key, char c)
 	{
-		if (c == 'a')
-			ship.rotateLeft(true);
-		else if (c == 'd')
-			ship.rotateRight(true);
-		else if (c == 'w')
-			ship.accelerate(true);
-		else if (c == ' ')
-			ship.fire();
-		else if (c == 's')
-			ship.stop(true);
+		if (c == '1')
+			((PlayerTeam) allTeams[1]).addAutoShip(1, true);
+		else if (c == '2')
+			((PlayerTeam) allTeams[2]).addAutoShip(1, true);
+//		if (c == 'a')
+//			ship.rotateLeft(true);
+//		else if (c == 'd')
+//			ship.rotateRight(true);
+//		else if (c == 'w')
+//			ship.accelerate(true);
+//		else if (c == ' ')
+//			ship.fire();
+//		else if (c == 's')
+//			ship.stop(true);
 	}
 	
 	// checks for keyReleases

@@ -13,13 +13,15 @@ public abstract class Team
 	protected final int team;
 	protected SimpleTest gameInst;
 	protected List<Obj> allUnits, astList, baseList, bulletList, creditList, shipList, turretList;
-	
+	protected int credits;
 	
 	// Make sure to update this enum if more lists are added to this class.
 	public enum objectType { ASTEROID, AUTOSHIP, BASE, BULLET, CREDIT, SHIP, TURRET, USERSHIP }
 	
 	public Team(int teamNum, SimpleTest gameInst)
 	{
+		// start with the ability to buy ship
+		credits = 5000;
 		team = teamNum;
 		this.gameInst = gameInst; 
 		this.allUnits = new List<Obj>();

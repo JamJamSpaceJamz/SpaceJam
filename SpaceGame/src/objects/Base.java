@@ -6,7 +6,7 @@ import game.List;
 import game.SimpleTest;
 import game.Team;
 import game.Team.objectType;
-
+import game.PlayerTeam;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Polygon;
@@ -18,11 +18,9 @@ public class Base extends Obj
 	private final Color color;
 	private float rotation;
 	private float[] points;
-	private int credit;
 	
 	public Base(float size, float[] loc, Color color, SimpleTest gameInst, Team team)
 	{
-		credit = 0;
 		this.size = size;
 		this.location = loc;
 		this.color = color;
@@ -58,7 +56,7 @@ public class Base extends Obj
 		gfloat.setColor(getColor());
 		shape = new Polygon(points);
 		gfloat.fill(shape);
-		gfloat.drawString("" + credit, location[0], location[1] + size*1.3f);
+		gfloat.drawString("" + ((PlayerTeam) team).setCredits(0), location[0], location[1] + size*1.3f);
 	}
 	
 	private void generateTurrets(int numTurrets)
@@ -95,7 +93,7 @@ public class Base extends Obj
 	
 	public void credit(int amount)
 	{
-		credit += amount;
+		((PlayerTeam) team).setCredits(amount);
 	}
 	
 	@Override

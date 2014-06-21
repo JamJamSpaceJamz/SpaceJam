@@ -51,11 +51,20 @@ public abstract class Ship extends Obj
 		this.rotation = 0;
 		this.cargo = 0;
 		this.gameInst = inst;  
+		makeShape();
 	}
 
 	public void draw(Graphics g)
 	{
-		
+		makeShape();
+
+		g.setColor(getColor());
+		drawCargo(g);
+		g.fill(shape);
+	}
+	
+	private void makeShape()
+	{
 		float[] points = new float[6];
 		points[0] = (size*Helper.cos(0 + rotation) + location[0]);
 		points[1] = (size*Helper.sin(0 + rotation) + location[1]);
@@ -69,10 +78,6 @@ public abstract class Ship extends Obj
 		points[5] = (size*Helper.sin(230 + rotation) + location[1]);
 
 		shape = new Polygon(points);
-
-		g.setColor(getColor());
-		drawCargo(g);
-		g.fill(shape);
 	}
 
 	abstract public void accelerate(boolean acc);

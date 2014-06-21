@@ -30,9 +30,9 @@ public class PlayerTeam extends Team
 		addUnit(objectType.BASE);
 		
 		// Add three miner ships. Two autonomous; One user controlled.
-		final int AUTOSHIPS = 5, USERSHIPS = 0;
-		addUnit(objectType.AUTOSHIP, AUTOSHIPS);
-		addUnit(objectType.USERSHIP, USERSHIPS);	
+//		final int AUTOSHIPS = 5, USERSHIPS = 0;
+//		addUnit(objectType.AUTOSHIP, AUTOSHIPS);
+//		addUnit(objectType.USERSHIP, USERSHIPS);	
 	}
 	
 	@Override 
@@ -42,7 +42,7 @@ public class PlayerTeam extends Team
 		{
 			case SHIP:
 			case AUTOSHIP:
-				addAutoShip(quantity);
+				addAutoShip(quantity, false);
 				break;
 			case USERSHIP:
 				addUserShip(quantity);
@@ -77,18 +77,29 @@ public class PlayerTeam extends Team
 		}
 	}
 	
-	private void addAutoShip(int quantity)
+	// set pay to false for the ships to be FREE (such ships, much wow, very free)
+	public void addAutoShip(int quantity, boolean pay)
 	{
 //		final int SHIP_SPEED = 3, SHIP_SIZE = 5;
 //		final int SHIP_ROTATION = 20, SHIP_CAPACITY = 15; // TODO: Set initial rotation based on spawn location.
 //		final float SHIP_RANGE = 100, SHIP_HEALTH = 30;
-		for (int i=0; i<quantity; i++)
+		
+		// checks if enough credits, does nothing otherwise
+		// sidenote: ship price == a hardcoded 500
+		if (!pay || credits - quantity*500 >= 0 )
 		{
-			float[] shipSpawn = genShipSpawnLocation();
-			
-			Ship ship = new BlakeShip(shipSpawn, this, gameInst);
-			this.getList(objectType.AUTOSHIP).add(ship);
-			this.updateAllUnits(ship);
+			for (int i=0; i<quantity; i++)
+			{
+				float[] shipSpawn = genShipSpawnLocation();
+				
+				Ship ship = new BlakeShip(shipSpawn, this, gameInst);
+				this.getList(objectType.AUTOSHIP).add(ship);
+				this.updateAllUnits(ship);
+			}
+			if (pay)
+			{
+				credits -= quantity*500;
+			}
 		}
 	}
 	
@@ -136,6 +147,12 @@ public class PlayerTeam extends Team
 		retVal[1] = baseLoc[1] + SPAWN_DIST * Helper.sin(spawnAngle);
 		
 		return retVal;
+	}
+	
+	public int setCredits(int i)
+	{
+		credits += i;
+		return credits;
 	}
 	
 	private float[] baseSpawnLocation() {
