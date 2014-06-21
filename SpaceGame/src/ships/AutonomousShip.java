@@ -39,10 +39,7 @@ public abstract class AutonomousShip extends Ship
 	
 	// TODO: this method should be combined with asteroidInRange()
 	protected boolean enemyInRange() {
-		//System.out.println("In enemyInRange()");
 		for (Obj obj: objectsInRange) {
-			//System.out.print("obj team = " + obj.getTeam());
-			//System.out.print(" this team = " + this.getTeam() + "\n");
 			if (obj.getTeam() != this.getTeam() && obj.getTeam() != 0) {
 				return true;
 			}

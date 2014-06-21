@@ -99,7 +99,11 @@ public class Base extends Obj
 	@Override
 	public boolean collide(Obj hitter) 
 	{
-		return true;
+		CollisionChecker.backStep(hitter, 40);
+		hitter.velocity[0] *= -0.5f;
+		hitter.velocity[1] *= -0.5f;
+		
+		return false;
 	}
 	
 	public float[] getLocation() {

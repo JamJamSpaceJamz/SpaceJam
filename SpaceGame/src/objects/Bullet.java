@@ -104,24 +104,15 @@ public class Bullet extends Obj
 	@Override
 	public boolean collide(Obj hitter)
 	{
-		if (hitter instanceof Asteroid)
-		{
-//			System.out.println("remove"); 
+		if (hitter.getTeam() != this.getTeam() && !(hitter instanceof Credit) && !(hitter instanceof Bullet)) {
 			collided = true;
 			float[] vel = hitter.velocity;
 			vel[0] += velocity[0]/100;
 			vel[1] += velocity[1]/100;
 			this.remove();
 			hitter.damage(damage);
-			return false;
 		}
-		else if (hitter instanceof Ship || hitter instanceof Credit || hitter instanceof Turret)
-			return false;
-		else if (hitter instanceof Base && hitter.team == this.team)
-			// This condition currently exists because bullets are bouncing off of the inside of the base.
-			return false; 
 		
-		return true;
+		return false;
 	}
-
 }

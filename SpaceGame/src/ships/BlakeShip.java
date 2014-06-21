@@ -1,7 +1,7 @@
-	package ships;
-	
-	import game.SimpleTest;
-	import game.Team;
+package ships;
+
+import game.SimpleTest;
+import game.Team;
 	
 import objects.Asteroid;
 import objects.Obj;
@@ -30,10 +30,8 @@ import objects.Obj;
 	protected void hunt()
 	{
 		if (enemyInRange()) {
-			//System.out.println("Found enemy.");
 			Obj target = findClosestEnemy();
 			if (target != null)
-				//System.out.println("Target acquired.");
 				attack(target);
 		} else {		
 			// fly to closest asteroid until a certain distance away
