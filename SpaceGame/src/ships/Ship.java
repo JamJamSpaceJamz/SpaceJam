@@ -55,6 +55,7 @@ public abstract class Ship extends Obj
 
 	public void draw(Graphics g)
 	{
+		
 		float[] points = new float[6];
 		points[0] = (size*Helper.cos(0 + rotation) + location[0]);
 		points[1] = (size*Helper.sin(0 + rotation) + location[1]);
@@ -69,7 +70,7 @@ public abstract class Ship extends Obj
 
 		shape = new Polygon(points);
 
-		g.setColor(Color.green);
+		g.setColor(getColor());
 		drawCargo(g);
 		g.fill(shape);
 	}
