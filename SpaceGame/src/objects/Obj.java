@@ -4,6 +4,7 @@ import game.List;
 import game.SimpleTest;
 import game.Team;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Shape;
 
@@ -60,6 +61,23 @@ public abstract class Obj
 	public void remove()
 	{
 		objInst.remove();
+	}
+	
+	public Color getColor()
+	{
+		int i = team.getTeam();
+		
+		switch(i){
+			case 1:
+				return Color.green;
+			case 2:
+				return Color.red;
+			case 3:
+				return Color.cyan;
+			case 4:
+				return Color.orange;
+		}
+		return null;
 	}
 	
 	protected boolean checkBorders()

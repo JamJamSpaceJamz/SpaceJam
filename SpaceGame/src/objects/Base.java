@@ -55,7 +55,7 @@ public class Base extends Obj
 	@Override
 	public void draw(Graphics gfloat) 
 	{
-		gfloat.setColor(color);
+		gfloat.setColor(getColor());
 		shape = new Polygon(points);
 		gfloat.fill(shape);
 		gfloat.drawString("" + credit, location[0], location[1] + size*1.3f);

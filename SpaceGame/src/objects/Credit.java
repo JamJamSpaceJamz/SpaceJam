@@ -99,6 +99,6 @@ public class Credit extends Obj
 		else if (hitter instanceof Credit)
 			return false;
 		
-		return true;
+		return false;
 	}	
 }
