@@ -3,7 +3,8 @@
 	import game.SimpleTest;
 	import game.Team;
 	
-	import objects.Asteroid;
+import objects.Asteroid;
+import objects.Obj;
 	
 	public class BlakeShip extends AutonomousShip
 	{
@@ -28,15 +29,23 @@
 	// Destroy asteroids around the map
 	protected void hunt()
 	{
-		// fly to closest asteroid until a certain distance away
-		// shoot asteroid. repeat
-		if (asteroidInRange())
-		{
-			Asteroid target = findClosestAsteroid();
+		if (enemyInRange()) {
+			//System.out.println("Found enemy.");
+			Obj target = findClosestEnemy();
 			if (target != null)
-				attackAsteroid(target);
-		} else {
-			findAsteroids();
+				//System.out.println("Target acquired.");
+				attack(target);
+		} else {		
+			// fly to closest asteroid until a certain distance away
+			// shoot asteroid. repeat
+			if (asteroidInRange())
+			{
+				Asteroid target = findClosestAsteroid();
+				if (target != null)
+					attack(target);
+			} else {
+				findAsteroids();
+			}
 		}
 	}
 	
@@ -68,7 +77,8 @@
 		}
 	}
 	
-	protected void attackAsteroid(Asteroid target) {
+	protected void attack(Obj target)
+	{
 		stop(); // Make sure the asteroid does not go out of range
 		if (!turnTo(directionTo(target)));
 		else
