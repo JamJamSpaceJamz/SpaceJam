@@ -99,8 +99,7 @@ public class Asteroid extends Obj
 			float[] location = new float[2];
 			location[0] = this.location[0] + Helper.cos(direction)*size*2.03f;
 			location[1] = this.location[1] + Helper.sin(direction)*size*2.03f;
-			Credit crd = new Credit(location, direction, worth*15, gameInst, team);
-			team.addUnit(objectType.CREDIT, crd);
+			Credit crd = new Credit(location, direction, worth*15, gameInst);
 		}
 		if (health <= 0)
 		{

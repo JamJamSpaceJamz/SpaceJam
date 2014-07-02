@@ -106,6 +106,26 @@ public class Base extends Obj
 		return false;
 	}
 	
+	public void remove()
+	{
+		int credit = ((PlayerTeam) team).setCredits(0);
+		while (credit > 0)
+		{
+			System.out.println("Ship removed. Credit: " + credit);
+			int worth = 40;
+			if (credit < 40) worth = credit;
+			credit -= worth;
+			
+			int direction = (int) (Math.random() *360);
+			float[] location = new float[2];
+			location[0] = this.location[0] + Helper.cos(direction)*size*5.03f;
+			location[1] = this.location[1] + Helper.sin(direction)*size*5.03f;
+			Credit crd = new Credit(location, direction, worth, gameInst);
+			
+		}
+		objInst.remove();
+	}
+	
 	public float[] getLocation() {
 		return this.location;
 	}

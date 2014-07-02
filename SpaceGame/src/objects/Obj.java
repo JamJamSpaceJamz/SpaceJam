@@ -55,7 +55,7 @@ public abstract class Obj
 	{
 		health -= dmg;
 		if (health <= 0)
-			objInst.remove();
+			remove();
 	}
 	
 	public void remove()
