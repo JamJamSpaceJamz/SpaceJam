@@ -36,6 +36,8 @@ public class SimpleTest extends BasicGameState
 	@Override
 	public void init(GameContainer container, StateBasedGame arg1)
 			throws SlickException {	
+		Constants a = new Constants(1);
+		
 		toggle = Constants.game_toggle;;
 		this.container = container;
 		container.setTargetFrameRate(Constants.game_target_framerate);
