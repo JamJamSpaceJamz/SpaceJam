@@ -42,7 +42,7 @@ public class NeutralTeam extends Team
 		{
 			float[] loc = new float[2];
 			loc[0] = (float) (Math.random()* gameInst.container.getWidth());
-			loc[1] = (float) (Math.random()* gameInst.container.getHeight());
+			loc[1] = (float) (Math.random()* gameInst.containerHeight);
 
 			
 			float ast_size = (float) (Math.random() * 10 + 4) * Constants.scale;

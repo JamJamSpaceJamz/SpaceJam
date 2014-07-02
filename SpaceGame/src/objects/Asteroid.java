@@ -64,6 +64,7 @@ public class Asteroid extends Obj
 		shape = new Polygon(points);
 		g.setColor(Color.gray);
 		g.fill(shape);
+
 	}
 
 	public void update(int delta)
