@@ -180,6 +180,12 @@ public abstract class Ship extends Obj
 	{
 		// angle in degrees
 		float angularDistance = angle - rotation;
+
+		if (angularDistance < -180f) 
+			angularDistance += 360f;
+		if (angularDistance > 180f)
+			angularDistance -= 360f;
+		
 		if (angularDistance > accuracy)
 		{
 			this.rotateRight(true);
