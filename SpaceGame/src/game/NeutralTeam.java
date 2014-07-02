@@ -41,7 +41,7 @@ public class NeutralTeam extends Team
 		{
 			float[] loc = new float[2];
 			loc[0] = (float) (Math.random()* gameInst.container.getWidth());
-			loc[1] = (float) (Math.random()* gameInst.container.getHeight());
+			loc[1] = (float) (Math.random()* gameInst.containerHeight);
 
 			Asteroid ast = new Asteroid(loc, (float) (Math.random() * 10 + 4), gameInst, this);
 			this.getList(objectType.ASTEROID).add(ast);

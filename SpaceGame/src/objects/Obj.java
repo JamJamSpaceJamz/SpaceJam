@@ -84,7 +84,7 @@ public abstract class Obj
 	{
 		boolean check = false;
 		int width = gameInst.container.getWidth();
-		int height = gameInst.container.getHeight();
+		int height = gameInst.containerHeight;
 		
 		if (location[0] >= width)
 		{

@@ -6,6 +6,7 @@ import objects.CollisionChecker;
 import objects.Obj;
 
 import game.Team.objectType;
+import gui.BottomMenu;
 
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
@@ -22,6 +23,7 @@ import ships.UserShip;
 
 public class SimpleTest extends BasicGameState
 {
+	public int containerHeight;
 	private Ship ship;
 	public Team[] allTeams;    // neutralTeam;
 	public List<List<Obj>> gameList;
@@ -39,6 +41,7 @@ public class SimpleTest extends BasicGameState
 		int speed = 3;	
 		toggle = 0;
 		this.container = container;
+		containerHeight = container.getHeight() - 50;
 		container.setTargetFrameRate(60);
 		int rotation = 20;
 		float range = 100;
@@ -66,7 +69,7 @@ public class SimpleTest extends BasicGameState
 	}
 
 	@Override
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g)
+	public void render(GameContainer c, StateBasedGame arg1, Graphics g)
 			throws SlickException {
 		g.setLineWidth(.3f);
 		
@@ -80,7 +83,8 @@ public class SimpleTest extends BasicGameState
 				pointer1 = pointer1.next;
 			}
 			pointer = pointer.next;
-		}	
+		}
+		BottomMenu.draw(g, c);
 	}
 
 	public void update(GameContainer container, int delta) throws SlickException 

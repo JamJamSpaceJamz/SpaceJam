@@ -159,7 +159,7 @@ public class PlayerTeam extends Team
 		int teamNum = this.getTeam();
 		float[] spawn = new float[2];
 		float width  = this.gameInst.container.getWidth();
-		float height = this.gameInst.container.getHeight();
+		float height = this.gameInst.containerHeight;
 		float dx =  width / 8f;
 		float dy = height / 8f;
 		
