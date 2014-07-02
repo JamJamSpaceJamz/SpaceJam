@@ -85,8 +85,7 @@ public class PlayerTeam extends Team
 //		final float SHIP_RANGE = 100, SHIP_HEALTH = 30;
 		
 		// checks if enough credits, does nothing otherwise
-		// sidenote: ship price == a hardcoded 500
-		if (!pay || credits - quantity*500 >= 0 )
+		if (!pay || credits - quantity * Constants.team_ship_cost >= 0 )
 		{
 			for (int i=0; i<quantity; i++)
 			{
@@ -98,16 +97,16 @@ public class PlayerTeam extends Team
 			}
 			if (pay)
 			{
-				credits -= quantity*500;
+				credits -= quantity * Constants.team_ship_cost;
 			}
 		}
 	}
 	
 	private void addUserShip(int quantity)
 	{
-		final int SHIP_SPEED = 3, SHIP_SIZE = 5;
-		final int SHIP_ROTATION = 20, SHIP_CAPACITY = 15; // TODO: Set initial rotation based on spawn location.
-		final float SHIP_RANGE = 100, SHIP_HEALTH = 30;
+		final int SHIP_SPEED = Constants.ship_initial_speed;
+		final int SHIP_ROTATION = 20, SHIP_CAPACITY = Constants.ship_capacity; // TODO: Set initial rotation based on spawn location.
+		final float SHIP_RANGE = Constants.fighter_range, SHIP_HEALTH = Constants.fighter_health, SHIP_SIZE = Constants.ship_size;
 		
 		for (int i=0; i<quantity; i++)
 		{
@@ -124,7 +123,7 @@ public class PlayerTeam extends Team
 	{
 		// Add a base. All initial values could/should be tweaked.
 		final float[] BASESPAWN = baseSpawnLocation();
-		final float BASESIZE = 30;
+		final float BASESIZE = Constants.base_size;
 		final Color BASECOLOR = Color.green;
 		Base mainBase = new Base(BASESIZE, BASESPAWN, BASECOLOR, gameInst, this);
 		this.getList(objectType.BASE).add(mainBase);
@@ -132,7 +131,7 @@ public class PlayerTeam extends Team
 	}
 	
 	private float[] genShipSpawnLocation() {
-		float SPAWN_DIST = 70;
+		float SPAWN_DIST = Constants.base_spawn_dist;
 		
 		// Get location of this team's base.
 		float[] retVal = new float[2];

@@ -6,6 +6,7 @@ import objects.CollisionChecker;
 import objects.Obj;
 
 import game.Team.objectType;
+import game.Constants;
 
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
@@ -34,17 +35,11 @@ public class SimpleTest extends BasicGameState
 
 	@Override
 	public void init(GameContainer container, StateBasedGame arg1)
-			throws SlickException {
-		int size = 5;
-		int speed = 3;	
-		toggle = 0;
+			throws SlickException {	
+		toggle = Constants.game_toggle;;
 		this.container = container;
-		container.setTargetFrameRate(60);
-		int rotation = 20;
-		float range = 100;
-		float health = 30;
-		int capacity = 15;
-		final int NUM_PLAYERS = 4;
+		container.setTargetFrameRate(Constants.game_target_framerate);
+		final int NUM_PLAYERS = Constants.game_num_players;
 		allTeams = new Team[NUM_PLAYERS + 1];
 		
 		// Make the NPCs (always team 0)

@@ -2,9 +2,12 @@ package game;
 
 import org.newdawn.slick.Color;
 
-import ships.AutonomousShip;
+import game.Constants;
+
 import objects.Base;
 import objects.Obj;
+
+import ships.AutonomousShip;
 import ships.Ship;
 import ships.UserShip;
 
@@ -21,7 +24,7 @@ public abstract class Team
 	public Team(int teamNum, SimpleTest gameInst)
 	{
 		// start with the ability to buy ship
-		credits = 5000;
+		credits = Constants.team_initial_credits;
 		team = teamNum;
 		this.gameInst = gameInst; 
 		this.allUnits = new List<Obj>();

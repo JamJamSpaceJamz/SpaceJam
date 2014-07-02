@@ -5,9 +5,11 @@ import objects.Obj;
 import game.Helper;
 import game.SimpleTest;
 import game.Team;
+import game.Constants;
+
 public abstract class AutonomousShip extends Ship
 {
-	protected final int SEARCH_TIMER = 100;
+	protected final int SEARCH_TIMER = Constants.autoship_search_timer;
 	protected int timer = 0;
 	protected float dir = 0;
 	// Initialize searchDirection with a random direction between -1 and +1
@@ -99,8 +101,8 @@ public abstract class AutonomousShip extends Ship
 			acceleration[0] = (float) Helper.cos(rotation)*2; //speed;
 			acceleration[1] = (float) Helper.sin(rotation)*2; //speed;
 			
-			velocity[0] += acceleration[0]*delta*.01f;
-			velocity[1] += acceleration[1]*delta*.01f;
+			velocity[0] += acceleration[0]*delta*Constants.game_delta_scale;
+			velocity[1] += acceleration[1]*delta*Constants.game_delta_scale;
 			
 			setLocation();
 		}
@@ -119,7 +121,7 @@ public abstract class AutonomousShip extends Ship
 	public void rotateLeft()
 	{
 		turnLeft = true;
-		rotation -= rotateSpd * .01f * delta;
+		rotation -= rotateSpd * Constants.game_delta_scale * delta;
 		if (rotation < -360)
 			rotation += 360;
 	}
@@ -135,7 +137,7 @@ public abstract class AutonomousShip extends Ship
 	public void rotateRight()
 	{
 		turnRight = true;
-		rotation += rotateSpd * .01f * delta;
+		rotation += rotateSpd * Constants.game_delta_scale * delta;
 		if (rotation > 360)
 			rotation -= 360;
 	}
@@ -164,8 +166,8 @@ public abstract class AutonomousShip extends Ship
 		
 		speed = (float) Math.sqrt(velocity[0]*velocity[0] + velocity[1]*velocity[1]);
 		
-		location[0] += velocity[0]*delta*.01f;
-		location[1] += velocity[1]*delta*.01f;
+		location[0] += velocity[0]*delta*Constants.game_delta_scale;
+		location[1] += velocity[1]*delta*Constants.game_delta_scale;
 	}
 	
 	// This method allows the user to set a speed for the ship

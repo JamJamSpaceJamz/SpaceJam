@@ -45,12 +45,18 @@ public class CollisionChecker
 	// how it was in the last frame
 	public static void backStep(Obj thing, int delta)
 	{
-		float[] thingVel = thing.setVel(null);
+		float[] thingVel = thing.getVel();
+		
 		thingVel[0] *= -1;
 		thingVel[1] *= -1;
+		
+		thing.setVel(thingVel);
 		thing.update(delta);
+		
 		thingVel[0] *= -1;
 		thingVel[1] *= -1;
+		
+		thing.setVel(thingVel);
 	}
 
 	// Takes two objects and calculates their change in
