@@ -4,6 +4,7 @@ import objects.Asteroid;
 import objects.Credit;
 import objects.Obj;
 import game.Team.objectType;
+import game.Constants;
 
 public class NeutralTeam extends Team
 {	
@@ -14,7 +15,7 @@ public class NeutralTeam extends Team
 	
 	protected void startingUnits()
 	{
-		final int NUMBER_ASTEROIDS = 25;
+		final int NUMBER_ASTEROIDS = Constants.game_init_asteroids;
 		this.astList    = new List<Obj>();
 		this.creditList = new List<Obj>();
 		
@@ -43,7 +44,9 @@ public class NeutralTeam extends Team
 			loc[0] = (float) (Math.random()* gameInst.container.getWidth());
 			loc[1] = (float) (Math.random()* gameInst.container.getHeight());
 
-			Asteroid ast = new Asteroid(loc, (float) (Math.random() * 10 + 4), gameInst, this);
+			
+			float ast_size = (float) (Math.random() * 10 + 4) * Constants.scale;
+			Asteroid ast = new Asteroid(loc, ast_size, gameInst, this);
 			this.getList(objectType.ASTEROID).add(ast);
 			this.updateAllUnits(ast);
 		}	

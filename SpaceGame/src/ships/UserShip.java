@@ -6,7 +6,7 @@ import game.Team;
 
 public class UserShip extends Ship
 {
-	public UserShip(float[] spawn, int size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst, Team team)
+	public UserShip(float[] spawn, float size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst, Team team)
 	{
 		super(spawn, size, speed, rotateSpd, range, capacity, health, inst, team);
 	}

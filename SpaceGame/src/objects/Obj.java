@@ -35,20 +35,17 @@ public abstract class Obj
 		return shape;
 	}
 	
-	public float[] setVel(float[] speed) 
-	{
-		if (speed != null)
-		{
-			velocity = speed;
-		}
-		if (velocity == null)
-		{
-			float[] temp = new float[2];
-			temp[0] = 1;
-			temp[1] = 1;
-			return temp;
-		}
-		return velocity;
+	// Return velocity without giving access to this.velocity
+	public float[] getVel() {
+		float x = this.velocity[0];
+		float y = this.velocity[1];
+		float[] vel = { x, y };
+		
+		return vel;
+	}
+	
+	public void setVel(float[] vel) {
+		velocity = vel;
 	}
 	
 	public void damage(float dmg)
@@ -148,8 +145,5 @@ public abstract class Obj
 		return this.team.getTeam();
 	}
 	
-	abstract public boolean collide(Obj hitter);
-	
-	//abstract public float[] setSpeed(float[] speed);
-	
+	abstract public boolean collide(Obj hitter);	
 }

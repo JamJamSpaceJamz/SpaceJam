@@ -5,21 +5,20 @@ import game.Team;
 	
 import objects.Asteroid;
 import objects.Obj;
+import objects.Credit;
 	
-	public class BlakeShip extends AutonomousShip
-	{
-		public BlakeShip(float[] spawn, Team team, SimpleTest inst) 
-		{
+	public class BlakeShip extends Fighter {
+		public BlakeShip(float[] spawn, Team team, SimpleTest inst) {
 			// size, speed, rotateSpd, range, capacity, health, inst, team
-			super(spawn, 5, 3, 20, 100, 15, 30, inst, team); 
+			super(spawn, team, inst); 
 		}
 	
 	@Override
-	public void update(int dt)
-	{
-			delta = dt;
+	public void update(int dt) {
+		delta = dt;
 	
 		radar();
+
 		if (isFullCredits)
 			returnToBase();
 		else	
@@ -27,11 +26,10 @@ import objects.Obj;
 	}
 	
 	// Destroy asteroids around the map
-	protected void hunt()
-	{
+	protected void hunt() {
 		if (enemyInRange()) {
 			Obj target = findClosestEnemy();
-			if (target != null)
+			if (target != null && !(target instanceof Credit))
 				attack(target);
 		} else {		
 			// fly to closest asteroid until a certain distance away
@@ -75,8 +73,7 @@ import objects.Obj;
 		}
 	}
 	
-	protected void attack(Obj target)
-	{
+	protected void attack(Obj target) {
 		stop(); // Make sure the asteroid does not go out of range
 		if (!turnTo(directionTo(target)));
 		else

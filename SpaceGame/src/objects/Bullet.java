@@ -1,5 +1,6 @@
 package objects;
 
+import game.Constants;
 import game.Helper;
 import game.List;
 import game.Team;
@@ -15,7 +16,7 @@ import java.lang.Math;
 
 public class Bullet extends Obj
 {
-	private float range, width, hieght;
+	private float range, width, height;
 	private float points[];
 	private float damage;
 
@@ -24,10 +25,10 @@ public class Bullet extends Obj
 		// adding so its not null, should fix later
 		this.location = location;
 		
-		float INITIAL_SPEED = 30;
+		float INITIAL_SPEED = Constants.bullet_init_speed;
 		
-		width = 2f;
-		hieght = 10f;
+		width = Constants.bullet_width;
+		height = Constants.bullet_height;
 		
 		points = makePoints(location, rotation);
 		shape = new Polygon(points);
@@ -53,16 +54,16 @@ public class Bullet extends Obj
 		pts[1] = loc[1] + width/2 * cos;
 
 		//upper left pt
-		pts[2] = pts[0] + hieght * cos;
-		pts[3] = pts[1] + hieght * sin;
+		pts[2] = pts[0] + height * cos;
+		pts[3] = pts[1] + height * sin;
 
 		//upper right pt
 		pts[4] = pts[2] + width * sin;
 		pts[5] = pts[3] - width * cos;
 
 		//lower right pt
-		pts[6] = pts[4] - hieght * cos;
-		pts[7] = pts[5] - hieght * sin;
+		pts[6] = pts[4] - height * cos;
+		pts[7] = pts[5] - height * sin;
 
 		return pts;
 	}
@@ -74,14 +75,14 @@ public class Bullet extends Obj
 			objInst.remove();		
 
 		float speed = (float)Math.sqrt(velocity[0] * velocity[0] + velocity[1] * velocity[1]);
-		speed *=  delta * 0.01f;
+		speed *=  delta * Constants.game_delta_scale;
 		
 		range -= speed;
 
 		for (int i = 0; i < 8; i += 2)
 		{
-			points[i] += this.velocity[0] * delta * 0.01f;
-			points[i+1] += this.velocity[1] * delta * 0.01f;
+			points[i] += this.velocity[0] * delta * Constants.game_delta_scale;
+			points[i+1] += this.velocity[1] * delta * Constants.game_delta_scale;
 		}
 	}
 	
@@ -100,7 +101,10 @@ public class Bullet extends Obj
 		return shape;
 	}
 
-
+	public void hit(Obj target) {
+		target.damage(damage);
+	}
+	
 	@Override
 	public boolean collide(Obj hitter)
 	{
@@ -110,7 +114,7 @@ public class Bullet extends Obj
 			vel[0] += velocity[0]/100;
 			vel[1] += velocity[1]/100;
 			this.remove();
-			hitter.damage(damage);
+			hit(hitter);
 		}
 		
 		return false;

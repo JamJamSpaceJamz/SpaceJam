@@ -7,6 +7,7 @@ import game.List;
 import game.SimpleTest;
 import game.Team;
 import game.Team.objectType;
+import game.Constants;
 
 import objects.Base;
 import objects.Bullet;
@@ -21,21 +22,18 @@ import org.newdawn.slick.geom.Polygon;
 public abstract class Ship extends Obj
 {
 	public float[] acceleration;
-	
-	
-	
-	protected int delta, rotateSpd, size, credit;
+	protected int delta, rotateSpd, credit;
 	protected boolean turnLeft, turnRight, accelerate, stop, isFullCredits;
 	// NOTE: ROTATION IS IN DEGREES
-	protected float rotation, range, damage, speed;
+	protected float rotation, range, damage, speed, size;
 	protected int capacity, cargo, weaponCoolDown, radarCoolDown; 
 	protected int COOLDOWN;
-	final protected float MAX_SPEED = 12;
+	final protected float MAX_SPEED = Constants.ship_max_speed;
 	protected ArrayList<Obj> closeObj, objectsInRange;
 
-	public Ship (float[] spawn, int size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst, Team team)
+	public Ship (float[] spawn, float size, int speed, int rotateSpd, float range, int capacity, float health, SimpleTest inst, Team team)
 	{
-		COOLDOWN = 5;
+		COOLDOWN = Constants.ship_cooldown;
 		
 		this.location = new float[2];
 		this.location[0] = spawn[0];
@@ -47,10 +45,10 @@ public abstract class Ship extends Obj
 		this.rotateSpd = rotateSpd;
 		this.range = range;
 		this.capacity = capacity;
-		this.mass = 75;
+		this.mass = Constants.ship_mass;
 		this.health = health;
 		this.team = team;
-		this.damage = 30;
+		this.damage = Constants.fighter_damage;
 		
 		this.cargo = 0;
 		this.gameInst = inst;  
@@ -166,16 +164,11 @@ public abstract class Ship extends Obj
 		navigateTo(team.getList(objectType.BASE).next.data);
 	}
 	
-	//protected boolean turnTo(float angle)
 	public boolean turnTo(float angle)
 	{
-		return turnTo(angle, 3.0f);
+		return turnTo(angle, Constants.ship_default_turn_accuracy);
 	}
 	
-	/*
-	 * Turns to a given angle with a given speed 
-	 *  TODO TURN THE CORRECT DISTANCE AND WORK OUT A MAX TURN SPEED
-	 */
 	protected boolean turnTo(float angle, float accuracy)
 	{
 		// angle in degrees
@@ -225,7 +218,7 @@ public abstract class Ship extends Obj
 
 	// creates a bullet and adds it to the game's bulletlist\
 	// (future work: recoil?)
-	public void fire()
+	protected void fire()
 	{
 		if (weaponCoolDown == 0)
 		{

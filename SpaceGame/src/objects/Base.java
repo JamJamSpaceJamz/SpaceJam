@@ -1,12 +1,13 @@
 package objects;
 
-
 import game.Helper;
 import game.List;
 import game.SimpleTest;
 import game.Team;
 import game.Team.objectType;
 import game.PlayerTeam;
+import game.Constants;
+import objects.Bullet;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Polygon;
@@ -14,7 +15,7 @@ import org.newdawn.slick.geom.Polygon;
 public class Base extends Obj
 {
 	private final float size, range;
-	private final float TURNSPEED = 0.5f;
+	private final float TURNSPEED = Constants.base_turnspeed;
 	private final Color color;
 	private float rotation;
 	private float[] points;
@@ -25,22 +26,24 @@ public class Base extends Obj
 		this.location = loc;
 		this.color = color;
 		this.gameInst = gameInst;
-		this.mass = 1000;
+		this.mass = Constants.base_mass;
 		this.team = team;
-		this.range = 100;
+		this.range = Constants.base_range;
+		this.health = Constants.base_health;
 		
 		rotation = 0;
 		velocity = new float[2];
 		velocity[0] = 0;
 		velocity[1] = 0;
 		initPts();
-		generateTurrets(5);
+		// Base should not start with turrets.
+//		generateTurrets(5);
 	}
 	
 	private void initPts()
 	{
 		// number of sides the base has
-		int numPts = 6;
+		int numPts = Constants.base_numPoints;
 		points = new float[numPts*2];
 		for (int i = 0; i < numPts; i++)
 		{
@@ -68,27 +71,25 @@ public class Base extends Obj
 			dir = i*360f/numTurrets;
 			Turret turret = new Turret(this, dir, gameInst);
 			team.addUnit(objectType.TURRET, turret);
-			
-	//		pointer.add(turret);
 		}
 	}
 
 	@Override
 	public void update(int delta) 
 	{
-		int numPts = 6;
+		int numPts = Constants.base_numPoints;
 		
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < numPts; i++)
 		{
 			float dir = i*360f/numPts;
-			rotation += TURNSPEED * .01f*delta;
+			rotation += TURNSPEED * Constants.game_delta_scale * delta;
 			points[2*i] = size*Helper.cos(dir + rotation) + location[0];
 			points[2*i + 1] = size *Helper.sin(dir + rotation) + location[1];
 		}
 		
 		checkBorders();
-		location[0] += velocity[0]*delta*.01f;
-		location[1] += velocity[1]*delta*.01f;
+		location[0] += velocity[0]*delta*Constants.game_delta_scale;
+		location[1] += velocity[1]*delta*Constants.game_delta_scale;
 	}
 	
 	public void credit(int amount)
@@ -99,9 +100,13 @@ public class Base extends Obj
 	@Override
 	public boolean collide(Obj hitter) 
 	{
-		CollisionChecker.backStep(hitter, 40);
-		hitter.velocity[0] *= -0.5f;
-		hitter.velocity[1] *= -0.5f;
+		if (!(hitter instanceof Bullet)) {		
+			CollisionChecker.backStep(hitter, 40);
+			hitter.velocity[0] *= -0.5f;
+			hitter.velocity[1] *= -0.5f;
+		} else {
+			((Bullet) hitter).hit(this);
+		}
 		
 		return false;
 	}
