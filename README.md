@@ -30,6 +30,12 @@ The game currently supports ships, asteroids, bases, gems, teams, and the basic 
 
 If you open the game right now you will see one programable ship and one user controlled ship for testing. Move the user ship with "WASD" and space to fire.
 
+Dependencies
+============
+Java7
+
+Java Lightweight Game Library (lwgl)
+
 TO DO
 =====
 
